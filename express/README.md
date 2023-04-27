@@ -12,12 +12,15 @@ npm install
 npm run build
 
 ## Start Express App with JavaScript from dist folder:
+### On Port 8000
 npm run start-build
 
 ## Run Express App with TypeScript as Dev Server with Nodemon:
+### On Port 8000
 npm run dev
 # This will create the dist folder to see the compiled JavaScript
 
 ## Run Express App only with Nodemon (without JavaScript):
+### On Port 8000
 npm start
 # Attention: This will not create the dist folder and if there is an old dist folder, it won`t be changed!
