@@ -1,0 +1,8 @@
+# Ignore build artifacts
+/dist/
+
+# Ignore libaries
+/node_modules/
+
+# Ignore .env files
+# .env
