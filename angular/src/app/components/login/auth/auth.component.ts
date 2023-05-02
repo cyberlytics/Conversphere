@@ -23,6 +23,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class AuthComponent {
   email!: string;
   password!: string;
+  username: string = "usernametest";
   hide: boolean = true;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
@@ -38,5 +39,21 @@ export class AuthComponent {
         console.error('Fehler bei der Anmeldung:', error);
       }
     );
+  }
+
+  onRegister() {   
+    if(!this.email || !this.password || !this.username) {
+      console.log('Bitte alle Felder ausfüllen!'); 
+    }
+    else{
+      this.authService.register(this.username, this.email, this.password).subscribe(
+        success => {
+          console.log('Registrierung erfolgreich!');
+        },
+        error => {
+          console.error('Fehler bei der Registrierung:', error);
+        }
+      );
+    }
   }
 }

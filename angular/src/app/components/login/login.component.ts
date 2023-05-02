@@ -18,17 +18,8 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class LoginComponent {
   constructor(private authService: AuthentificationService) { }
-  email!: string;
-  password!: string;
+  
+ 
 
-  onRegister() {    
-    this.authService.register(this.email, this.password).subscribe(
-      success => {
-        console.log('Registrierung erfolgreich!');
-      },
-      error => {
-        console.error('Fehler bei der Registrierung:', error);
-      }
-    );
-  }
+
 }

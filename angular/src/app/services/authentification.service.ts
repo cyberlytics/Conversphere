@@ -10,9 +10,10 @@ export class AuthentificationService {
 
   constructor(private http: HttpClient) { }
 
-  register(email: string, password: string): Observable<any> {
-    const url = `${this.baseUrl}/register`;
-    return this.http.post(url, { email, password });
+  register(username: string, email: string, password: string): Observable<any> {
+    const url = `localhost:8080/auth/register`;
+    console.log(username, email, password);
+    return this.http.post(url, {username, email, password });
   }
 
   login(email: string, password: string): Observable<any> {
