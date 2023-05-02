@@ -28,18 +28,6 @@ export class AuthComponent {
   passwordFormControl = new FormControl('', [Validators.required]);
 
   constructor(private authService: AuthentificationService) { }
-  
-
-  onRegister() {
-    this.authService.register(this.email, this.password).subscribe(
-      success => {
-        console.log('Registrierung erfolgreich!');
-      },
-      error => {
-        console.error('Fehler bei der Registrierung:', error);
-      }
-    );
-  }
 
   onLogin() {
     this.authService.login(this.email, this.password).subscribe(
