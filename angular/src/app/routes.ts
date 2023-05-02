@@ -2,13 +2,9 @@
 import { Routes } from '@angular/router';
 import { StartpageComponent } from './components/startpage/startpage.component';
 import { ErrorComponent } from './components/error/error.component';
+import { LebenslaufComponent } from './components/lebenslauf/lebenslauf.component';
 
 export const APP_ROUTES: Routes = [
-    {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'start'
-    },
     {
         path: 'start',
         component: StartpageComponent
@@ -17,13 +13,18 @@ export const APP_ROUTES: Routes = [
         path: 'error',
         component: ErrorComponent
     },
-
- 
-    // Option 2: Directly Lazy Loading a Standalone Component
     {
         path: 'lebenslauf',
-        loadComponent: () => 
-            import('./components/lebenslauf/lebenslauf.component')
-                .then(m => m.LebenslaufComponent)
+        component: LebenslaufComponent
+    },
+    {
+        path: '', 
+        redirectTo: 'start', 
+        pathMatch: 'full'
+    },
+    {
+        path: '**',
+        pathMatch: 'full',
+        redirectTo: 'error'
     },
 ];
