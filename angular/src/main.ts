@@ -6,14 +6,12 @@ import {
     PreloadAllModules, 
     provideRouter, 
     withDebugTracing, 
-    withPreloading, 
-    withRouterConfig 
+    withPreloading
 } 
 from '@angular/router';
-
-import { APP_ROUTES } from './app/routes';
 import { HttpClientModule } from '@angular/common/http';
 
+import { APP_ROUTES } from './app/routes';
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -23,5 +21,4 @@ bootstrapApplication(AppComponent, {
         withDebugTracing(),
       ),
     ],
-})
-  .catch(err => console.error(err));
+}).catch(err => console.error(err));

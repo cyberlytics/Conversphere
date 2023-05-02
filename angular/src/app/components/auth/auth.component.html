@@ -1,7 +1,7 @@
 <form>
   <mat-form-field appearance="fill">
     <mat-label>Email</mat-label>
-    <input matInput type="email" formControlName="emailFormControl"/>
+    <input matInput type="email" [formControl]="emailFormControl"/>
     <mat-error *ngIf="emailFormControl.hasError('required')">
       Email is required
     </mat-error>
