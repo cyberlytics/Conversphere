@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button'; 
 
 @Component({
   selector: 'app-auth',
@@ -11,7 +13,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     CommonModule, 
     ReactiveFormsModule,
     FormsModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule
     ],
   providers: [AuthentificationService],
   templateUrl: './auth.component.html',
@@ -20,8 +24,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 export class AuthComponent {
   email!: string;
   password!: string;
-  
+  hide: boolean = true;
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFormControl = new FormControl('', [Validators.required]);
 
   constructor(private authService: AuthentificationService) { }
   

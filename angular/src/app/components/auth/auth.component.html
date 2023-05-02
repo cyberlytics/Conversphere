@@ -1,8 +1,19 @@
-<form class="example-form">
-  <mat-form-field>
-    <mat-label>Favorite food</mat-label>
-    <input matInput placeholder="Ex. Pizza" value="Sushi" />
+<form>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" formControlName="emailFormControl"/>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('email')">
+      Invalid email format
+    </mat-error>
   </mat-form-field>
-  <button (click)="onRegister()">Registrieren</button>
-  <button (click)="onLogin()">Anmelden</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input matInput [type]="hide ? 'password': 'text'"/>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="onLogin()">Anmelden</button>
+  <div>Noch keinen Account?</div>
+  <button mat-raised-button color="primary" (click)="onRegister()">Registrieren</button>
 </form>
