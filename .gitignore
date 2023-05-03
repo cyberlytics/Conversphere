@@ -4,6 +4,7 @@
 docu/*.pdf
 docu/*synctex.gz
 docu/*.aux
+docu/*.out
 
 # Logs
 logs
