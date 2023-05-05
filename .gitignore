@@ -1,7 +1,6 @@
 ## conversphere 
 
 # Tex/Latex
-docu/*.pdf
 docu/*synctex.gz
 docu/*.aux
 docu/*.out

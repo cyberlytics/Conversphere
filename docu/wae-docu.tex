@@ -18,7 +18,7 @@
 
 	\title{Conversphere}
 	\author{
-		\IEEEauthorblockN{1\textsuperscript{nd} Feil Lukas}
+		\IEEEauthorblockN{1\textsuperscript{st} Feil Lukas}
 		\IEEEauthorblockA{
 			\textit{OTH Amberg-Weiden} \\
 			Bad Kötzting, Deutschland \\
@@ -70,7 +70,7 @@
 	Die vom Benutzer empfangenen Nachrichten sowie die vom Benutzer gesendete Nachrichten sind in einem scrollbaren Chat-Feld sichtbar. In der Chat-Feld trägt jede Nachricht den Namen des Absenders, so dass der Benutzer weiß, von wem die Nachricht stammt. Der Benutzer kann eine Nachricht über ein Textfeld oberhalb des Chat-Feld senden.
 	
 	Der Benutzer wählt seine Art der Kommunikation (ob er flüstert, schreit oder normal spricht). Der Benutzer kann auch wählen (ob er betrunken, sprachbehindert ist usw.), was die Reichweite der Nachricht beeinflusst und auch die Nachricht Qualität (ob die Nachricht verständlich ist oder nicht). Der Benutzer hat die Möglichkeit, ein Profil auf der Seite zu erstellen, um sein Profil zu speichern. Er kann zwischen Räumen wechseln und einen Freund in einem bestimmten Raum einladen.
-	\ \\ %Erzeugt ein Leerzeichen und beendet dann die Zeile, also Leerzeile
+	\ \\
 
 	\section{Motivation}
 	Unsere Motivation war es, eine neue Art des Austausches mit unserem einzigartigen Chatroom zu erschaffen. 
@@ -105,16 +105,16 @@
 	Zur Speicherung von Nutzer und Spiel bzw. Chatdaten soll eine NoSQL MongoDB Datenbank zum Einsatz kommen. MontoDB Atlas bietet dafür einen kostenlosen Service, welcher eine gehostete MongoDB zu Verfügung stellt.
 
 	\subsection{Backend - Express.js}
-	Das Backend soll auf einem in Node.js laufenden Express.js Server basieren. Dieser soll die gesammte Spiellogik implementieren und alle anfallenden Daten zur speicherung in die Datenbank leiten.
+	Das Backend soll auf einem in Node.js laufenden Express.js Server basieren. Dieser soll die gesammte Spiellogik implementieren und alle anfallenden Daten zur Speicherung in die Datenbank leiten.
 
-	\subsection{Schnittstellen - REST API}
-	Der Express Server sowie das Frontend sollen über eine REST API miteinander Kommunizieren. Es sollen dabei für jede Funktion bzw. jede Art von Daten eine eigene Domains sowohl im Frontend als auch im Backend erstellt werden.
+	\subsection{Schnittstellen - Restful API}
+	Der Express Server sowie das Frontend sollen über eine Restful API miteinander Kommunizieren. Es sollen dabei für jede Funktion bzw. jede Art von Daten eine eigene Domain sowohl im Frontend als auch im Backend erstellt werden.
 	
 	\subsection{Frontend - Angular PWA}
 	Für das Frontend soll mit Hilfe von Anuglar eine Progressiv Web App erstellt werden welche mit Hilfe einer Render bzw. Animierungsbiliothek erweitert wird.
 
-	\subsection{Deployment - AWS S3 und EC2}
-	Die Webseite soll als static Website über AWS S3 an die Clienten verteilt werden. Das Backend soll mit Hilfe eines Docker Containers auf einem AWS EC2 gehostet werden.
+	\subsection{Deployment - AWS S3 und ECS}
+	Die Webseite soll als static Website über AWS S3 an die Clienten verteilt werden. Das Backend soll mit Hilfe eines Docker Containers in der AWS ECS gehostet werden.
 
 	\ \\
 	\section{Anforderungen}
