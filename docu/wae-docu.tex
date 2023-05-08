@@ -61,22 +61,22 @@
 	\end{abstract}
 
 	\begin{IEEEkeywords}
-		WPA, Chat, Proximity, Room, Web App, Angular, NodeJS, MongoDB, Express
+		PWA, Chat, Proximity, Room, Web App, Angular, NodeJS, MongoDB, Express
 	\end{IEEEkeywords}
 
 	\section{Einführung}
-	Conversphere ist eine Web-Chat-Anwendung, die es Benutzern ermöglicht, miteinander zu kommunizieren. Converse ist ein unterhaltsamer Chat, bei dem Benutzer wählen können, mit wem sie kommunizieren möchten. Die Kommunikation zwischen Benutzern erfolgt über Textnachrichten. Auf dieser Webanwendung gibt es eine Karte, auf der der Benutzer seine Position auswählen und auch die Position anderer Benutzer sehen kann. Sobald der Benutzer seine Position ausgewählt hat, kann er die von anderen Benutzern gesendete Nachrichten empfangen, die sich in einem bestimmten Radius befinden. Wenn sich ein Benutzer nicht im Radius der ausgewählten Position befindet, kann er die von ihm gesendete Nachrichten nicht sehen.
+	Conversphere ist eine Web-Chat-Anwendung, die es Benutzern ermöglicht, miteinander zu kommunizieren. Die Kommunikation zwischen den Usern erfolgt über Textnachrichten. Es gibt eine Karte, auf welcher die eigene Position auswählbar ist und die Positionen der anderen User anzeigt. Es können nur die Nachrichten von Usern empfangen werden, wenn man innerhalb eines gewissen Umkreises dieser User positioniert ist.
 	
-	Die vom Benutzer empfangenen Nachrichten sowie die vom Benutzer gesendete Nachrichten sind in einem scrollbaren Chat-Feld sichtbar. In der Chat-Feld trägt jede Nachricht den Namen des Absenders, so dass der Benutzer weiß, von wem die Nachricht stammt. Der Benutzer kann eine Nachricht über ein Textfeld oberhalb des Chat-Feld senden.
+	Die hörbaren Nachrichten sind in einem Chat-Feld sichtbar. Jede Nachricht ist mit dem Namen des Absenders gekennzeichnet, so dass Nachrichten den verschiedenen Usern zugeordnet werden können. Der Benutzer kann eine Nachricht über ein Textfeld im Chat-Feld senden.
 	
-	Der Benutzer wählt seine Art der Kommunikation (ob er flüstert, schreit oder normal spricht). Der Benutzer kann auch wählen (ob er betrunken, sprachbehindert ist usw.), was die Reichweite der Nachricht beeinflusst und auch die Nachricht Qualität (ob die Nachricht verständlich ist oder nicht). Der Benutzer hat die Möglichkeit, ein Profil auf der Seite zu erstellen, um sein Profil zu speichern. Er kann zwischen Räumen wechseln und einen Freund in einem bestimmten Raum einladen.
+	Der Benutzer kann seine Lautstärke der Nachricht wählen (flüstern, normales Gespräch, oder schreien). Dies beeinflusst die Reichweite der Nachricht. Ebenso sind Spezialeffekte wählbar (betrunken, Rage-Mode, usw.), was Qualität der Nachricht beeinflusst. Ein User hat die Möglichkeit, sich ein Profil auf der Seite zu erstellen, um seinen Charakter zu personalisieren. Es können neue Chat-Rooms erstellt werden und man kann schon existierenden Chat-Rooms über deren ID beitreten.
 	\ \\
 
 	\section{Motivation}
 	Unsere Motivation war es, eine neue Art des Austausches mit unserem einzigartigen Chatroom zu erschaffen. 
 	Durch unsere bisherigen Erfahrungen mit den vorhandenen Chats, stießen wir immer wieder auf Langeweile und Unzufriedenheit. Damit waren wir auch nicht allein.
 	
-	Unser Chatraum soll anders sein als alles, was du bisher erlebt hast. 
+	Unser Chatraum soll anders sein als alles, was du bisher erlebt hast.
 	
 	Durch den individuellen Chat-Radius kann der neuste Klatsch und Tratsch ausgetauscht werden, der vielleicht nicht für jedermann Ohren bestimmt ist. Die Auswahl deiner Chatpartner bietet die perfekte Grundlage dafür. 
 	In Zeiten von Remotearbeit immer essenzieller wird, wollten wir zudem einen sicheren Raum schaffen, in dem es möglich ist, seine Gedanken und Ideen teilen zu können und gleichzeitig sozial distanziert zu bleiben.
@@ -176,10 +176,8 @@
 	
 	\textbf{Akzeptanzkriterien:}
 	\begin{itemize}
-		\item 3 Stufen einstellbar über den Schieberegler.  @@ Auf 3 Stufen begrenzen oder flüssiger Übergang?
+		\item Reichweite einstellbar über den Schieberegler.
 		\item Nach verschieben ändert sich der Umkreis.
-		\item Schieberegler als Anzeige
-		\item Duch Caps-Lock wird die Nachricht an alle im Raum gesendet
 	\end{itemize}
 	\ \\
 	
@@ -189,18 +187,30 @@
 	
 	\textbf{Akzeptanzkriterien:}
 	\begin{itemize}
-		\item Je nach Entfernung der Nachricht und der Lautstärke der Nachricht wird diese mit unterschiedlichem Verblassungs-Effekt angezeigt.
+		\item Je nach Entfernung und Lautstärke der Nachricht wird diese mit unterschiedlichem Verblassungs-Effekt angezeigt.
 	\end{itemize}
 	\ \\
 
 	\subsubsection{Drunk-Mode}
 	\ \\
-	Ich als Nutzer möchte einen Drunk-Mode, in welchem Nachrichten ???.
+	Ich als Nutzer möchte einen Drunk-Mode, in welchem Nachrichten in welchem Buchstaben zufällig vertauscht werden.
 	
 	\textbf{Akzeptanzkriterien:}
 	\begin{itemize}
-		\item ??? @@.
+		\item Aktivierung des Drunk-Modes über einen Button im Chat-Feld.
+		\item Nachrichten im Drunk-Mode werden den mit zufällig vertauschten Buchstaben innerhalb eines Wortes angezeigt.
 	\end{itemize}
+	
+	\subsubsection{Rage-Mode}
+	\ \\
+	Ich als Nutzer möchte einen Rage-Mode, in ich meine Nachricht an alle Teilnehmer im Raum senden kann.
+	
+	\textbf{Akzeptanzkriterien:}
+	\begin{itemize}
+		\item Durch das senden einer Nachricht im CAPS-Lock wird der Rage-Mode aktiviert.
+		\item Die gesendete Nachricht ist für alle Nutzer sichtbar.
+	\end{itemize}
+	
 
 \ \\
 
