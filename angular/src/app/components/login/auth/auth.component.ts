@@ -4,7 +4,7 @@ import { AuthentificationService } from 'src/app/services/authentification.servi
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-auth',
@@ -41,19 +41,25 @@ export class AuthComponent {
     );
   }
 
-  onRegister() {   
-    if(!this.email || !this.password || !this.username) {
-      console.log('Bitte alle Felder ausfüllen!'); 
+  onRegister() {
+    if(this.passwordFormControl.value != null && this.emailFormControl.value != null){
+      this.email = this.emailFormControl.value;
+      this.password = this.passwordFormControl.value;
     }
-    else{
-      this.authService.register(this.username, this.email, this.password).subscribe(
-        success => {
-          console.log('Registrierung erfolgreich!');
-        },
-        error => {
-          console.error('Fehler bei der Registrierung:', error);
-        }
-      );
-    }
+     this.authService.register(this.username, this.email, this.password);
+    //.subscribe(
+    //     success => {
+    //       console.log('Registrierung erfolgreich!');
+    //     },
+    //     error => {
+    //       console.error('Fehler bei der Registrierung:', error);
+    //     }
+    //   );
+    // if(!this.email || !this.password || !this.username) {
+    //   console.log('Bitte alle Felder ausfüllen!');
+    // }
+    // else{
+
+    // }
   }
 }
