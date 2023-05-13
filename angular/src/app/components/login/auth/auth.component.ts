@@ -6,7 +6,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -23,43 +24,62 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./auth.component.scss']
 })
 export class AuthComponent {
-  email!: string;
-  password!: string;
-  username: string = "usernametest";
   hide: boolean = true;
+
+  username: string = "usernametest";
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private authService: AuthentificationService, private injector: Injector) { }
+  info$: Subject<any> = new Subject<Event>();
 
-  public httpHeaders: HttpHeaders = new HttpHeaders();
-
-  onLogin() {
-    this.authService.login(this.email, this.password).subscribe(
-      success => {
-        console.log('Anmeldung erfolgreich!');
-      },
-      error => {
-        console.error('Fehler bei der Anmeldung:', error);
-      }
-    );
+  constructor(private authService: AuthentificationService, private injector: Injector) {
+    this.info$.pipe(
+      switchMap((event) => {
+        return this.infoCall()
+      }),
+      ).subscribe({
+        next: (data) => { console.log(data)}
+      });
   }
 
-  onRegister() {
-    if(this.passwordFormControl.value != null && this.emailFormControl.value != null){
-      this.email = this.emailFormControl.value;
-      this.password = this.passwordFormControl.value;
+  infoCall(): Observable<any> {
+    let obsFromService =  this.authService.info("test");
+
+    obsFromService.subscribe({
+      next: (data) => { console.log(data)}
+    });
+
+    return obsFromService;
+  }
+
+  onInfo(){
+    this.info$.next(event);
+  }
+
+
+
+
+
+
+  onLogin():void {
+    if(this.passwordFormControl.value == null || this.emailFormControl.value == null){
+      console.log("email or password is null");
+      return;
     }
-    this.authService.register(this.username, this.email, this.password)
-      .subscribe({
-        next: (data) => { console.log(data)
-      }
+    this.authService.login(this.emailFormControl.value, this.passwordFormControl.value).subscribe({
+      next: (data) => { console.log(data)}
     });
   }
 
-  onInfo():void {
-    this.authService.info("test").subscribe({
-      next: (data) => { console.log(data)}
+  onRegister():void {
+    if(this.passwordFormControl.value == null || this.emailFormControl.value == null){
+      console.log("email or password is null");
+      return;
+    }
+    this.authService.register(this.username, this.emailFormControl.value, this.passwordFormControl.value)
+      .subscribe({
+        next: (data) => { console.log(data)
+      }
     });
   }
 }
