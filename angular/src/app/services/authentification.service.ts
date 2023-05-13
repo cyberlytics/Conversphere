@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthUser } from '../interfaces/auth-user';
 
@@ -8,13 +8,21 @@ import { AuthUser } from '../interfaces/auth-user';
 })
 export class AuthentificationService {
   private baseUrl = 'http://localhost:8080/auth';
-  public httpHeaders: HttpHeaders = new HttpHeaders();
 
   constructor(private http: HttpClient) { }
 
-  info(request: string): Observable<any> {
+  httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+  info(request: any): Observable<any> {
     const url = `http://localhost:8080/info`;
-    return this.http.get(url, {headers: this.httpHeaders});
+    return this.http.get(url, this.httpOptions).pipe(
+      catchError((err) => { console.error(err); throw err; }),
+//    map((res) => { console.log(res); return res; })
+    );
   }
 
   register(username: string, email: string, password: string): Observable<any> {
@@ -32,16 +40,5 @@ export class AuthentificationService {
   login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/login`;
     return this.http.post(url, { email, password });
-  }
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
-  postBlog(blog: any) {
-    let url = "http://localhost:8080/blogs";
-    return this.http.get(url, this.httpOptions);
   }
 }

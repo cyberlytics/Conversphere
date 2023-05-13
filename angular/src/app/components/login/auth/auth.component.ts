@@ -1,4 +1,4 @@
-import { Component, Injector } from '@angular/core';
+import { Component, Injector, effect, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -57,20 +57,9 @@ export class AuthComponent {
     });
   }
 
-  onInfo() {
-    const url = `http://localhost:8080/info`;
-
-    this.authService.postBlog("test").subscribe({
-      error: (err) => { console.error(err) },
-      complete: () => { }
+  onInfo():void {
+    this.authService.info("test").subscribe({
+      next: (data) => { console.log(data)}
     });
   }
-
-  // readonly count = signal(0);
-
-  // initializeLogging(): void {
-  //   effect(() => {
-  //     console.log(`The count is: ${this.count()})`);
-  //   }, {injector: this.injector});
-  // }
 }
