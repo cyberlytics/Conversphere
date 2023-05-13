@@ -1,0 +1,17 @@
+<form>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" [formControl]="emailFormControl"/>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is required
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('email')">
+      Invalid email format
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Passwort</mat-label>
+    <input matInput [type]="hide ? 'password': 'text'"/>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="onLogin()">Anmelden</button>
+</form>
