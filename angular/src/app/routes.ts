@@ -18,13 +18,14 @@ export const APP_ROUTES: Routes = [
     {
         path: 'lebenslauf',
         component: LebenslaufComponent
-    },{
+    },
+    {
         path: 'login',
         component: LoginComponent
     },
     {
-        path: '', 
-        redirectTo: 'start', 
+        path: '',
+        redirectTo: 'start',
         pathMatch: 'full'
     },
     {

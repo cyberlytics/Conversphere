@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-auth',
@@ -28,7 +30,9 @@ export class AuthComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  constructor(private authService: AuthentificationService) { }
+  constructor(private authService: AuthentificationService, private injector: Injector) { }
+
+  public httpHeaders: HttpHeaders = new HttpHeaders();
 
   onLogin() {
     this.authService.login(this.email, this.password).subscribe(
@@ -46,20 +50,27 @@ export class AuthComponent {
       this.email = this.emailFormControl.value;
       this.password = this.passwordFormControl.value;
     }
-     this.authService.register(this.username, this.email, this.password);
-    //.subscribe(
-    //     success => {
-    //       console.log('Registrierung erfolgreich!');
-    //     },
-    //     error => {
-    //       console.error('Fehler bei der Registrierung:', error);
-    //     }
-    //   );
-    // if(!this.email || !this.password || !this.username) {
-    //   console.log('Bitte alle Felder ausfüllen!');
-    // }
-    // else{
-
-    // }
+    this.authService.register(this.username, this.email, this.password)
+      .subscribe({
+        next: (data) => { console.log(data)
+      }
+    });
   }
+
+  onInfo() {
+    const url = `http://localhost:8080/info`;
+
+    this.authService.postBlog("test").subscribe({
+      error: (err) => { console.error(err) },
+      complete: () => { }
+    });
+  }
+
+  // readonly count = signal(0);
+
+  // initializeLogging(): void {
+  //   effect(() => {
+  //     console.log(`The count is: ${this.count()})`);
+  //   }, {injector: this.injector});
+  // }
 }
