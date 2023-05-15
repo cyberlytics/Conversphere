@@ -13,12 +13,12 @@
     <mat-label>Passwort</mat-label>
     <input matInput [type]="hide ? 'password': 'text'" [formControl]="passwordFormControl"/>
   </mat-form-field>
-
+</form>
+<div>
   <button mat-raised-button color="primary" (click)="onLogin()">Anmelden</button>
-
   <h1>Noch keinen Account?</h1>
+</div>
+<div>
   <button mat-raised-button color="primary" (click)="onRegister()">Registrieren</button>
   <button mat-raised-button color="primary" (click)="onInfo()">Info</button>
-</form>
-
-<button  (click)="onInfo()">Info2</button>
+</div>

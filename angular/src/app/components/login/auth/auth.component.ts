@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
 import { HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, switchMap } from 'rxjs';
+import { Observable, Subject, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -30,11 +30,11 @@ export class AuthComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
-  info$: Subject<any> = new Subject<Event>();
+  info$: Subject<any> = new Subject<void>();
 
   constructor(private authService: AuthentificationService, private injector: Injector) {
     this.info$.pipe(
-      switchMap((event) => {
+      switchMap(() => {
         return this.infoCall()
       }),
       ).subscribe({
@@ -46,14 +46,14 @@ export class AuthComponent {
     let obsFromService =  this.authService.info("test");
 
     obsFromService.subscribe({
-      next: (data) => { console.log(data)}
+      next: (data: string) => { console.log(data)}
     });
 
     return obsFromService;
   }
 
   onInfo(){
-    this.info$.next(event);
+    this.info$.next(undefined);
   }
 
 
