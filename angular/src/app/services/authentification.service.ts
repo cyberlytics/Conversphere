@@ -21,7 +21,6 @@ export class AuthentificationService {
     const url = `http://localhost:8080/info`;
     return this.http.get(url, this.httpOptions).pipe(
       catchError((err) => { console.error(err); throw err; }),
-//    map((res) => { console.log(res); return res; })
     );
   }
 
@@ -39,6 +38,10 @@ export class AuthentificationService {
 
   login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/login`;
-    return this.http.post(url, { email, password });
+    return this.http.post(url, {
+      "email": email,
+      "password": password
+      }
+    );
   }
 }

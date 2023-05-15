@@ -57,10 +57,6 @@ export class AuthComponent {
   }
 
 
-
-
-
-
   onLogin():void {
     if(this.passwordFormControl.value == null || this.emailFormControl.value == null){
       console.log("email or password is null");
