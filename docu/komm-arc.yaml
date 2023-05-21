@@ -37,7 +37,7 @@ paths:
                   $ref: '#/components/schemas/Room'
         "500":
           description: Internal server error
-  /server/room/{room_id}/message:
+  /server/rooms/{room_id}/messages:
     get:
       tags:
         - server
@@ -257,6 +257,15 @@ components:
         description:
           type: string
           example: 'Chat with other people about web applications.'
+        users_ids:
+          type: array
+          items:
+            type: object
+            properties:
+              users_id:
+                type: string
+                format: uuid
+
       xml:
         name: room 
     User:
@@ -280,6 +289,9 @@ components:
           type: string
           example: 'Hi, what''s up?'
         user_id:
+          type: string
+          format: uuid
+        room_id:
           type: string
           format: uuid
         visibility:
