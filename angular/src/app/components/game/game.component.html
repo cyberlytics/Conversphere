@@ -6,13 +6,18 @@
 	</div>
 	<div class="body">
 		<strong>Conversphere Chatroom</strong>
-		<p class="Room-ID">Room-ID:XXXX</p>
+		<div class="Information">
+			<p class="Room-ID">Room-ID:XXXX</p>
+			<mat-slider class="Slider" min="1" max="3" step="1">
+				<input matSliderThumb>
+			  </mat-slider>
+		</div>
 		<p></p>
 		<textarea class="Chat" name="text"></textarea>
 		<p></p>
 	<div class="Chatinput">
 		<input class="Textinput" type="text" width="auto" name="getText" placeholder="Enter your text here">
-		<button class="Button" mat-raised-button>Primary</button>
+		<button class="Button" mat-raised-button>Send</button>
 	</div>
 	</div>
 </div>
