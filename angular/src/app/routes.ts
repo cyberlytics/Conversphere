@@ -21,6 +21,9 @@ export const APP_ROUTES: Routes = [
     },{
         path: 'login',
         component: LoginComponent
+    },{
+        path: 'gamepage',
+        component: GameComponent
     },
     {
         path: '', 
