@@ -2,12 +2,12 @@
   "name": "express",
   "version": "1.0.0",
   "description": "",
-  "main": "server.ts",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
     "build": "npx tsc",
-    "start-build": "node dist/server.js",
-    "dev": "concurrently --kill-others \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
+    "start-build": "node dist/index.js",
+    "dev": "concurrently --kill-others \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "start": "nodemon"
   },
   "keywords": [],
