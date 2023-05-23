@@ -6,14 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-startpage',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    MatButtonModule
-  ],
+  imports: [CommonModule, RouterLink, MatButtonModule],
   templateUrl: './startpage.component.html',
-  styleUrls: ['./startpage.component.scss']
+  styleUrls: ['./startpage.component.scss'],
 })
-export class StartpageComponent {
-
-}
+export class StartpageComponent {}

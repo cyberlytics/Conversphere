@@ -1,6 +1,6 @@
-interface Person{
-    forename: String;
-    surename: String;
-    dateOfBirth: Date;
-    address: Address;
+interface Person {
+  forename: String;
+  surename: String;
+  dateOfBirth: Date;
+  address: Address;
 }

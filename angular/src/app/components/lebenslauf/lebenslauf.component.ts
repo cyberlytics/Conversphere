@@ -7,9 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./lebenslauf.component.scss'],
 })
 export class LebenslaufComponent implements OnInit {
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

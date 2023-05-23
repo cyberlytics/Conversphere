@@ -7,15 +7,11 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [
-    CommonModule,
-    AuthComponent,
-    MatButtonModule
-  ],
+  imports: [CommonModule, AuthComponent, MatButtonModule],
   providers: [AuthentificationService],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  constructor(private authService: AuthentificationService) { }
+  constructor(private authService: AuthentificationService) {}
 }

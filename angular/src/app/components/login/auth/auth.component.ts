@@ -17,65 +17,92 @@ import { Observable, Subject, map, switchMap } from 'rxjs';
     MatInputModule,
     MatButtonModule,
     MatFormFieldModule,
-    ReactiveFormsModule
-    ],
+    ReactiveFormsModule,
+  ],
   providers: [AuthentificationService],
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
   hide: boolean = true;
 
-  username: string = "usernametest";
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  username: string = 'usernametest';
+  emailFormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
   info$: Subject<any> = new Subject<void>();
 
-  constructor(private authService: AuthentificationService, private injector: Injector) {
-    this.info$.pipe(
-      switchMap(() => {
-        return this.infoCall()
-      }),
-      ).subscribe({
-        next: (data) => { console.log(data)}
+  constructor(
+    private authService: AuthentificationService,
+    private injector: Injector
+  ) {
+    this.info$
+      .pipe(
+        switchMap(() => {
+          return this.infoCall();
+        })
+      )
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
       });
   }
 
   infoCall(): Observable<any> {
-    let obsFromService =  this.authService.info("test");
+    let obsFromService = this.authService.info('test');
 
     obsFromService.subscribe({
-      next: (data: string) => { console.log(data)}
+      next: (data: string) => {
+        console.log(data);
+      },
     });
 
     return obsFromService;
   }
 
-  onInfo(){
+  onInfo() {
     this.info$.next(undefined);
   }
 
-
-  onLogin():void {
-    if(this.passwordFormControl.value == null || this.emailFormControl.value == null){
-      console.log("email or password is null");
+  onLogin(): void {
+    if (
+      this.passwordFormControl.value == null ||
+      this.emailFormControl.value == null
+    ) {
+      console.log('email or password is null');
       return;
     }
-    this.authService.login(this.emailFormControl.value, this.passwordFormControl.value).subscribe({
-      next: (data) => { console.log(data)}
-    });
+    this.authService
+      .login(this.emailFormControl.value, this.passwordFormControl.value)
+      .subscribe({
+        next: (data) => {
+          console.log(data);
+        },
+      });
   }
 
-  onRegister():void {
-    if(this.passwordFormControl.value == null || this.emailFormControl.value == null){
-      console.log("email or password is null");
+  onRegister(): void {
+    if (
+      this.passwordFormControl.value == null ||
+      this.emailFormControl.value == null
+    ) {
+      console.log('email or password is null');
       return;
     }
-    this.authService.register(this.username, this.emailFormControl.value, this.passwordFormControl.value)
+    this.authService
+      .register(
+        this.username,
+        this.emailFormControl.value,
+        this.passwordFormControl.value
+      )
       .subscribe({
-        next: (data) => { console.log(data)
-      }
-    });
+        next: (data) => {
+          console.log(data);
+        },
+      });
   }
 }
