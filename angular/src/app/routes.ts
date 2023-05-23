@@ -21,7 +21,8 @@ export const APP_ROUTES: Routes = [
     {
         path: 'lebenslauf',
         component: LebenslaufComponent
-    },{
+    },
+    {
         path: 'login',
         component: LoginComponent
     },{
@@ -33,8 +34,8 @@ export const APP_ROUTES: Routes = [
         component: ChatroomComponent
     },
     {
-        path: '', 
-        redirectTo: 'start', 
+        path: '',
+        redirectTo: 'start',
         pathMatch: 'full'
     },
     {
