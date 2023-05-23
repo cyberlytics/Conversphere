@@ -1,6 +1,7 @@
-interface Person{
-    forename: String;
-    surename: String;
-    dateOfBirth: Date;
-    address: Address;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface Person {
+  forename: string;
+  surename: string;
+  dateOfBirth: Date;
+  address: Address;
 }

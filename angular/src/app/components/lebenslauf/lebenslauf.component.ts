@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-lebenslauf',
@@ -7,9 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./lebenslauf.component.scss'],
 })
 export class LebenslaufComponent implements OnInit {
-  constructor() { }
-
   ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
-
 }

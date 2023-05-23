@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,11 +19,11 @@ import { GameComponent } from '../game/game.component';
     MatIconModule,
     MatToolbarModule,
     RouterLink,
-    GameComponent
+    GameComponent,
   ],
   templateUrl: './chatroom.component.html',
-  styleUrls: ['./chatroom.component.scss']
+  styleUrls: ['./chatroom.component.scss'],
 })
 export class ChatroomComponent {
-  opened=false;
+  opened = false;
 }
