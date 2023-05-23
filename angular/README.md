@@ -29,3 +29,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## ESLint and Pretier
+Run `npx eslint .` to check the code with eslint.
+Run `npx eslint . --fix` to format the code with eslint.
+
+Run `npx prettier .` to check the code with prettier.
+Run `npx prettier --write .` to format the code with prettier.  
