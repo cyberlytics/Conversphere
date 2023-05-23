@@ -31,5 +31,6 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
 ## ESLint and Pretier
+
 Run `npm run lint` to lint the code with eslint.
 Run `npm run format` to format the code with prettier.

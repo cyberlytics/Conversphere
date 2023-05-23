@@ -3,6 +3,7 @@ import { StartpageComponent } from './components/startpage/startpage.component';
 import { ErrorComponent } from './components/error/error.component';
 import { LebenslaufComponent } from './components/lebenslauf/lebenslauf.component';
 import { LoginComponent } from './components/login/login.component';
+import { ChatroomComponent } from './components/chatroom/chatroom.component';
 
 export const APP_ROUTES: Routes = [
   {
@@ -20,6 +21,14 @@ export const APP_ROUTES: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'chatroom',
+    component: ChatroomComponent,
+  },
+  {
+    path: '',
+    component: ChatroomComponent,
   },
   {
     path: '',
