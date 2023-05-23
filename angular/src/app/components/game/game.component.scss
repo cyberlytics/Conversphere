@@ -6,30 +6,16 @@ strong{
     height: 3em;
     margin: 1em;
 }
-.background{
-    background-color: gray;
-    display: grid;
-    grid-template-rows: min-content;
-    overflow: hidden;
-    height: 100vh;
-    flex-direction: row;
-}
+
 .Chat{
-    height: 20%;
-    width: 70%;
-    margin-left: 5em;
-}
-.header{
-    height: 100px;
-    button{
-        color: black;
-        background: orange;
-        margin: 1em;
-    }
+    height: 20vh;
+    width: 70vw;
+    margin: 1em 0px 0px 5em;
 }
 .body{
     display: flex;
     flex-direction: column;
+    height: 100vh;
 }
 .Chatinput{
     display: flex;
@@ -39,18 +25,20 @@ strong{
         background-color: orange;
         margin-left: 1em;
     }
+    margin: 1em 0px 0px 5em;
+    justify-content: space-between;
+    width: 70vw;
 }
 .Textinput{
     height: 30px;
-    width: min(20%,300px);
-    margin-left: 5em;
-}
-.Room-ID{
-    margin-left: 5em;
+    width: min(40vw,300px);
 }
 .Information{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    margin: 0px 0px 0px 5em;
+    width: 70vw;
 }
 .Slider{
     margin-left: 200px;
