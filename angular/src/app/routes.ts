@@ -6,6 +6,7 @@ import { LebenslaufComponent } from './components/lebenslauf/lebenslauf.componen
 import { AuthComponent } from './components/login/auth/auth.component';
 import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
+import { SidemenuComponent } from './components/sidemenu/sidemenu.component';
 
 export const APP_ROUTES: Routes = [
     {
@@ -25,6 +26,10 @@ export const APP_ROUTES: Routes = [
     },{
         path: 'gamepage',
         component: GameComponent
+    },
+    {
+        path: 'sidemenu',
+        component: SidemenuComponent
     },
     {
         path: '', 
