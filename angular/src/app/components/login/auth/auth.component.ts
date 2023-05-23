@@ -1,4 +1,4 @@
-import { Component, Injector, effect, signal } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,8 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
-import { HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, map, switchMap } from 'rxjs';
+import { Observable, Subject, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -24,15 +23,16 @@ import { Observable, Subject, map, switchMap } from 'rxjs';
   styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
-  hide: boolean = true;
+  hide = true;
 
-  username: string = 'usernametest';
+  username = 'usernametest';
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
   ]);
   passwordFormControl = new FormControl('', [Validators.required]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   info$: Subject<any> = new Subject<void>();
 
   constructor(
@@ -52,8 +52,9 @@ export class AuthComponent {
       });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   infoCall(): Observable<any> {
-    let obsFromService = this.authService.info('test');
+    const obsFromService = this.authService.info();
 
     obsFromService.subscribe({
       next: (data: string) => {

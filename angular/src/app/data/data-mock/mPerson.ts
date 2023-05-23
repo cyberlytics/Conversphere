@@ -1,6 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class mLukas implements Person {
-  forename: String = 'Lukas';
-  surename: String = 'Feil';
+  forename = 'Lukas';
+  surename = 'Feil';
   dateOfBirth: Date = new Date(1997, 6, 21);
   address: Address = {
     street: 'Ammermühlweg',

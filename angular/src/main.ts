@@ -5,7 +5,6 @@ import { bootstrapApplication } from '@angular/platform-browser';
 import {
   PreloadAllModules,
   provideRouter,
-  withDebugTracing,
   withPreloading,
 } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';

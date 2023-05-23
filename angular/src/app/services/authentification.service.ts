@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthUser } from '../interfaces/auth-user';
 
@@ -17,7 +17,8 @@ export class AuthentificationService {
     }),
   };
 
-  info(request: any): Observable<any> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  info(): Observable<any> {
     const url = `http://localhost:8080/info`;
     return this.http.get(url, this.httpOptions).pipe(
       catchError((err) => {
@@ -27,6 +28,7 @@ export class AuthentificationService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register(username: string, email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/register`;
     console.log(username, email, password);
@@ -37,6 +39,7 @@ export class AuthentificationService {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   login(email: string, password: string): Observable<any> {
     const url = `${this.baseUrl}/login`;
     return this.http.post(url, {
