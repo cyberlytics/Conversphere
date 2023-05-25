@@ -4,13 +4,22 @@ strong {
   font-size: 3em;
   line-height: 3em;
   height: 3em;
-  margin: 1em;
+  margin: 1em 0px 0px 5em;
 }
-
+.Spielfeld{
+  background-color: cornflowerblue; 
+  width: 70vw; 
+  height: 30vh; 
+  margin: 1em 0px 0px 5em;
+}
 .Chat {
   height: 20vh;
   width: 70vw;
   margin: 1em 0px 0px 5em;
+}
+.center{
+  display: flex;
+  justify-content: center;
 }
 .body {
   display: flex;

@@ -1,4 +1,4 @@
-<div>
+<div class="center">
   <div class="body">
     <strong>Conversphere Chatroom</strong>
     <div class="Information">
@@ -7,6 +7,11 @@
         <input matSliderThumb />
       </mat-slider>
     </div>
+    <div id="Spielfeld" class="Spielfeld" (click)="onClickAtDiv($event)" >
+      <div id="Spieler" style="background-color: red; width: 5px; height: 5px;">
+        
+      </div>
+  </div>
     <textarea class="Chat" name="text"></textarea>
     <div class="Chatinput">
       <input
