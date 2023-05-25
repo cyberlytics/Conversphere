@@ -1,0 +1,54 @@
+strong {
+  display: flex;
+  justify-content: center;
+  font-size: 3em;
+  line-height: 3em;
+  height: 3em;
+  margin: 1em 0px 0px 5em;
+}
+.Spielfeld{
+  background-color: cornflowerblue;
+  width: 70vw;
+  height: 30vh;
+  margin: 1em 0px 0px 5em;
+}
+.Chat {
+  height: 20vh;
+  width: 70vw;
+  margin: 1em 0px 0px 5em;
+}
+.center{
+  display: flex;
+  justify-content: center;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.Chatinput {
+  display: flex;
+  flex-direction: row;
+  button {
+    color: black;
+    background-color: orange;
+    margin-left: 1em;
+  }
+  margin: 1em 0px 0px 5em;
+  justify-content: space-between;
+  width: 70vw;
+}
+.Textinput {
+  height: 30px;
+  width: min(40vw, 300px);
+}
+.Information {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px 0px 0px 5em;
+  width: 70vw;
+}
+.Slider {
+  margin-left: 200px;
+}

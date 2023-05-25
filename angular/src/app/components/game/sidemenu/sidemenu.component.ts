@@ -1,15 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
-import { GameComponent } from '../game/game.component';
+import { GameComponent } from '../game.component';
 
 @Component({
-  selector: 'app-chatroom',
+  selector: 'app-sidemenu',
   standalone: true,
   imports: [
     CommonModule,
@@ -19,11 +19,10 @@ import { GameComponent } from '../game/game.component';
     MatIconModule,
     MatToolbarModule,
     RouterLink,
-    GameComponent,
-  ],
-  templateUrl: './chatroom.component.html',
-  styleUrls: ['./chatroom.component.scss'],
+    GameComponent,],
+  templateUrl: './sidemenu.component.html',
+  styleUrls: ['./sidemenu.component.scss'],
 })
-export class ChatroomComponent {
-  opened = false;
+export class SidemenuComponent {
+  public opened = false;
 }

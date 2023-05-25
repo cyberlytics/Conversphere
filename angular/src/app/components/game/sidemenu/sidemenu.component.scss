@@ -13,6 +13,7 @@ mat-toolbar {
 .sidemenu {
   display: flex;
   flex-direction: column;
+  width: max(30vw, 300px );
   button {
     color: black;
     background: orange;

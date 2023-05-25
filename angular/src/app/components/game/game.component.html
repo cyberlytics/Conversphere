@@ -1,3 +1,4 @@
+<app-sidemenu></app-sidemenu>
 <div class="center">
   <div class="body">
     <strong>Conversphere Chatroom</strong>
@@ -9,19 +10,8 @@
     </div>
     <div id="Spielfeld" class="Spielfeld" (click)="onClickAtDiv($event)" >
       <div id="Spieler" style="background-color: red; width: 5px; height: 5px;">
-        
       </div>
-  </div>
-    <textarea class="Chat" name="text"></textarea>
-    <div class="Chatinput">
-      <input
-        class="Textinput"
-        type="text"
-        width="auto"
-        name="getText"
-        placeholder="Enter your text here"
-      />
-      <button class="Button" mat-raised-button>Send</button>
     </div>
+    <app-chatroom></app-chatroom>
   </div>
 </div>
