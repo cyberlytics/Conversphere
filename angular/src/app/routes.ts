@@ -5,6 +5,7 @@ import { LebenslaufComponent } from './components/lebenslauf/lebenslauf.componen
 import { LoginComponent } from './components/login/login.component';
 import { ChatroomComponent } from './components/chatroom/chatroom.component';
 import { Component } from '@angular/core';
+import { GameComponent } from './components/game/game.component';
 
 export const APP_ROUTES: Routes = [
   {
@@ -16,8 +17,8 @@ export const APP_ROUTES: Routes = [
     component: ErrorComponent,
   },
   {
-    path: 'lebenslauf',
-    component: LebenslaufComponent,
+    path: 'game',
+    component: GameComponent,
   },
   {
     path: 'startpage',
@@ -29,10 +30,6 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'chatroom',
-    component: ChatroomComponent,
-  },
-  {
-    path: '',
     component: ChatroomComponent,
   },
   {
