@@ -5,6 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { ChatroomComponent } from './chatroom/chatroom.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -15,37 +18,44 @@ import { ChatroomComponent } from './chatroom/chatroom.component';
     MatSliderModule,
     SidemenuComponent,
     ChatroomComponent,
+    MatSidenavModule,
+    MatToolbarModule,
   ],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent
 {
-  rect: DOMRect | undefined;
-  player: HTMLElement | null;
-  constructor()
-  {
-    this.rect = document.getElementById("Spielfeld")?.getBoundingClientRect();
+  public opened = false;
+  player: HTMLElement | null | undefined;
+
+  ngAfterInit(){
     this.player = document.getElementById("Spieler");
   }
 
   onClickAtDiv(e: MouseEvent)
   {
-    if(this.rect == null || this.player == null)
+    this.player = document.getElementById("Spieler");
+    if(this.player == null)
     {
-      console.log("rect is null, gamefield not found in DOM");
+      console.log("player not found in DOM");
       return;
     }
-    console.log(e.clientX - this.rect.left);
-    console.log(e.clientY - this.rect.top);
-
+    const menubarHoehe = document.getElementById("gamefield")?.getBoundingClientRect().top;
     this.player.style.position="absolute";
     this.player.style.left=(e.clientX)+'px';
-    this.player.style.top=(e.clientY)+'px';
+
+    if(menubarHoehe != null){
+      this.player.style.top=(e.clientY - menubarHoehe  +'px');
+    }else{
+      this.player.style.top=(e.clientY +'px');
+    }
+    //save player position in %
+    //send player position to server
   }
 
   @HostListener('window:resize', ['$event']) onResize()
   {
-    this.rect = document.getElementById("Spielfeld")?.getBoundingClientRect();
+    //use player position in % to reset after window resize
   }
 }

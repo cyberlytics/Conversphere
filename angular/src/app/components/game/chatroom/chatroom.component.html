@@ -1,13 +1,12 @@
-<div>
-  <textarea class="Chat" name="text"></textarea>
-    <div class="Chatinput">
-      <input
-        class="Textinput"
-        type="text"
-        width="auto"
-        name="getText"
-        placeholder="Enter your text here"
-      />
-    <button class="Button" mat-raised-button>Send</button>
+<div class="chatroom">
+  <div style="width: 70vw">
+    <div class="textarea" name="text"></div>
+    <div class="inputArea">
+        <mat-form-field>
+           <input matInput class="textinput" name="getText" placeholder="Enter your text here"/>
+        </mat-form-field>
+
+      <button class="buttonColor" mat-raised-button >Send</button>
+    </div>
   </div>
 </div>
