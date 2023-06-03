@@ -5,27 +5,43 @@
     </button>
   </mat-toolbar-row>
 </mat-toolbar>
-
-<mat-drawer-container>
-  <div class="body" id="gamefield">
-    <div class="center game">
-      <div class="title">Conversphere Chatroom</div>
-      <div class="information">
-        <p>Room-ID:XXXX</p>
-        <mat-slider class="slider" min="1" max="3" step="1">
-          <input matSliderThumb />
-        </mat-slider>
-      </div>
-      <div id="Spielfeld" class="spielfeld" (click)="onClickAtDiv($event)" >
-        <div id="Spieler" class="spieler">
-        </div>
-      </div>
-      <app-chatroom></app-chatroom>
-    </div>
+<mat-sidenav-container>
+  <mat-sidenav mode="over" [(opened)]="opened">
+  <div class="sidemenu">
+    <button
+      mat-raised-button
+      routerLink="/start"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Start Page
+    </button>
+    <button
+      mat-raised-button
+      routerLink="/login"
+      routerLinkActive="active"
+      ariaCurrentWhenActive="page"
+    >
+      Login Page
+    </button>
   </div>
-
-</mat-drawer-container>
-
-<mat-sidenav mode="over" [(opened)]="opened">
-  <app-sidemenu></app-sidemenu>
 </mat-sidenav>
+  <mat-sidenav-content class="sidemenu">
+    <div class="body" id="gamefield">
+      <div class="center game">
+        <div class="title">Conversphere Chatroom</div>
+        <div class="information">
+          <p>Room-ID:XXXX</p>
+          <mat-slider class="slider" min="1" max="3" step="1">
+            <input matSliderThumb />
+          </mat-slider>
+        </div>
+        <div id="Spielfeld" class="spielfeld" (click)="onClickAtDiv($event)" >
+          <div id="Spieler" class="spieler">
+          </div>
+        </div>
+        <app-chatroom></app-chatroom>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

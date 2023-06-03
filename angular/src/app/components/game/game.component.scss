@@ -44,3 +44,12 @@ mat-toolbar {
   width: 5px;
   height: 5px;
 }
+.sidemenu {
+  display: flex;
+  flex-direction: column;
+  button {
+    color: black;
+    background: orange;
+    margin: 1em;
+  }
+}
