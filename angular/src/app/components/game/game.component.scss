@@ -1,45 +1,55 @@
-strong {
+mat-sidenav {
+  width: 20em;
+  height: 100%;
+}
+mat-sidenav-container {
+  height: 95vh;
+}
+mat-toolbar {
+  background-color: orange;
+  height: 5vh;
+}
+.body {
+  background-color: gray;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  height: 95vh;
+}
+.game{
+  margin-left: 5em;
+  margin-right: 5em;
+}
+.title {
   font-size: 3em;
   line-height: 3em;
   height: 3em;
-  margin: 1em;
+  font-weight: bold;
 }
+.spielfeld{
+  background-color: cornflowerblue;
+  height: 30vh;
+}
+.information {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
-.Chat {
-  height: 20vh;
-  width: 70vw;
-  margin: 1em 0px 0px 5em;
+  .slider {
+    margin-left: 200px;
+  }
 }
-.body {
+.spieler{
+  background-color: red;
+  width: 5px;
+  height: 5px;
+}
+.sidemenu {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-}
-.Chatinput {
-  display: flex;
-  flex-direction: row;
   button {
     color: black;
-    background-color: orange;
-    margin-left: 1em;
+    background: orange;
+    margin: 1em;
   }
-  margin: 1em 0px 0px 5em;
-  justify-content: space-between;
-  width: 70vw;
-}
-.Textinput {
-  height: 30px;
-  width: min(40vw, 300px);
-}
-.Information {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0px 0px 0px 5em;
-  width: 70vw;
-}
-.Slider {
-  margin-left: 200px;
 }

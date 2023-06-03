@@ -1,0 +1,22 @@
+.chatroom{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.textarea {
+  height: 20vh;
+  background-color: blue;
+  margin-top: 1em;
+}
+.inputArea {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+.textinput {
+  width: min(40vw, 300px);
+}
+.slider {
+  margin-left: 200px;
+}
