@@ -42,9 +42,14 @@ channels:
     parameters:
       roomId:
         $ref: '#/components/parameters/roomId'
+    subscribe:
+      summary: Information about leaving the room.
+      operationId: leaveRoom
+      message:
+        $ref: '#/components/messages/leaveRoom'
     publish:
       summary: Information about a new user joined the room.
-      operationId: userJoined
+      operationId: userInformation
       message:
         oneOf:
           - $ref: '#/components/messages/userJoined'
@@ -77,6 +82,13 @@ components:
       name: userLeft
       title: User left
       summary: Information about a user disconnected from the chatroom.
+      payload:
+        $ref: '#/components/schemas/User'
+    leaveRoom:
+      messageId: leaveRoom
+      name: leaveRoom
+      title: Leave room
+      summary: Information about leaving the room
       payload:
         $ref: '#/components/schemas/User'
   schemas:
