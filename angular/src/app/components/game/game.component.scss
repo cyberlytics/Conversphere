@@ -21,7 +21,7 @@ mat-toolbar {
   margin-right: 5em;
 }
 .title {
-  font-size: 3em;
+  font-size: 3vw;
   line-height: 3em;
   height: 3em;
   font-weight: bold;
@@ -34,6 +34,7 @@ mat-toolbar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  font-size: 1vw;
 
   .slider {
     margin-left: 200px;
