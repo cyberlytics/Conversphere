@@ -5,16 +5,9 @@ info:
   version: 0.0.1
 servers:
   - url: localhost:8080
-tags:
-  - name: server
-    description: Communications from Front-End to Server
-  - name: Client
-    description: Communications from Server to Front-End
 paths:
-  /server/rooms:
+  /api/rooms:
     get:
-      tags:
-        - server
       summary: Retrieves all rooms
       description: Retrieves a list with all currently open rooms.
       operationId: getRooms
@@ -29,36 +22,8 @@ paths:
                   $ref: '#/components/schemas/Room'
         "500":
           description: Internal server error
-  /server/rooms/{room_id}/messages:
-    get:
-      tags:
-        - server
-      summary: Retrieves all messages for a room
-      description: Retrieves a list with all messages for the room.
-      operationId: getMessagesForRoom
-      parameters:
-        - name: room_id
-          in: path
-          description: Specifying the room
-          required: true
-          schema:
-            type: string
-            format: uuid
-      responses:
-        "200":
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Message'
-        "500":
-          description: Internal server error
-  /server/join:
+  /api/join:
     post:
-      tags:
-        - server
       summary: Join a room
       description: Join the given Chatroom with an specific nickname.
       operationId: joinRoom
@@ -88,142 +53,6 @@ paths:
           description: Username already in use in the requested chatroom.
         "500":
           description: Internal server error
-  /server/leave:
-    post:
-      tags:
-        - server
-      summary: Leave a room
-      description: Leave the given Chatroom for a user.
-      operationId: leaveRoom
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                room_id:
-                  type: string
-                  format: uuid
-                user_id:
-                  type: string
-                  format: uuid
-      responses:
-        "200":
-          description: Room left
-        "400":
-          description: Bad request. Invalid request-body.
-        "409":
-          description: The user is not registered in the given chatroom.
-        "500":
-          description: Internal server error
-  /client/rooms:
-    post:
-      tags:
-        - client
-      summary: Updates the client with the actual open rooms.
-      description: Update with a list containing the open chatrooms on the server.
-      requestBody:
-        required: true
-        content:
-          application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Room'
-      responses:
-        "200":
-          description: Rooms updated.
-        "400":
-          description: Bad request. Invalid request-body.
-        "500":
-          description: Internal server error.
-  /client/room/{room_id}/messages/{user_id}:
-    post:
-      tags:
-        - client
-      summary: Updates the the client with a new message.
-      description: Update a new message for a specific chatroom sent from one user.
-      parameters:
-        - name: room_id
-          in: path
-          description: Specifying the room
-          required: true
-          schema:
-            type: string
-            format: uuid
-        - name: user_id
-          in: path
-          description: Specifying the user sent the message
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Message'
-      responses:
-        "200":
-          description: Message processed.
-        "400":
-          description: Bad request. Invalid request-body.
-        "500":
-          description: Internal server error.
-  /client/join:
-    post:
-      tags:
-        - client
-      summary: Updates the client with a new user for a chat-room.
-      description: Provides information about a new user in a chatroom.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                room_id:
-                  type: string
-                  format: uuid
-                user_id:
-                  type: string
-                  format: uuid
-      responses:
-        "200": 
-          description: Message processed.
-        "400": 
-          description: Bad request. Invalid request-body.
-        "500": 
-          description: Internal server error
-  /client/leave:
-    post:
-      tags:
-        - client
-      summary: Updates the client with the exit of a client from a chatroom.
-      description: Provides information about the exit of a user in a chatroom.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                room_id:
-                  type: string
-                  format: uuid
-                user_id:
-                  type: string
-                  format: uuid
-      responses:
-        "200": 
-          description: Message processed.
-        "400": 
-          description: Bad request. Invalid request-body.
-        "500": 
-          description: Internal server error
 components:
   schemas:
     Room:
@@ -246,9 +75,6 @@ components:
               users_id:
                 type: string
                 format: uuid
-
-      xml:
-        name: room 
     User:
       type: object
       properties:
@@ -258,26 +84,3 @@ components:
         nickname:
           type: string
           example: 'Test user'
-      xml:
-        name: user
-    Message:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-        text:
-          type: string
-          example: 'Hi, what''s up?'
-        user_id:
-          type: string
-          format: uuid
-        room_id:
-          type: string
-          format: uuid
-        visibility:
-          type: integer
-          minimum: 0
-          maximum: 100
-      xml:
-        name: message

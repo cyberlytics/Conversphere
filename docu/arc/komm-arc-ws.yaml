@@ -1,0 +1,132 @@
+asyncapi: '2.6.0'
+id: http://conversphere.com
+tags:
+  - name: WebApp
+info:
+  title: Conversphere
+  version: '0.0.1'
+  description: TBD
+  contact:
+    name: Conversphere-Team
+    url: http://conversphere.com
+    email: info@converspere.com
+  license:
+    name: TBD
+servers:
+  test:
+    url: localhost:8080
+    protocol: ws
+    description: local test server
+    tags:
+      - name: "env:development"
+        description: This environment is meant for developers to run their own tests
+defaultContentType: application/json
+channels:
+  ws/rooms/{roomId}/messages:
+    description: The topic where information about messages may be produced and consumed.
+    parameters:
+      roomId:
+        $ref: '#/components/parameters/roomId'
+    publish:
+      summary: Information about a new message in the room.
+      operationId: receiveNewMessage
+      message:
+        $ref: '#/components/messages/receivedMessage'
+    subscribe:
+      summary: Inform about a new message in the room.
+      operationId: sendNewMessage
+      message:
+        $ref: '#/components/messages/sendMessage'
+  ws/rooms/{roomId}/users/join:
+    description: The topic where information about new users in the room may be consumed.
+    parameters:
+      roomId:
+        $ref: '#/components/parameters/roomId'
+    publish:
+      summary: Information about a new user joined the room.
+      operationId: userJoined
+      message:
+        $ref: '#/components/messages/userJoined'
+  ws/rooms/{roomId}/users/left:
+    description: The topic where information about a user leaving the chatroom may be consumed.
+    parameters:
+      roomId:
+        $ref: '#/components/parameters/roomId'
+    publish:
+      summary: Information about a user left the room.
+      operationId: userLeft
+      message: 
+        $ref: '#/components/messages/userLeft'
+components:
+  messages:
+    receivedMessage:
+      messageId: receivedMessage
+      name: receivedMessage
+      title: Received message
+      summary: Information about a new message in the chatroom
+      payload:
+        $ref: '#/components/schemas/Message'
+    sendMessage:
+      messageId: sendMessage
+      name: sendMessage
+      title: Send Message
+      summary: Information about a new message to send to the chatroom
+      payload:
+        $ref: '#/components/schemas/Message'
+    userJoined:
+      messageId: userJoined
+      name: userJoined
+      title: User joined
+      summary: Information about a new user joined the chatroom.
+      payload:
+        $ref: '#/components/schemas/User'
+    userLeft:
+      messageId: userLeft
+      name: userLeft
+      title: User left
+      summary: Information about a user disconnected from the chatroom.
+      payload:
+        $ref: '#/components/schemas/User'
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique id of the user 
+        nickname:
+          type: string
+          example: 'Test-User'
+          description: Nickname of the user.
+      additionalProperties: false
+    Message:
+      type: object
+      properties:
+        text:
+          type: string
+          example: 'Hi, what''s up?'
+          description: Content of the message
+        user_id:
+          type: string
+          format: uuid
+          description: Id of the sender
+      additionalProperties:
+        type: object
+        properties:
+          id:
+            type: string
+            fromat: uuid
+            description: Unique id of the message
+          visibility:
+            type: integer
+            minimum: 0
+            maximum: 100
+            description: Visibility of the message in percent
+        additionalProperties: false
+  parameters:
+    roomId:
+      description: The ID of the room.
+      schema:
+        type: string
+        format: uuid
