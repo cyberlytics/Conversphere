@@ -37,8 +37,8 @@ channels:
       operationId: sendNewMessage
       message:
         $ref: '#/components/messages/sendMessage'
-  ws/rooms/{roomId}/users/join:
-    description: The topic where information about new users in the room may be consumed.
+  ws/rooms/{roomId}/users:
+    description: The topic where information users in a specific room may be consumed.
     parameters:
       roomId:
         $ref: '#/components/parameters/roomId'
@@ -46,17 +46,9 @@ channels:
       summary: Information about a new user joined the room.
       operationId: userJoined
       message:
-        $ref: '#/components/messages/userJoined'
-  ws/rooms/{roomId}/users/left:
-    description: The topic where information about a user leaving the chatroom may be consumed.
-    parameters:
-      roomId:
-        $ref: '#/components/parameters/roomId'
-    publish:
-      summary: Information about a user left the room.
-      operationId: userLeft
-      message: 
-        $ref: '#/components/messages/userLeft'
+        oneOf:
+          - $ref: '#/components/messages/userJoined'
+          - $ref: '#/components/messages/userLeft'
 components:
   messages:
     receivedMessage:
