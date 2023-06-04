@@ -27,17 +27,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Room'
-            application/xml:
-              schema:
-                type: array
-                xml:
-                  wrapped: true
-                  name: rooms
-                items:
-                  $ref: '#/components/schemas/Room'
         "500":
           description: Internal server error
-  /server/room/{room_id}/message:
+  /server/rooms/{room_id}/messages:
     get:
       tags:
         - server
@@ -59,14 +51,6 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  $ref: '#/components/schemas/Message'
-            application/xml:
-              schema:
-                type: array
-                xml:
-                  wrapped: true
-                  name: messages
                 items:
                   $ref: '#/components/schemas/Message'
         "500":
@@ -96,9 +80,6 @@ paths:
           description: Room joined
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
               schema:
                 $ref: '#/components/schemas/User'
         "400":
@@ -257,6 +238,15 @@ components:
         description:
           type: string
           example: 'Chat with other people about web applications.'
+        users_ids:
+          type: array
+          items:
+            type: object
+            properties:
+              users_id:
+                type: string
+                format: uuid
+
       xml:
         name: room 
     User:
@@ -280,6 +270,9 @@ components:
           type: string
           example: 'Hi, what''s up?'
         user_id:
+          type: string
+          format: uuid
+        room_id:
           type: string
           format: uuid
         visibility:
