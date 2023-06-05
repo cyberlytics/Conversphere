@@ -1,0 +1,86 @@
+openapi: 3.0.3
+info:
+  title: Conversphere
+  description: TBD
+  version: 0.0.1
+servers:
+  - url: localhost:8080
+paths:
+  /api/rooms:
+    get:
+      summary: Retrieves all rooms
+      description: Retrieves a list with all currently open rooms.
+      operationId: getRooms
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        "500":
+          description: Internal server error
+  /api/join:
+    post:
+      summary: Join a room
+      description: Join the given Chatroom with an specific nickname.
+      operationId: joinRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                room_id:
+                  type: string
+                  format: uuid
+                nickname:
+                  type: string
+                  example: 'TestUser'
+      responses:
+        "200":
+          description: Room joined
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad request. Invalid request-body.
+        "423":
+          description: Username already in use in the requested chatroom.
+        "500":
+          description: Internal server error
+components:
+  schemas:
+    Room:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: 'Room 1'
+        description:
+          type: string
+          example: 'Chat with other people about web applications.'
+        users_ids:
+          type: array
+          items:
+            type: object
+            properties:
+              users_id:
+                type: string
+                format: uuid
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        nickname:
+          type: string
+          example: 'Test user'
