@@ -45,15 +45,26 @@ export class GameComponent
 
     if(menubarHoehe != null){
       this.player.style.top=(e.clientY - menubarHoehe +'px');
+      var prozentualplayerheight=((e.clientY - menubarHoehe)/innerHeight);
+      var prozentualplayerwidth=(e.clientX/innerWidth);
+
     }else{
       this.player.style.top=(e.clientY +'px');
     }
+  
     //save player position in %
     //send player position to server
   }
 
   @HostListener('window:resize', ['$event']) onResize()
   {
+    this.player=document.getElementById("Spieler");
+    if (this.player != null)
+    {
+      this.player.style.left=500+'px';
+      this.player.style.top=500+'px';
+    }
+    
     //use player position in % to reset after window resize
   }
 
