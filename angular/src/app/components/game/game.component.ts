@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
-import { SidemenuComponent } from './sidemenu/sidemenu.component';
-import { ChatroomComponent } from './chatroom/chatroom.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
@@ -17,8 +15,6 @@ import { RouterLink } from '@angular/router';
     MatButtonModule,
     MatIconModule,
     MatSliderModule,
-    SidemenuComponent,
-    ChatroomComponent,
     MatSidenavModule,
     MatToolbarModule,
     RouterLink
@@ -48,7 +44,7 @@ export class GameComponent
     this.player.style.left=(e.clientX)+'px';
 
     if(menubarHoehe != null){
-      this.player.style.top=(e.clientY - menubarHoehe  +'px');
+      this.player.style.top=(e.clientY - menubarHoehe +'px');
     }else{
       this.player.style.top=(e.clientY +'px');
     }
@@ -59,5 +55,18 @@ export class GameComponent
   @HostListener('window:resize', ['$event']) onResize()
   {
     //use player position in % to reset after window resize
+  }
+
+  formatlabel(value:number): string{
+    if(value==0){
+      return "flüstern";
+    }
+    if(value==1){
+      return "reden";
+    }
+    if(value==2){
+      return "rufen";
+    }
+    return '${value}';
   }
 }
