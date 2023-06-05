@@ -25,6 +25,8 @@ import { RouterLink } from '@angular/router';
 export class GameComponent
 {
   public opened = false;
+  prozentualplayerheight=0;
+  prozentualplayerwidth=0;
   player: HTMLElement | null | undefined;
 
   ngAfterInit(){
@@ -45,8 +47,8 @@ export class GameComponent
 
     if(menubarHoehe != null){
       this.player.style.top=(e.clientY - menubarHoehe +'px');
-      var prozentualplayerheight=((e.clientY - menubarHoehe)/innerHeight);
-      var prozentualplayerwidth=(e.clientX/innerWidth);
+      this.prozentualplayerheight=((e.clientY - menubarHoehe)/innerHeight);
+      this.prozentualplayerwidth=(e.clientX/innerWidth);
 
     }else{
       this.player.style.top=(e.clientY +'px');
@@ -61,11 +63,10 @@ export class GameComponent
     this.player=document.getElementById("Spieler");
     if (this.player != null)
     {
-      this.player.style.left=500+'px';
-      this.player.style.top=500+'px';
+      this.player.style.left=(this.prozentualplayerwidth*innerWidth)+'px';
+      console.log((this.prozentualplayerwidth)+'px');
+      this.player.style.top=(this.prozentualplayerheight*innerHeight)+'px';
     }
-    
-    //use player position in % to reset after window resize
   }
 
   formatlabel(value:number): string{
