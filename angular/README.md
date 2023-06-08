@@ -19,6 +19,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 ## Code scaffolding
 
+
 Run `ng generate component --standalone components/component-name` to generate a new standalone component.
 Run `ng generate service services/serviceName` to generate a new standalone component.
 Use cammel case for the component name.

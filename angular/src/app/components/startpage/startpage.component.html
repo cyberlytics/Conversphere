@@ -1,11 +1,34 @@
-<strong>Welcome at Conversphere</strong>
-<nav>
-  <button
-    mat-raised-button
-    routerLink="/login"
-    routerLinkActive="active"
-    ariaCurrentWhenActive="page"
-  >
-    Login Page
-  </button>
-</nav>
+<div class="background">
+  <h1 class="titel">Welcome at Conversphere</h1>
+  <nav class="navbar">
+    <button
+    class="button"
+      mat-raised-button
+      routerLink="/login"
+      routerLinkActive="active"
+      ariaCurrentWhenActi>Registrieren 
+    </button> 
+
+    <button
+    [disabled]="!nickname"
+    class="button"
+      mat-raised-button
+      routerLink="/game"
+      routerLinkActive="active"
+      ariaCurrentWhenActi>Raumerstellen
+    </button> 
+
+    <button
+    class="button"
+      mat-raised-button
+      ariaCurrentWhenActi (click)="openDialog()" >username eingeben
+    </button> 
+
+  </nav>
+<div>
+  {{
+    nickname
+  }}
+</div>
+
+</div>

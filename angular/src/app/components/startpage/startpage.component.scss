@@ -1,28 +1,17 @@
-mat-sidenav {
-  background-color: lightblue;
-  width: 20em;
-  height: 100%;
-}
-mat-sidenav-container {
-  height: 95vh;
-}
-mat-toolbar {
-  background-color: orange;
-  height: 5vh;
-}
-.sidemenu {
+.background{
+  background-color: rgb(247, 240, 230);
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  button {
-    color: black;
-    background: orange;
-    margin: 1em;
-  }
+  
 }
-.background {
-  background-color: gray;
-  display: grid;
-  grid-template-rows: min-content;
-  height: 100vh;
-  flex-direction: row;
+.titel{
+  display: flex;
+  margin-top: 1em;
+  justify-content: center;
 }
+.navbar{
+  display: flex;
+  justify-content: center;
+}
+
