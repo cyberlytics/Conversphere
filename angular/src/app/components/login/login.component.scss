@@ -1,11 +1,16 @@
-div {
+form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  h1 {
-    text-align: center;
-  }
+  margin: 22px 22px 0px 22px;
+}
+div {
+  margin-left: 25%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
   button {
-    margin: 8px;
+    margin-bottom: 22px;
   }
 }

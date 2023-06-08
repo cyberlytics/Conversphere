@@ -1,45 +1,70 @@
-strong {
-  display: flex;
-  justify-content: center;
-  font-size: 3em;
-  line-height: 3em;
-  height: 3em;
-  margin: 1em;
-}
-
-.Chat {
-  height: 20vh;
-  width: 70vw;
-  margin: 1em 0px 0px 5em;
-}
-.body {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-.Chatinput {
-  display: flex;
-  flex-direction: row;
+mat-sidenav-container {
+  height: 95vh;
+  width: 100%;
   button {
     color: black;
-    background-color: orange;
-    margin-left: 1em;
+    background: orange;
   }
-  margin: 1em 0px 0px 5em;
+  background-color: #808080;
+  position: fixed;
+}
+mat-toolbar {
+  background-color: orange;
+  font-weight: bold;
+  height: 5vh;
+}
+.sidemenu {
+  display: flex;
+  flex-direction: column;
+  width: 15vw;
+  button{
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 2em;
+  }
+}
+.game{
+  margin-left: 5em;
+  margin-right: 5em;
+}
+.information {
+  display: flex;
   justify-content: space-between;
-  width: 70vw;
+  font-size: 1vw;
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+  .slider{
+    width: 10vw;
+  }
 }
-.Textinput {
-  height: 30px;
-  width: min(40vw, 300px);
+.spielfeld{
+  background-color: cornflowerblue;
+  height: 30vh;
 }
-.Information {
+.spieler{
+  background-color: red;
+  width: 5px;
+  height: 5px;
+}
+.chatroom{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0px 0px 0px 5em;
-  width: 70vw;
+  margin-top: 2em;
+  button{
+    width: 5vw;
+    height: 7vh;
+    font-size: 1vw;
+  }
 }
-.Slider {
-  margin-left: 200px;
+.textarea {
+  height: 30vh;
+  background-color: blue;
+  margin-top: 2em;
+}
+.textinput {
+  width: 50vw;
+  height: 7vh;
+  font-size: 20;
+  font-size: large;
 }
