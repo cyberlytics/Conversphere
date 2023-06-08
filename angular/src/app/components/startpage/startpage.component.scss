@@ -1,3 +1,19 @@
+mat-sidenav-container {
+  height: 95vh;
+  width: 100%;
+  button {
+    color: black;
+    background: orange;
+  }
+  background-color: #808080;
+  position: fixed;
+}
+mat-toolbar {
+  background-color: orange;
+  font-weight: bold;
+  height: 5vh;
+}
+
 .background{
   background-color: rgb(247, 240, 230);
   height: 100vh;

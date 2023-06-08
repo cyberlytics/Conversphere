@@ -1,3 +1,16 @@
+<mat-toolbar>
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="opened = !opened">
+      <mat-icon>menu</mat-icon>
+    </button>
+    Conversphere Chatroom
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+
+
+
 <div class="background">
   <h1 class="titel">Welcome at Conversphere</h1>
   <nav class="navbar">
@@ -30,5 +43,29 @@
     nickname
   }}
 </div>
+<mat-selection-list #shoes [multiple]="false">
+  <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+    {{shoe}}
+  </mat-list-option>
+</mat-selection-list>
+
+<p>
+  Option selected: {{shoes.selectedOptions.hasValue() ? shoes.selectedOptions.selected[0].value : 'None'}}
+</p>
 
 </div>
+
+<div>
+  <form>
+    <h4>mat-select</h4>
+    <mat-form-field>
+      <mat-label>room</mat-label>
+      <mat-select [(ngModel)]="selectedValue" name="room">
+        <mat-option *ngFor="let room of rooms" [value]="room.value">
+          {{room.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <p> Selected room: {{selectedValue}} </p>
+   
+
