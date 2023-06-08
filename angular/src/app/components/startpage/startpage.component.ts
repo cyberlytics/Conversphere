@@ -24,10 +24,6 @@ interface Room {
   value: string;
   viewValue: string;
 }
-
-
-
-
 @Component({
   selector: 'app-startpage',
   standalone: true,
@@ -59,6 +55,7 @@ export class StartpageComponent {
   selectedCar: string | undefined;
 
   rooms: Room[] = [
+    {value: '', viewValue: ''},
     {value: 'Room', viewValue: 'Room'},
     {value: 'Room-1', viewValue: 'Room-1'},
     {value: 'Room-2', viewValue: 'Room-2'},
@@ -68,7 +65,6 @@ export class StartpageComponent {
   nickname?: string;
   opened: unknown;
   
-
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {

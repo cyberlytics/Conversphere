@@ -1,48 +1,73 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <button mat-icon-button (click)="opened = !opened">
-      <mat-icon>menu</mat-icon>
-    </button>
     Conversphere Chatroom
   </mat-toolbar-row>
 </mat-toolbar>
 
 
-
-
-
 <div class="background">
   <h1 class="titel">Welcome at Conversphere</h1>
+
+
+<h1>Bitte geben Sie einen Nickname ein: </h1>
+  <mat-form-field class="joinbutton">
+   <mat-label>Nickname: </mat-label>
+    <input matInput [(ngModel)]="nickname">
+  </mat-form-field>
+
+
   <nav class="navbar">
     <button
     class="button"
       mat-raised-button
       routerLink="/login"
+      [disabled]="!nickname"
       routerLinkActive="active"
       ariaCurrentWhenActi>Registrieren 
     </button> 
 
     <button
-    [disabled]="!nickname"
     class="button"
       mat-raised-button
       routerLink="/game"
+      [disabled]="!nickname"
       routerLinkActive="active"
-      ariaCurrentWhenActi>Raumerstellen
+      ariaCurrentWhenActi (click)="openDialog()">Raumerstellen
+
     </button> 
 
     <button
     class="button"
       mat-raised-button
-      ariaCurrentWhenActi (click)="openDialog()" >username eingeben
+      [disabled]="!nickname"
+      ariaCurrentWhenActi (click)="openDialog()" >Raumerstellen2:
     </button> 
-
   </nav>
-<div>
-  {{
-    nickname
-  }}
-</div>
+
+  
+  <h4>Raum beitreten: </h4>
+  <mat-form-field>
+    <mat-label>Wähle einen Raum</mat-label>
+    <mat-select [(ngModel)]="selectedValue" name="room">
+      <mat-option *ngFor="let room of rooms" [value]="room.value">
+        {{room.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <p> Sie haben:"  {{selectedValue}}  "gewählt </p>
+  <section>
+    <div class=""></div>
+    <div class="joinbutton">
+      <button
+      [disabled]="!nickname || !selectedValue"
+     
+      mat-raised-button
+      routerLink="/game"
+      routerLinkActive="active"
+      ariaCurrentWhenActi>join
+    </button> 
+  
+<h1>Alternative</h1>
 <mat-selection-list #shoes [multiple]="false">
   <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
     {{shoe}}
@@ -55,17 +80,11 @@
 
 </div>
 
-<div>
-  <form>
-    <h4>mat-select</h4>
-    <mat-form-field>
-      <mat-label>room</mat-label>
-      <mat-select [(ngModel)]="selectedValue" name="room">
-        <mat-option *ngFor="let room of rooms" [value]="room.value">
-          {{room.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <p> Selected room: {{selectedValue}} </p>
+
+
+
+
+
    
 
+ 

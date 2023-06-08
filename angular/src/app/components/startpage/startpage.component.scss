@@ -30,4 +30,11 @@ mat-toolbar {
   display: flex;
   justify-content: center;
 }
+//join button 
+.joinbutton{
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
 
