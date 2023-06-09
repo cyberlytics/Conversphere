@@ -66,6 +66,15 @@
       routerLinkActive="active"
       ariaCurrentWhenActi>join
     </button> 
+
+    <div class="link">
+  <button>
+  <a mat-fab extended routerLink="http://localhost:3000/game">
+    <mat-icon>favorite</mat-icon>
+    Raum teilen
+  </a>
+</button>
+</div>
   
 <h1>Alternative</h1>
 <mat-selection-list #shoes [multiple]="false">
@@ -78,7 +87,6 @@
   Option selected: {{shoes.selectedOptions.hasValue() ? shoes.selectedOptions.selected[0].value : 'None'}}
 </p>
 
-</div>
 
 
 
