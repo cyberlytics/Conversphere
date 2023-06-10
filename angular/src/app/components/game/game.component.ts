@@ -6,7 +6,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
-
+import { FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -17,7 +18,8 @@ import { RouterLink } from '@angular/router';
     MatSliderModule,
     MatSidenavModule,
     MatToolbarModule,
-    RouterLink
+    RouterLink,
+    ReactiveFormsModule,
   ],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
@@ -80,5 +82,14 @@ export class GameComponent
       return "rufen";
     }
     return '${value}';
+  }
+
+  messageControl = new FormControl('');
+  sendMessage(){
+    const message = this.messageControl.value;
+    if(message)
+    {
+      this.messageControl.setValue('');
+    }
   }
 }

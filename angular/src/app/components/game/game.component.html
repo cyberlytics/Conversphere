@@ -33,9 +33,10 @@
         </div>
         <div class="textarea" name="text"></div>
         <div class="chatroom">  
-          <input matInput class="textinput" name="getText" placeholder="Enter your text here"/>
-          <button class="buttonColor" mat-raised-button>Senden</button>
+          <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" placeholder="Enter your text here"/>
+          <button class="buttonColor" mat-raised-button (click)="sendMessage()">Senden</button>
         </div>
       </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
