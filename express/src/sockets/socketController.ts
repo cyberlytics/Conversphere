@@ -1,7 +1,11 @@
 import { Namespace, Server } from "socket.io";
-import { handleMessagesNamespace } from "./messagesController.js";
+import { connections, handleMessagesNamespace } from "./messagesController.js";
 import { handleUsersNamespace } from "./usersControllers.js";
 
+interface User{
+  user_id: string,
+  nickname: string
+}
 
 function checkNamespaces(io: Server) : Namespace {
   return io.of((name, auth, next) => 
@@ -37,4 +41,8 @@ function handleNamespaces(nsp: Namespace) : void{
  handleUsersNamespace(nsp);
 }
 
-export {handleNamespaces, checkNamespaces};
+function userDisconnected(roomId: string, user: User): void{
+  // remove from the connections!
+}
+
+export {handleNamespaces, checkNamespaces, userDisconnected};
