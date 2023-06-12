@@ -32,10 +32,7 @@ import { User } from 'src/app/interfaces/users';
 export class GameComponent
 {
   chatContent: string | undefined;
-  user:User = {
-    id: "500",
-    nickname: "Testuser"
-  }
+
   constructor(private chatservice:ChatService)
   {
     chatservice.InitMessagesSocket().subscribe( (data) => {
@@ -74,7 +71,7 @@ export class GameComponent
     }else{
       this.player.style.top=(e.clientY +'px');
     }
-  
+
     //save player position in %
     //send player position to server
   }
