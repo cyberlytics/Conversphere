@@ -36,11 +36,10 @@ export class GameComponent
     id: "500",
     nickname: "Testuser"
   }
-
   constructor(private chatservice:ChatService)
   {
     chatservice.InitMessagesSocket().subscribe( (data) => {
-      this.chatContent = data.text;
+      this.chatContent = data.text; // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
     } );
     chatservice.InitUsersSocket().subscribe();
   }
