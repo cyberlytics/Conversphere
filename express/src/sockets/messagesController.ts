@@ -1,14 +1,6 @@
+import { Message } from "model/Message.js";
+import { User } from "model/User.js";
 import { Namespace, Socket } from "socket.io";
-
-interface Message{
-    userId: string
-    text: string
-}
-
-interface User{
-  userId: string,
-  nickname: string
-}
 
 const connections: {[user_id: string]: Socket} = {}
 
@@ -21,20 +13,20 @@ function handleMessagesNamespace(nsp: Namespace) : void{
       if(typeof socket.handshake.query.user_id === 'string'){
         connections[socket.handshake.query.user_id] = socket;
         socket.on("sendNewMessage", (message: Message) => {
-          console.log("Received a new message from User " + message.userId + ": " + message.text);
+          console.log("Received a new message from User " + message.user_id + ": " + message.text);
           // Get all the user for the room
           // TODO -> replace with correct value
           const users:User[] = [];
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
           
-          users.filter(x => x.userId != message.userId).forEach((user)=>{
-            const connection = connections[user.userId];
+          users.filter(x => x.id != message.user_id).forEach((user)=>{
+            const connection = connections[user.id];
             if(connection){
               connection.emit('receivedMessage', message);
             }else{
-              console.warn('Not able to find connection for user: ' + user.userId);
+              console.warn('Not able to find connection for user: ' + user.id);
             }
           });
         });

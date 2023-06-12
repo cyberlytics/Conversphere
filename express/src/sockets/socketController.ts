@@ -1,11 +1,7 @@
 import { Namespace, Server } from "socket.io";
-import { connections, handleMessagesNamespace } from "./messagesController.js";
+import { handleMessagesNamespace } from "./messagesController.js";
 import { handleUsersNamespace } from "./usersControllers.js";
-
-interface User{
-  user_id: string,
-  nickname: string
-}
+import { User } from "model/User.js";
 
 function checkNamespaces(io: Server) : Namespace {
   return io.of((name, auth, next) => 

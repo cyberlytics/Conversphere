@@ -1,13 +1,9 @@
 import { Namespace, Socket } from "socket.io";
 import { userDisconnected } from "./socketController.js";
+import { User } from "model/User.js";
 
 interface UserLeftMessage{
   userId: string
-  nickname: string
-}
-
-interface User{
-  userId: string,
   nickname: string
 }
 
@@ -25,23 +21,23 @@ function handleUsersNamespace(nsp: Namespace) : void {
           // Get all the user for the room
           // TODO -> replace with correct value
           const users:User[] = [];
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
-          users.push({userId: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
+          users.push({id: 'asdfasdfasdfasdf', nickname: 'testUser1'})
           
-          const user:User = {userId: 'asdfasdf', nickname: 'asdf'}
+          const user:User = {id: 'asdfasdf', nickname: 'asdf'}
 
-          users.filter(x => x.userId != message.userId).forEach((user)=>{
-            const connection = connections[user.userId];
+          users.filter(x => x.id != message.userId).forEach((user)=>{
+            const connection = connections[user.id];
             if(connection){
               connection.emit('userLeft', user);
             }else{
-              console.warn('Not able to find connection for user: ' + user.userId);
+              console.warn('Not able to find connection for user: ' + user.id);
             }
           });
 
           // TODO: Get room-id
-          userDisconnected('asdfasdf', {user_id: user.userId, nickname: user.nickname});
+          userDisconnected('asdfasdf', user);
         });
       }else{
         console.error('User-Id was not included in the connection-attempt. Disconnecting socket.')
