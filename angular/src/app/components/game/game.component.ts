@@ -32,7 +32,7 @@ import { Message } from 'src/app/interfaces/messages';
 })
 export class GameComponent
 {
-  chatContent: Message[] | undefined = [{id:"Name", text:"Hallo" , user_id:"500", visibility:1},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:1},{id:"Name 3", text:"Hallo 3" , user_id:"500", visibility:1},{id:"Name 4", text:"Hallo4" , user_id:"501", visibility:1},{id:"Name 5", text:"Hallo5" , user_id:"501", visibility:1},{id:"Name 6", text:"Hallo 6" , user_id:"500", visibility:1},{id:"Name 7", text:"Hallo8" , user_id:"501", visibility:1},{id:"Name 9", text:"Hallo9" , user_id:"501", visibility:1},{id:"Name 10", text:"Hallo 10" , user_id:"500", visibility:1},{id:"Name 11", text:"Hallo 11" , user_id:"500", visibility:1},{id:"Name 12", text:"Hallo12" , user_id:"501", visibility:1}];
+  chatContent: Message[] | undefined = [{id:"Name", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:1},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:1},{id:"Name 3", text:"Hallo 3" , user_id:"500", visibility:1},{id:"Name 4", text:"Hallo4" , user_id:"501", visibility:1},{id:"Name 5", text:"Hallo5" , user_id:"501", visibility:1},{id:"Name 6", text:"Hallo 6" , user_id:"500", visibility:1},{id:"Name 7", text:"Hallo8" , user_id:"501", visibility:1},{id:"Name 9", text:"Hallo9" , user_id:"501", visibility:1},{id:"Name 10", text:"Hallo 10" , user_id:"500", visibility:1},{id:"Name 11", text:"Hallo 11" , user_id:"500", visibility:1},{id:"Name 12", text:"Hallo12" , user_id:"501", visibility:1}];
 
   user:User = {
     id: "500",
