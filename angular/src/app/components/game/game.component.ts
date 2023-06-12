@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/interfaces/users';
+import { Message } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-game',
@@ -31,7 +32,7 @@ import { User } from 'src/app/interfaces/users';
 })
 export class GameComponent
 {
-  chatContent: string[] | undefined = ["Hallo", "Hallo2", "Hallo3"];
+  chatContent: Message[] | undefined = [{id:"Name", text:"Hallo" , user_id:"500", visibility:1},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:1},{id:"Name 3", text:"Hallo 3" , user_id:"500", visibility:1},{id:"Name 4", text:"Hallo4" , user_id:"501", visibility:1},{id:"Name 5", text:"Hallo5" , user_id:"501", visibility:1},{id:"Name 6", text:"Hallo 6" , user_id:"500", visibility:1},{id:"Name 7", text:"Hallo8" , user_id:"501", visibility:1},{id:"Name 9", text:"Hallo9" , user_id:"501", visibility:1},{id:"Name 10", text:"Hallo 10" , user_id:"500", visibility:1},{id:"Name 11", text:"Hallo 11" , user_id:"500", visibility:1},{id:"Name 12", text:"Hallo12" , user_id:"501", visibility:1}];
 
   user:User = {
     id: "500",
@@ -43,13 +44,13 @@ export class GameComponent
       if (this.chatContent?.length == 10)
       {
         this.chatContent?.shift();
-        this.chatContent?.push(data.text); 
+        this.chatContent?.push(data); 
+        
       }
       else
       {
-        this.chatContent?.push(data.text); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
-      }
-      
+        this.chatContent?.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
+      }    
       
     } );
     chatservice.InitUsersSocket().subscribe();

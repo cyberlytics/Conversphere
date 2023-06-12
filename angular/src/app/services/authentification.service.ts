@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthUser } from '../interfaces/auth-user';
+import { AuthUser } from '../interfaces/auth-users';
+
+
 
 @Injectable({
   providedIn: 'root',
