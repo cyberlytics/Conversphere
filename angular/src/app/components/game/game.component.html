@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="textarea" name="text">
-          {{chatContent}}
+          <div *ngFor="let message of chatContent">{{message}}</div>
         </div>
         <div class="chatroom">  
           <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" placeholder="Enter your text here"/>

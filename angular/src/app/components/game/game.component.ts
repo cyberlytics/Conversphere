@@ -31,7 +31,8 @@ import { User } from 'src/app/interfaces/users';
 })
 export class GameComponent
 {
-  chatContent: string | undefined;
+  chatContent: string[] | undefined = ["Hallo", "Hallo2", "Hallo3"];
+
   user:User = {
     id: "500",
     nickname: "Testuser"
@@ -39,7 +40,17 @@ export class GameComponent
   constructor(private chatservice:ChatService)
   {
     chatservice.InitMessagesSocket().subscribe( (data) => {
-      this.chatContent = data.text; // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
+      if (this.chatContent?.length == 10)
+      {
+        this.chatContent?.shift();
+        this.chatContent?.push(data.text); 
+      }
+      else
+      {
+        this.chatContent?.push(data.text); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
+      }
+      
+      
     } );
     chatservice.InitUsersSocket().subscribe();
   }
