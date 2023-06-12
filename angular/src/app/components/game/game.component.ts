@@ -8,6 +8,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthentificationService } from 'src/app/services/authentification.service';
+import { ChatService } from 'src/app/services/chat.service';
+import { User } from 'src/app/interfaces/users';
+
 @Component({
   selector: 'app-game',
   standalone: true,
@@ -21,11 +25,27 @@ import { ReactiveFormsModule } from '@angular/forms';
     RouterLink,
     ReactiveFormsModule,
   ],
+  providers: [AuthentificationService],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
 export class GameComponent
 {
+  chatContent: string | undefined;
+  user:User = {
+    id: "500",
+    nickname: "Testuser"
+  }
+
+  constructor(private chatservice:ChatService)
+  {
+    chatservice.InitMessagesSocket().subscribe( (data) => {
+      this.chatContent = data.text;
+    } );
+    chatservice.InitUsersSocket().subscribe();
+  }
+
+
   public opened = false;
   prozentualplayerheight=0;
   prozentualplayerwidth=0;
@@ -83,6 +103,8 @@ export class GameComponent
     }
     return '${value}';
   }
+
+
 
   messageControl = new FormControl('');
   sendMessage(){

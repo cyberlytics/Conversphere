@@ -31,7 +31,9 @@
           <div id="Spieler" class="spieler">
           </div>
         </div>
-        <div class="textarea" name="text"></div>
+        <div class="textarea" name="text">
+          {{chatContent}}
+        </div>
         <div class="chatroom">  
           <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" placeholder="Enter your text here"/>
           <button class="buttonColor" mat-raised-button (click)="sendMessage()">Senden</button>
