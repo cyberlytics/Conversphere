@@ -68,8 +68,10 @@ export class StartpageComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(UsernameComponent, );
-
+    const dialogRef = this.dialog.open(UsernameComponent, {
+      width: '250px',
+      data: { text: 'Sei höflich und respektvoll: Behandle andere Chatteilnehmer mit Freundlichkeit und Respekt. Vermeide beleidigende oder abfällige Bemerkungen.\n Keine Diskriminierung oder Belästigung: Diskriminierung, Belästigung, Beleidigungen oder respektloses Verhalten sind inakzeptabel. Jeder sollte sich sicher und wohl fühlen können.' }
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.nickname = result;

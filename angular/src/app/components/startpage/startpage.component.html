@@ -16,15 +16,8 @@
   </mat-form-field>
 
 
+
   <nav class="navbar">
-    <button
-    class="button"
-      mat-raised-button
-      routerLink="/login"
-      [disabled]="!nickname"
-      routerLinkActive="active"
-      ariaCurrentWhenActi>Registrieren 
-    </button> 
 
     <button
     class="button"
@@ -34,13 +27,6 @@
       routerLinkActive="active"
       ariaCurrentWhenActi (click)="openDialog()">Raumerstellen
 
-    </button> 
-
-    <button
-    class="button"
-      mat-raised-button
-      [disabled]="!nickname"
-      ariaCurrentWhenActi (click)="openDialog()" >Raumerstellen2:
     </button> 
   </nav>
 
@@ -76,23 +62,3 @@
 </button>
 </div>
   
-<h1>Alternative</h1>
-<mat-selection-list #shoes [multiple]="false">
-  <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
-    {{shoe}}
-  </mat-list-option>
-</mat-selection-list>
-
-<p>
-  Option selected: {{shoes.selectedOptions.hasValue() ? shoes.selectedOptions.selected[0].value : 'None'}}
-</p>
-
-
-
-
-
-
-
-   
-
- 
