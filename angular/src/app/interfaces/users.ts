@@ -5,6 +5,8 @@ export interface Users {
   export interface User {
     id: string,
     nickname: string,
-    x: number,
-    y: number,
+    position:{
+      x: number,
+      y: number
+    }
   }

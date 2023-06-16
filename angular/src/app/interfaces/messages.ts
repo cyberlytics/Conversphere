@@ -1,6 +1,6 @@
 export interface Message {
-  id: string,
+  id: string, // auto gegeben durch mongoose
   text: string,
   user_id: string,
-  visibility: number,
+  visibility: // nicht in db
 }
