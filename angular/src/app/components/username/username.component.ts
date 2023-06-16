@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,20 +14,14 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./username.component.scss']
 })
 
-
-
 export class UsernameComponent {
 
   constructor(
     public dialogRef: MatDialogRef<UsernameComponent>,
-    // @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-    
-  NicknameFormControl = new FormControl('', [Validators.required]);
-  closedialoge(){
-    console.log(this.NicknameFormControl.value);
-    this.dialogRef.close(this.NicknameFormControl.value);
-    
+
+  onOkClick(): void {
+    this.dialogRef.close();
   }
 }
-
