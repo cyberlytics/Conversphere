@@ -1,3 +1,19 @@
+mat-sidenav-container {
+  height: 95vh;
+  width: 100%;
+  button {
+    color: black;
+    background: orange;
+  }
+  background-color: #808080;
+  position: fixed;
+}
+mat-toolbar {
+  background-color: orange;
+  font-weight: bold;
+  height: 5vh;
+}
+
 .background{
   background-color: rgb(247, 240, 230);
   height: 100vh;
@@ -14,4 +30,17 @@
   display: flex;
   justify-content: center;
 }
+//join button 
+.joinbutton{
+  display: table-cell;
+  font-size: 14px;
+  margin-left: 8px;
+  min-width: 120px;
+}
+
+.link{
+    display: flex;
+    justify-content: center;
+    width: 1200px;
+  }
 
