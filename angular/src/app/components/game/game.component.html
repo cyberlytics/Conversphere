@@ -23,8 +23,8 @@
       <div class="game">
         <div class="information">
           <div>
-            <p>Room-ID:XXXX</p>
-            <p>Name::XXXX</p>
+            <p>Room-ID: {{rooms.id}}</p>
+            <p>Name: {{user.nickname}}</p>
           </div>          
           <mat-slider class="slider" min="0" max="2" step="1" discrete [displayWith]="formatlabel" >
             <input matSliderThumb />
@@ -35,9 +35,9 @@
           </div>
         </div>
         <div class="textarea" name="text">
-          <div style="margin: 0.5em;">
+          <div id="chatnachricht" style="margin: 0.5em;">
             <div *ngFor="let message of chatContent">            
-              <div style="font-size: x-large; line-height: 1;">{{message.id}} : {{message.text}}</div> 
+              <div style="line-height: 1;">{{message.id}} : {{message.text}}</div> 
             </div>
           </div>
           
