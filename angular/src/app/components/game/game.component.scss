@@ -13,6 +13,9 @@ mat-toolbar {
   font-weight: bold;
   height: 5vh;
 }
+mat-form-field{
+  background-color: orange;
+}
 .sidemenu {
   display: flex;
   flex-direction: column;
@@ -59,12 +62,14 @@ mat-toolbar {
 }
 .textarea {
   height: 30vh;
-  background-color: blue;
+  background-color: burlywood;
   margin-top: 2em;
+  display: flex;
+  flex-direction: column;
 }
 .textinput {
   width: 50vw;
   height: 7vh;
-  font-size: 20;
-  font-size: large;
+  font-size: 2vw;
 }
+

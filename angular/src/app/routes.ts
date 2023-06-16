@@ -23,7 +23,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: '',
-    redirectTo: 'game',
+    redirectTo: 'start',
     pathMatch: 'full',
   },
   {

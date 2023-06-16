@@ -4,7 +4,3 @@ export interface Message {
   user_id: string,
   visibility: number,
 }
-
-export interface Messages {
-  messages: Message[]
-}

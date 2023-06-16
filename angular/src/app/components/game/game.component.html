@@ -22,7 +22,10 @@
   <mat-sidenav-content id="gamefield">
       <div class="game">
         <div class="information">
-          <p>Room-ID:XXXX</p>
+          <div>
+            <p>Room-ID: {{rooms.id}}</p>
+            <p>Name: {{user.nickname}}</p>
+          </div>          
           <mat-slider class="slider" min="0" max="2" step="1" discrete [displayWith]="formatlabel" >
             <input matSliderThumb />
           </mat-slider>
@@ -31,11 +34,19 @@
           <div id="Spieler" class="spieler">
           </div>
         </div>
-        <div class="textarea" name="text"></div>
+        <div class="textarea" name="text">
+          <div id="chatnachricht" style="margin: 0.5em;">
+            <div *ngFor="let message of chatContent">            
+              <div style="line-height: 1;">{{message.id}} : {{message.text}}</div> 
+            </div>
+          </div>
+          
+        </div>
         <div class="chatroom">  
-          <input matInput class="textinput" name="getText" placeholder="Enter your text here"/>
-          <button class="buttonColor" mat-raised-button>Senden</button>
+          <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>
+          <button class="buttonColor" mat-raised-button (click)="sendMessage()">Senden</button>
         </div>
       </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
