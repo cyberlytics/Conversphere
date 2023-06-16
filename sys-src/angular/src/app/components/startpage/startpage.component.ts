@@ -4,7 +4,6 @@ import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog'; 
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { UsernameComponent } from '../username/username.component';
 import {NgFor} from '@angular/common';
 import {MatListModule} from '@angular/material/list';
 
@@ -17,7 +16,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 //imports für Select with form field
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {FormsModule} from '@angular/forms';
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { UsernameComponent } from '../username/username.component';
 
 
 interface Room {
@@ -34,10 +34,15 @@ interface Room {
     MatSidenavModule,
     MatToolbarModule,
     RouterLink,
-     MatDialogModule, 
-     MatFormFieldModule,
-     MatListModule, 
-     NgFor,FormsModule, MatSelectModule, MatInputModule],
+    FormsModule,
+    MatDialogModule, 
+    MatFormFieldModule,
+    MatListModule, 
+    NgFor,FormsModule, 
+    MatSelectModule, 
+    MatInputModule,
+    ReactiveFormsModule
+  ],
 
   templateUrl: './startpage.component.html',
   styleUrls: ['./startpage.component.scss'],
@@ -45,36 +50,31 @@ interface Room {
 
 
 export class StartpageComponent {
-
   //List with single selection
   typesOfShoes: string[] = ["Raum1", "Raum2" , "Raum3", "Raum4"];
-
-
-// Select with form field
-  selectedValue: string | undefined;
-  selectedCar: string | undefined;
-
   rooms: Room[] = [
-    {value: '', viewValue: ''},
-    {value: 'Room', viewValue: 'Room'},
-    {value: 'Room-1', viewValue: 'Room-1'},
-    {value: 'Room-2', viewValue: 'Room-2'},
-  ];
+      {value: '', viewValue: ''},
+      {value: 'Room', viewValue: 'Room'},
+      {value: 'Room-1', viewValue: 'Room-1'},
+      {value: 'Room-2', viewValue: 'Room-2'},
+    ];
 
-
-  nickname?: string;
+  // Select with form field
+  selectedValue: string | undefined;
+  nicknameString!: string | null;
+  nickname = new FormControl('', [Validators.required, Validators.minLength(3)]);
   opened: unknown;
   
   constructor(public dialog: MatDialog) {}
 
   openDialog(): void {
+    this.nicknameString = this.nickname.value;
     const dialogRef = this.dialog.open(UsernameComponent, {
-      width: '250px',
-      data: { text: 'Sei höflich und respektvoll: Behandle andere Chatteilnehmer mit Freundlichkeit und Respekt. Vermeide beleidigende oder abfällige Bemerkungen.\n Keine Diskriminierung oder Belästigung: Diskriminierung, Belästigung, Beleidigungen oder respektloses Verhalten sind inakzeptabel. Jeder sollte sich sicher und wohl fühlen können.' }
+      width: '60vw',
+      data: {nickname: this.nicknameString }
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe( () => {
       console.log('The dialog was closed');
-      this.nickname = result;
     });
   }
 }

@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-username',
@@ -14,16 +14,16 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 
 export class UsernameComponent {
+  nickname: string | undefined;
 
   constructor(
     public dialogRef: MatDialogRef<UsernameComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    this.nickname = data.nicknameString;
+  }
 
-  NicknameFormControl = new FormControl('', [Validators.required]);
-  closedialoge(){
-    console.log(this.NicknameFormControl.value);
-    this.dialogRef.close(this.NicknameFormControl.value);
-
+  onOkClick(){
+    this.dialogRef.close(this.nickname);
   }
 }

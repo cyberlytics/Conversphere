@@ -1,46 +1,39 @@
-mat-sidenav-container {
-  height: 95vh;
-  width: 100%;
-  button {
-    color: black;
-    background: orange;
-  }
-  background-color: #808080;
-  position: fixed;
-}
-mat-toolbar {
-  background-color: orange;
-  font-weight: bold;
-  height: 5vh;
-}
-
-.background{
-  background-color: rgb(247, 240, 230);
-  height: 100vh;
+.startpage{
   display: flex;
   flex-direction: column;
-  
-}
-.titel{
-  display: flex;
-  margin-top: 1em;
-  justify-content: center;
-}
-.navbar{
-  display: flex;
-  justify-content: center;
-}
-//join button 
-.joinbutton{
-  display: table-cell;
-  font-size: 14px;
-  margin-left: 8px;
-  min-width: 120px;
+  align-items: center;
+  height: 100vh;
 }
 
-.link{
-    display: flex;
-    justify-content: center;
-    width: 1200px;
-  }
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-self: center;
+  background-color: orange;
+  color: black;
+  height: 50px; //in zukunft mit zb 10vh 
+  width: 100vw;
+  margin: 0 0 0 0;
+}
 
+.roomInput{
+  width: 70vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.createRoom{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+
+.chooseRoom{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
