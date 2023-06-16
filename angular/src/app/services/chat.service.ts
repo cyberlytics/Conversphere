@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Socket, io } from "socket.io-client";
 import { Message } from '../interfaces/messages';
 import { User, Users } from '../interfaces/users';
@@ -13,7 +13,7 @@ export class ChatService {
   messages_socket: Socket | undefined;
   users_socket: Socket | undefined;
 
-  constructor() {  
+  constructor() {
     this.messages_socket = undefined;
     this.users_socket = undefined;
   }
@@ -25,7 +25,6 @@ export class ChatService {
    * @returns The subject for the Messages and the Users of the chat-room.
    */
   setupSocketConnection(roomId: string, user: User) {
-    // Create sockets
     const messagePath = this.base_socket_endpoint + '/' + roomId + '/messages';
     const usersPath = this.base_socket_endpoint + '/' + roomId + '/users';
     this.messages_socket = io(messagePath, {query: {user_id: user.id}});
@@ -58,29 +57,36 @@ export class ChatService {
     this.users_socket?.emit('leaveRoom', user);
   }
 
+  /**
+   * Subscribes to the websocket chat to receive messages
+   * @returns A Message Obejct everytime a new Message was received.
+   * @see Message
+   */
   InitMessagesSocket() : Subject<Message>{
     const messages = new Subject<Message>();
 
     this.messages_socket?.on('receivedMessage', (message: Message)=>{
-      console.log('Received a new message: ');
-      console.log(message);
-      // Add the new message to the saved messages
-      
+      console.log('Received a new message: '+ message);
+
       messages.next(message);
     });
     return messages;
   }
 
+  /**
+   * Subscribes to the websocket chat to receive user updates
+   * @returns A Users Obejct everytime a new User was received.
+   * @see Users
+   */
   InitUsersSocket() : Subject<Users>{
     const userSubject = new Subject<Users>();
 
     this.users_socket?.on('userChanged', (users: Users)=>{
-      console.log('New user array received! ');
-     // console.log(user);
-     userSubject.next(users);
+      console.log('Users: '+users);
+
+      userSubject.next(users);
     });
 
-    
     return userSubject;
   }
 }

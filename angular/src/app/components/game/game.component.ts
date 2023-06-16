@@ -11,8 +11,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/interfaces/users';
-import { Message } from 'src/app/interfaces/messages';
-import { Room } from 'src/app/interfaces/rooms';
 
 @Component({
   selector: 'app-game',
@@ -42,7 +40,7 @@ export class GameComponent
   rooms:Room={
       id: "600",
       name: "Raum 1",
-      description: "Das ist der Testraum 1"    
+      description: "Das ist der Testraum 1"
   }
 
   constructor(private chatservice:ChatService)
@@ -51,14 +49,14 @@ export class GameComponent
       if (this.chatContent?.length == 10)
       {
         this.chatContent?.shift();
-        this.chatContent?.push(data); 
-        
+        this.chatContent?.push(data);
+
       }
       else
       {
         this.chatContent?.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
-      }    
-      
+      }
+
     } );
     chatservice.InitUsersSocket().subscribe();
   }
@@ -93,7 +91,7 @@ export class GameComponent
     }else{
       this.player.style.top=(e.clientY +'px');
     }
-  
+
     //save player position in %
     //send player position to server
   }
@@ -115,7 +113,7 @@ export class GameComponent
       this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
       //this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
-    
+
   }
 
   formatlabel(value:number): string{
