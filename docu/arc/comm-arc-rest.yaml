@@ -67,14 +67,6 @@ components:
         description:
           type: string
           example: 'Chat with other people about web applications.'
-        users_ids:
-          type: array
-          items:
-            type: object
-            properties:
-              users_id:
-                type: string
-                format: uuid
     User:
       type: object
       properties:

@@ -38,7 +38,7 @@ channels:
       message:
         $ref: '#/components/messages/sendMessage'
   ws/rooms/{roomId}/users:
-    description: The topic where information users in a specific room may be consumed.
+    description: The topic where information about a user may be consumed or produced.
     parameters:
       roomId:
         $ref: '#/components/parameters/roomId'
@@ -48,12 +48,10 @@ channels:
       message:
         $ref: '#/components/messages/leaveRoom'
     publish:
-      summary: Information about a new user joined the room.
+      summary: Information about a user-interaction in the room.
       operationId: userInformation
       message:
-        oneOf:
-          - $ref: '#/components/messages/userJoined'
-          - $ref: '#/components/messages/userLeft'
+          $ref: '#/components/messages/usersUpdated'
 components:
   messages:
     receivedMessage:
@@ -70,20 +68,16 @@ components:
       summary: Information about a new message to send to the chatroom
       payload:
         $ref: '#/components/schemas/Message'
-    userJoined:
-      messageId: userJoined
-      name: userJoined
-      title: User joined
-      summary: Information about a new user joined the chatroom.
+    usersUpdated:
+      messageId: usersUpdate
+      name: usersUpdate
+      title: Users update
+      summary: Information about all the users in the chatroom.
       payload:
-        $ref: '#/components/schemas/User'
-    userLeft:
-      messageId: userLeft
-      name: userLeft
-      title: User left
-      summary: Information about a user disconnected from the chatroom.
-      payload:
-        $ref: '#/components/schemas/User'
+        type: array
+        items:
+          - $ref: '#/components/schemas/User'
+        additionalProperties: false
     leaveRoom:
       messageId: leaveRoom
       name: leaveRoom
@@ -103,6 +97,15 @@ components:
           type: string
           example: 'Test-User'
           description: Nickname of the user.
+        position:
+          type: object
+          properties:
+            x:
+              type: integer
+              description: X-Coordinate of the user
+            y:
+              type: integer
+              description: Y-Coordinate of the user
       additionalProperties: false
     Message:
       type: object
