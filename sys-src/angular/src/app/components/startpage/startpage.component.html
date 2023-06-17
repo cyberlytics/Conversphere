@@ -4,7 +4,7 @@
   </div>
   <h4>Bitte geben Sie einen Nickname ein: </h4>
   <div>
-    <div class="example-container">
+    <div class="nicknameContainer">
       <mat-form-field>
         <mat-label>Nickname:</mat-label>
         <input matInput placeholder="Geben Sie mindestens 3 Buchstaben ein!" [formControl]="nickname" required>
@@ -25,6 +25,7 @@
         ariaCurrentWhenActi (click)="openDialog()">Raumerstellen
       </button> 
     </div>
+
     <div class="chooseRoom">
       <h4>Raum beitreten: </h4>
       <mat-form-field>
@@ -35,8 +36,12 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button [disabled]="!selectedValue" mat-raised-button routerLink="/game" routerLinkActive="active" ariaCurrentWhenActi
-        >{{selectedValue}} beitreten
+      <button [disabled]="!selectedValue" 
+      mat-raised-button 
+      routerLink="/game" 
+      routerLinkActive="active"
+      ariaCurrentWhenActi (click)="openDialog()"
+      ariaCurrentWhenActi>{{selectedValue}} beitreten
       </button> 
     </div>  
   </div> 

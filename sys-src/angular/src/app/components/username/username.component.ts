@@ -18,9 +18,8 @@ export class UsernameComponent {
 
   constructor(
     public dialogRef: MatDialogRef<UsernameComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-    this.nickname = data.nicknameString;
+    @Inject(MAT_DIALOG_DATA) public data: any) {
+    this.nickname = data.nickname;
   }
 
   onOkClick(){
