@@ -50,6 +50,8 @@ interface Room {
 
 
 export class StartpageComponent {
+
+  imagePath = 'assets/chatIcon.png';
   //List with single selection
   typesOfShoes: string[] = ["Raum1", "Raum2" , "Raum3", "Raum4"];
   rooms: Room[] = [
