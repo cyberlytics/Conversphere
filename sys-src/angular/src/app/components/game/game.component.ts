@@ -119,8 +119,8 @@ export class GameComponent
     {
       const windowwidth = window.innerWidth;
       const windowheight = window.innerHeight;
-      this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
-      //this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
+      //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
+      this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
 
   }
@@ -137,12 +137,17 @@ export class GameComponent
     }
     return '${value}';
   }
+  leaveRoom()
+  {
+    this.chatservice.LeaveRoom(this.user);
+  }
 
   messageControl = new FormControl();
   sendMessage(){
     const message = this.messageControl.value;
     if(message)
     {
+      this.messageControl.setValue("");
       this.chatservice.SendMessage(message);
     }
   }
