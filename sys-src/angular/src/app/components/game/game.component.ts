@@ -101,12 +101,14 @@ export class GameComponent
     this.player.style.position="absolute";
     this.player.style.left=(e.clientX)+'px';
 
-    if(menubarHoehe != null){
+    if(menubarHoehe != null)
+    {
       this.player.style.top=(e.clientY - menubarHoehe +'px');
       this.prozentualplayerheight=((e.clientY - menubarHoehe)/innerHeight);
       this.prozentualplayerwidth=(e.clientX/innerWidth);
-
-    }else{
+    }
+    else
+    {
       this.player.style.top=(e.clientY +'px');
     }
     this.user.position.x=this.prozentualplayerheight;
@@ -135,13 +137,16 @@ export class GameComponent
   }
 
   formatlabel(value:number): string{
-    if(value==0){
+    if(value==0)
+    {
       return "flüstern";
     }
-    if(value==1){
+    if(value==1)
+    {
       return "reden";
     }
-    if(value==2){
+    if(value==2)
+    {
       return "rufen";
     }
     return '${value}';
