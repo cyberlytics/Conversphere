@@ -39,7 +39,7 @@
         <div class="textarea" name="text">
           <div id="chatnachricht" style="margin: 0.5em;">
             <div *ngFor="let message of chatContent">            
-              <div style="line-height: 1;" [style.opacity]="(message.visibility)/100">{{message.id}} : {{message.text}}
+              <div style="line-height: 1; white-space: nowrap;" [style.opacity]="(message.visibility)/100">{{message.id}} : {{message.text}}
               </div> 
             </div>
           </div>          
