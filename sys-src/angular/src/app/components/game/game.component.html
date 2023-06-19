@@ -43,7 +43,9 @@
           
         </div>
         <div class="chatroom">  
-          <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>
+          <mat-form-field>
+            <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>
+          </mat-form-field>
           <button class="buttonColor" mat-raised-button (click)="sendMessage()">Senden</button>
         </div>
       </div>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-username',
@@ -14,6 +14,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 
 export class UsernameComponent {
+onOkClick() {
+throw new Error('Method not implemented.');
+}
 
   constructor(
     public dialogRef: MatDialogRef<UsernameComponent>,

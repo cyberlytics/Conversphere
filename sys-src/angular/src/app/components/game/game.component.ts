@@ -13,6 +13,7 @@ import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/interfaces/users';
 import { Room } from 'src/app/interfaces/rooms';
 import { Message } from 'src/app/interfaces/messages';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-game',
@@ -26,6 +27,7 @@ import { Message } from 'src/app/interfaces/messages';
     MatToolbarModule,
     RouterLink,
     ReactiveFormsModule,
+    MatFormFieldModule,
   ],
   providers: [AuthentificationService],
   templateUrl: './game.component.html',
@@ -36,8 +38,8 @@ export class GameComponent
   chatContent: Message[] | undefined = [{id:"Name", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:1},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:1},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:1},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:1},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:1},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:1},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:1},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:1},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:1},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:1},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:1}];
   chatFontSize:number | undefined;
   user:User = {
-    id: "500",
-    nickname: "Testuser",
+    id: "",
+    nickname: "",
     position: {
       x: 0,
       y: 0
@@ -56,7 +58,6 @@ export class GameComponent
       {
         this.chatContent?.shift();
         this.chatContent?.push(data);
-
       }
       else
       {
@@ -137,12 +138,12 @@ export class GameComponent
     return '${value}';
   }
 
-  messageControl = new FormControl('');
+  messageControl = new FormControl();
   sendMessage(){
     const message = this.messageControl.value;
     if(message)
     {
-      this.messageControl.setValue('');
+      this.chatservice.SendMessage(message);
     }
   }
 }
