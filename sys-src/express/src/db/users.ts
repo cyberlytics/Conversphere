@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    id:  {type: mongoose.Schema.Types.ObjectId, required: true},
     nickname: {type: String, required: true},
     position: {type: {x: { type: Number, required: false },y: { type: Number, required: false }},required: false}
 });

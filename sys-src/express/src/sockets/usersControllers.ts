@@ -1,9 +1,7 @@
 import { Namespace, Socket } from "socket.io";
-import { userDisconnected } from "./socketController.js";
-import { User } from "model/User.js";
+import { getUserForRoom, userDisconnected } from "./socketController.js";
 
-import { getUserById} from '../db/users.js'; 
-import { getRooms , leaveRoomWithId, getUsersByRoomId} from '../db/rooms.js'; 
+import { deleteRoomById, leaveRoomWithId} from '../db/rooms.js'; 
 
 interface UserLeftMessage{
   userId: string
@@ -13,9 +11,9 @@ interface UserLeftMessage{
 const usr_connections: {[user_id: string]: Socket} = {}
 
 function handleUsersNamespace(nsp: Namespace) : void {
-  nsp.on("connection", (socket:any) => {
+  nsp.on("connection", async (socket:Socket) => {
     const namespace = socket.nsp.name;
-    if(/^\/ws\/rooms\/[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}\/users/.test(namespace)){
+    if(/^\/ws\/rooms\/[0-9a-fA-F]{24}\/users/.test(namespace)){
       // listen to events for user-actions (leave/join)
       if(typeof socket.handshake.query.user_id === 'string'){
         usr_connections[socket.handshake.query.user_id] = socket;
@@ -25,58 +23,46 @@ function handleUsersNamespace(nsp: Namespace) : void {
           // Get all the user for the room
           const room_id = namespace.slice("/ws/rooms/".length, -("/users".length));
           // remove the user from the room
-          leaveRoomWithId(room_id,message.userId);
-
-          // get the updated user-list from the room
-          const user_ids = await getUsersByRoomId(room_id);
-
-          if(user_ids){
-              // Get the complete user-information
-              const users = user_ids.map(async id =>{
-                const user = await getUserById(id);
-                if(user){
-                  return ({
-                    id: user.id,
-                    nickname: user.nickname,
-                    position:{
-                      x: user.position.x,
-                      y: user.position.y
-                    }
-                  } as User);
-                }
-              });
-              user_ids.forEach((user) => {
-                const connection = usr_connections[user];
-                if(connection){
-                  connection.emit('usersUpdate', users);
-                }else{
-                  console.warn('Not able to find connection for user: ' + user);
-                }    
-              });
-
-              // Send every user in the room the new user-list
-              users.filter(x => x.id != message.userId).forEach((user)=>{
-                const connection = usr_connections[user.id];
-                if(connection){
-                  connection.emit('userLeft', user);
-                }else{
-                  console.warn('Not able to find connection for user: ' + user.id);
-                }
-              });
-
-          }else{
-            console.warn('Not able to retrieve the users for the room: ' + room_id);
-          }
+          await leaveRoomWithId(room_id,message.userId);
 
           // Update the socket-lists
-          userDisconnected(room_id, message.userId);
+          userDisconnected(message.userId);
+
+          // Send update to all participants in the room and if the room is now empty -> delete the room
+          await updateUserListForRoom(room_id);
         });
+
+        // send a notification to the users in the room with the updated user-list
+        const room_id = namespace.slice("/ws/rooms/".length, -("/users".length));
+        updateUserListForRoom(room_id);
       }else{
         console.error('User-Id was not included in the connection-attempt. Disconnecting socket.')
         socket.disconnect();
       }
     }
   });
+}
+
+/**
+ * Sends a update to all the users in the room with the updated user-list.
+ * @param roomId The room for the updates.
+ */
+async function updateUserListForRoom(roomId: string){
+  const users = await getUserForRoom(roomId);
+  if(users.length > 0){
+    users.forEach(user => {
+      // Get connection for user
+      const connection = usr_connections[user.id];
+      if(connection){
+        connection.emit('usersUpdate', users);
+      }else{
+        console.warn('Not able to find connection for user: ' + user.id);
+      }
+    })
+  }else{
+    console.warn('Not able to retrieve users for the room: ' + roomId + ' Deleting room...');
+    deleteRoomById(roomId);
+  }
 }
 
 export {handleUsersNamespace, usr_connections};
