@@ -131,8 +131,8 @@ export class GameComponent
     {
       const windowwidth = window.innerWidth;
       const windowheight = window.innerHeight;
-      //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
-      this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
+      this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
+      //this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
   }
 
