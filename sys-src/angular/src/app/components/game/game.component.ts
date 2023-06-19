@@ -35,11 +35,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class GameComponent
 {
-  chatContent: Message[] | undefined = [{id:"Name", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:1},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:1},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:1},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:1},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:1},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:1},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:1},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:1},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:1},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:1},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:1}];
+  chatContent: Message[] = [{id:"Name", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:90},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:80},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
   chatFontSize:number | undefined;
+  userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
   user:User = {
-    id: "",
-    nickname: "",
+    id: "601",
+    nickname: "Testuser",
     position: {
       x: 0,
       y: 0
@@ -54,16 +55,15 @@ export class GameComponent
   constructor(private chatservice:ChatService)
   {
     chatservice.InitMessagesSocket().subscribe( (data: Message) => {
-      if (this.chatContent?.length == 10)
+      if (this.chatContent.length > 12)
       {
-        this.chatContent?.shift();
-        this.chatContent?.push(data);
+        this.chatContent.shift();
+        this.chatContent.push(data);
       }
       else
       {
-        this.chatContent?.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
+        this.chatContent.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
       }
-
     } );
     chatservice.InitUsersSocket().subscribe();
   }
@@ -74,6 +74,17 @@ export class GameComponent
   prozentualplayerwidth=0;
   player: HTMLElement | null | undefined;
   chatmessage : HTMLElement | null | undefined;
+  ngOnInit() 
+  {
+    this.chatmessage=document.getElementById("chatnachricht");
+    if(this.chatmessage != null)
+    {
+      const windowwidth = window.innerWidth;
+      const windowheight = window.innerHeight;
+      //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
+      this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
+    }    
+  }
   ngAfterInit(){
     this.player = document.getElementById("Spieler");
   }
@@ -101,7 +112,6 @@ export class GameComponent
     this.user.position.x=this.prozentualplayerheight;
     this.user.position.y=this.prozentualplayerwidth;
 
-    //save player position in %
     //send player position to server
   }
 
@@ -122,7 +132,6 @@ export class GameComponent
       //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
       this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
-
   }
 
   formatlabel(value:number): string{
@@ -137,6 +146,7 @@ export class GameComponent
     }
     return '${value}';
   }
+
   leaveRoom()
   {
     this.chatservice.LeaveRoom(this.user);

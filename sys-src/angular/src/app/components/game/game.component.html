@@ -31,18 +31,18 @@
           </mat-slider>
         </div>
         <div id="Spielfeld" class="spielfeld" (click)="onClickAtDiv($event)" >
-          <div id="Spieler" class="spieler">
+          <div id="Spieler" class="spieler"></div>
+          <div *ngFor="let user of userlist" class="player" [style.top.px]="user.position.y" [style.left.px]="user.position.x">
+            <span class="nickname">{{ user.nickname }}</span>
           </div>
         </div>
         <div class="textarea" name="text">
           <div id="chatnachricht" style="margin: 0.5em;">
             <div *ngFor="let message of chatContent">            
-              <div style="line-height: 1;">{{message.id}} : {{message.text}}
-                
+              <div style="line-height: 1;" [style.opacity]="(message.visibility)/100">{{message.id}} : {{message.text}}
               </div> 
             </div>
-          </div>
-          
+          </div>          
         </div>
         <div class="chatroom">           
           <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>          
