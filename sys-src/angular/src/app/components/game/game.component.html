@@ -39,7 +39,7 @@
         <div class="textarea" name="text">
           <div id="chatnachricht" class="Chatnachricht">
             <div *ngFor="let message of chatContent">            
-              <div class="Einzelnachricht" [style.opacity]="(message.visibility)/100">{{message.id}} : {{message.text}}
+              <div class="Einzelnachricht" [style.opacity]="(message.visibility)/100"> {{ getUsernickname(message.user_id) }} : {{message.text}}
               </div> 
             </div>
           </div>          

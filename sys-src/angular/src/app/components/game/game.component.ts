@@ -35,7 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class GameComponent
 {
-  //chatContent: Message[] = [{id:"Message_id", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
+  //chatContent: Message[] = [{id:"Message_id", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"600", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"602", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
   chatContent:Message[]=[];
   chatFontSize:number | undefined;
   //userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
@@ -53,7 +53,10 @@ export class GameComponent
       name: "Raum 1",
       description: "Das ist der Testraum 1"
   }
-
+  getUsernickname(userId: string): string {
+    const user = this.userlist.find(user => user.id === userId);
+    return user ? user.nickname : '';
+  }
   constructor(private chatservice:ChatService)
   {
     chatservice.InitMessagesSocket().subscribe( (data: Message) => {
