@@ -19,6 +19,14 @@
   <div *ngIf="nickname.valid" class="roomInput">
     <div class="createRoom">
       <h4>Einen neuen Raum erstellen</h4>
+      <div >
+        <mat-form-field>
+          <mat-label>Raumnamen angeben:</mat-label>
+          <input matInput placeholder="Raumname"
+          [formControl]="room_name" required>
+          <mat-error *ngIf="nickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
+        </mat-form-field>
+    </div>
       <button
         class="button"
         mat-raised-button
@@ -34,8 +42,8 @@
       <mat-form-field>
         <mat-label>Wähle einen Raum</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="room">
-          <mat-option *ngFor="let room of rooms" [value]="room.value">
-            {{room.viewValue}}
+          <mat-option *ngFor="let room of rooms" [value]="room.id">
+            {{room.id}}
           </mat-option>
         </mat-select>
       </mat-form-field>

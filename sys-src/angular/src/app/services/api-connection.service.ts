@@ -7,6 +7,9 @@ import { Room, Rooms } from '../interfaces/rooms';
   providedIn: 'root'
 })
 export class GameConnectionService {
+  static joinRoom(room_id: any, value: string | null) {
+    throw new Error('Method not implemented.');
+  }
 
   private baseUrl = 'http://localhost:8080/api';
 

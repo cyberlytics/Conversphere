@@ -16,12 +16,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UsernameComponent } from '../username/username.component';
+import { GameConnectionService } from 'src/app/services/api-connection.service';
+import { Room, Rooms } from 'src/app/interfaces/rooms';
 
 
-interface Room {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-startpage',
   standalone: true,
@@ -42,7 +40,7 @@ interface Room {
     ReactiveFormsModule,
     MatSnackBarModule,
   ],
-
+  providers: [GameConnectionService],
   templateUrl: './startpage.component.html',
   styleUrls: ['./startpage.component.scss'],
 })
@@ -53,21 +51,39 @@ export class StartpageComponent {
   imagePath = 'assets/chatIcon.png';
   //List with single selection
   typesOfShoes: string[] = ["Raum1", "Raum2" , "Raum3", "Raum4"];
-  rooms: Room[] = [
-      {value: '', viewValue: ''},
-      {value: 'Room', viewValue: 'Room'},
-      {value: 'Room-1', viewValue: 'Room-1'},
-      {value: 'Room-2', viewValue: 'Room-2'},
-    ];
-
+  rooms: Rooms = Room[];
   // Select with form field
   selectedValue: string | undefined;
   nicknameString!: string | null;
   nickname = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  room_name = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  description = "test description";
+  createdRoom: Room | undefined;
+  joinedRoom: Room | undefined;
   opened: unknown;
   
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar, api-Service: ApiService) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService) {
+    gameConnectionService.getRooms().subscribe((data) => {
+      this.rooms = data.room;
+    });
+  }
+  createNewRoom() {
+    if(this.room_name.value != null) {
+      this.gameConnectionService.createRoom(this.room_name.value, this.description).subscribe((data) => {
+        this.createdRoom = data;
+      });
+    }
+    //GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
+  }
 
+  joinNewRoom() {
+    if(this.createdRoom != null) {
+      GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
+    }else if(this.selectedValue != null) {
+      const roomId : string = findRoomIdWithName(this.selectedValue, this.rooms);
+      GameConnectionService.joinRoom(roomId, this.nickname.value);
+    }
+    //Optional Gibt fehler Meldung als Popup aus "Kein Raum ausgewählt oder erstellt"
   }
 
   // Open Info Dialog for chattrules
@@ -97,4 +113,10 @@ export class StartpageComponent {
       duration: 4000,
     });
   }
+}
+
+function findRoomIdWithName(selectedValue: string, roos: Rooms): string {
+  //Suche nach Raum mit Namen selectedValue
+  // und gibt id zurück
+  return "1";
 }
