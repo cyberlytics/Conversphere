@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ChatService } from 'src/app/services/chat.service';
-import { User } from 'src/app/interfaces/users';
+import { User, Users } from 'src/app/interfaces/users';
 import { Room } from 'src/app/interfaces/rooms';
 import { Message } from 'src/app/interfaces/messages';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -35,9 +35,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class GameComponent
 {
-  chatContent: Message[] = [{id:"Name", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
+  //chatContent: Message[] = [{id:"Message_id", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"500", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"501", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
+  chatContent:Message[]=[];
   chatFontSize:number | undefined;
-  userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
+  //userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
+  userlist:User[]=[];
   user:User = {
     id: "601",
     nickname: "Testuser",
@@ -65,7 +67,9 @@ export class GameComponent
         this.chatContent.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
       }
     } );
-    chatservice.InitUsersSocket().subscribe();
+    chatservice.InitUsersSocket().subscribe((data:Users)=>{
+      this.userlist=data.users;
+    });
   }
 
 
@@ -113,8 +117,7 @@ export class GameComponent
     }
     this.user.position.x=this.prozentualplayerheight;
     this.user.position.y=this.prozentualplayerwidth;
-
-    //send player position to server
+    this.chatservice.userUpdate(this.user);
   }
 
   @HostListener('window:resize', ['$event']) onResize()
