@@ -3,15 +3,17 @@
     <h1>Welcome to Conversphere</h1>
       <img [src]="imagePath" alt="chatIcon.png">
   </div>
+  <button mat-raised-button (click)="copyToClipboard()">Link kopieren</button>
   <h4>Bitte geben Sie einen Nickname ein: </h4>
   <div>
-    <div class="nicknameContainer">
-      <mat-form-field>
+  <div >
+      <mat-form-field class="nickname">
         <mat-label>Nickname:</mat-label>
-        <input matInput placeholder="Geben Sie mindestens 3 Buchstaben ein!" [formControl]="nickname" required>
-        <mat-error *ngIf="nickname.invalid">länge nicht ausreichend</mat-error>
+        <input matInput placeholder="Mindestens 3 Buchstaben! (ohne Leerzeichen)"
+        [formControl]="nickname" required>
+        <mat-error *ngIf="nickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
       </mat-form-field>
-    </div>
+  </div>
   </div>
 
   <div *ngIf="nickname.valid" class="roomInput">
