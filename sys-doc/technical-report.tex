@@ -1,0 +1,134 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
+\hypersetup{      
+	urlcolor=blue,
+}
+\begin{document}
+
+	\title{Conversphere}
+	\author{
+		\IEEEauthorblockN{1\textsuperscript{st} Feil Lukas}
+		\IEEEauthorblockA{
+			\textit{OTH Amberg-Weiden} \\
+			Bad Kötzting, Deutschland \\
+			l.feil@oth-aw.de
+		}
+		\and
+		\IEEEauthorblockN{2\textsuperscript{nd} Markus Fleischmann}
+		\IEEEauthorblockA{
+			\textit{OTH Amberg-Weiden} \\
+			Wernberg-Köblitz, Deutschland\\
+			m.fleischmann2@oth-aw.de
+		}
+		\and
+		\IEEEauthorblockN{3\textsuperscript{rd} Stefan Reger}
+		\IEEEauthorblockA{
+			\textit{OTH Amberg-Weiden} \\
+			Schwarzenfeld, Deutschland \\
+			s.reger@oth-aw.de
+		}
+		\and
+		\IEEEauthorblockN{4\textsuperscript{th} Lukas Rupp}
+		\IEEEauthorblockA{
+			\textit{OTH Amberg-Weiden} \\
+			Amberg, Deutschland \\
+			l.rupp@oth-aw.de
+		}
+		\and
+		\IEEEauthorblockN{5\textsuperscript{th} Sorel Tahata Djoumsi}
+		\IEEEauthorblockA{
+			\textit{OTH Amberg-Weiden} \\
+			Regensburg, Deutschland \\
+			s.tahata-djoumsi@oth-aw.de
+		}
+	}
+
+	\maketitle
+
+	\begin{abstract}
+		Web Chat-App mit Raumfunktion und Proximity-Chat
+	\end{abstract}
+
+	\begin{IEEEkeywords}
+		PWA, Chat, Proximity, Room, Web App, Angular, NodeJS, MongoDB, Express
+	\end{IEEEkeywords}
+
+	\section{Problemstellung}
+    \subsection{Mission statement}
+	Conversphere ist eine Web Chat-Anwendung, die es Benutzern ermöglicht, miteinander über Textnachrichten zu kommunizieren. 
+    Dadurch wird ein sicherer Raum geschaffen in welchem man seine Gedanken und Ideen teilen kann und gleichzeitig sozial distanziert bleibt. 
+    Benötigt wird dafür lediglich ein Gerät mit Webbrowser und ein Internetzugang.
+	\ \\
+
+	\subsection{Kontextabgrenzung}
+	Das System wird im folgenden als Blackbox abgespeichert. 
+    Alle verwendeten externen Systeme werden als Box um die Anwendung „Conversphere“ dargestellt. 
+    Der menschliche Akteur als „Spieler“ kann in diesem Fall als Plural aufgefasst werden, da zur Kommunikation als Dialog mindestens zwei Spieler benötigt werden.
+    - Bild
+    -	Für die Entwicklung des Frontend werden „Angular“ und deren Bibliotheken aus „Angular-Material“ verwendet Angular Progressiv Web App. 
+    Die Kommunikation zum Backend findet über „Socket.io“ statt. Zur Speicherung der Nutzer-, Spiel- und Chatdaten wird die NoSQL Datenbank „MongoDB“ verwendet. 
+    Das Backend läuft auf einem „Express.js“-Server welcher auf „Node.js“ basiert. 
+    Die Website läuft als static Website über „AWS S3“ und wird mittels einem „Docker Containers“ in AWS ECS gehostet.
+	\ \\
+
+	\subsection{Qualitätsziele}
+	\begin{tabular}{ | | | | } 
+        \hline
+        Gute Benutzbarkeit & Conversphere ist für Benutzer aller Altersklassen intuitiv und ohne Erklärung bedienbar.  \\ 
+        \hline
+        Hohe Zuverlässigkeit & Das System steht den Spielern jederzeit zur Verfügung und stellt Chaträume live dar. \\ 
+        \hline
+        Gute Wartbarkeit & Conversphere ist ohne großen Administrationsaufwand betreibbar und leicht um zusätzliche Features erweiterbar. \\ 
+        \hline
+      \end{tabular}
+	\ \\
+
+	\subsection{Entscheidende Rahmenbedingungen}
+	\begin{tabular}{ | | | | } 
+        \hline
+        Zeitlicher Rahmen & Das Projekt ist innerhalb von fünf Kalenderwochen abzuschließen.  \\ 
+        \hline
+        Technischer Anspruch & Das Projekt muss mind. einen der Themenbereiche Web-Anwendung. \\ 
+        \hline
+        Einfachheit in der Anwendung & Die Anwendung soll so einfach gehalten werden, dass sie im gegebenen Zeitraum umgesetzt werden kann. \\ 
+        \hline
+      \end{tabular}
+	\ \\
+
+	\section{Lösungsstrategien}
+	\subsection{Lösungsansätze}
+	Die zuvor benannten Qualitätsziele wurden im Projekt Conversphere folgendermaßen berücksichtigt:  \\
+    \begin{tabular}{ | | | | } 
+        \hline
+        Gute Benutzbarkeit & Durch eine simpel gehaltene Angular-Oberfläche kann die Anwendung intuitiv und ohne Erklärung benutzt werden. 
+        Die Oberfläche ist selbsterklärend und kann ansonsten bei der Anwendung weiter erkundet werden.
+        Zur Benutzung ist lediglich ein Webserver nötig.  \\ 
+        \hline
+        Hohe Zuverlässigkeit & Da die Infrastruktur auf AWS-Diensten basiert ist das System praktisch ohne zu erwartende Ausfälle dauerhaft verfügbar.
+        Nur durch die Benutzereigene Internetanbindung können Probleme bei der Benutzung auftreten.  \\ 
+        \hline
+        Gute Wartbarkeit & Die Nutzung . \\ 
+        \hline
+      \end{tabular}
+
+
+    \subsection{Technologiestack}
+    Das Frontend von Conversphere wird durch Angular gegeben.
+    Die Backend-Infrastruktur basiert auf einem Express-Server welcher auf Node.js läuft. Zur Kommunikation zwischen Frontend und Backend wird eine Socket.io Verbindung genutzt.
+    Alle Nutzer-, Spiel- und Chatdaten werden auf der NoSQL Datenbank „MongoDB“ gespeichert.
+    Für die Verwaltung der AWS Infrastruktur wird AWS S3 benutzt und über AWS ECS gehostet.
+    
+	
+
+\end{document}
