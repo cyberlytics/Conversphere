@@ -42,7 +42,7 @@
       <mat-form-field>
         <mat-label>Wähle einen Raum</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="room">
-          <mat-option *ngFor="let room of rooms" [value]="room.id">
+          <mat-option *ngFor="let room of roomArray" [value]="room.id">
             {{room.id}}
           </mat-option>
         </mat-select>

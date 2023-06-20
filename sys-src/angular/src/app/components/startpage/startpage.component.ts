@@ -51,7 +51,8 @@ export class StartpageComponent {
   imagePath = 'assets/chatIcon.png';
   //List with single selection
   typesOfShoes: string[] = ["Raum1", "Raum2" , "Raum3", "Raum4"];
-  rooms: Rooms = Room[];
+  rooms: Rooms = {room: []};
+  roomArray: Room[] = [];
   // Select with form field
   selectedValue: string | undefined;
   nicknameString!: string | null;
@@ -63,8 +64,12 @@ export class StartpageComponent {
   opened: unknown;
   
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService) {
-    gameConnectionService.getRooms().subscribe((data) => {
-      this.rooms = data.room;
+    
+  }
+  ngOnInit(){
+    this.gameConnectionService.getRooms().subscribe((data) => {
+      this.rooms = data;
+      this.roomArray = data.room;
     });
   }
   createNewRoom() {
@@ -80,8 +85,11 @@ export class StartpageComponent {
     if(this.createdRoom != null) {
       GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
     }else if(this.selectedValue != null) {
-      const roomId : string = findRoomIdWithName(this.selectedValue, this.rooms);
-      GameConnectionService.joinRoom(roomId, this.nickname.value);
+      if(this.rooms != undefined){
+        const roomId : string = findRoomIdWithName(this.selectedValue, this.rooms);
+        GameConnectionService.joinRoom(roomId, this.nickname.value);
+      }
+      
     }
     //Optional Gibt fehler Meldung als Popup aus "Kein Raum ausgewählt oder erstellt"
   }
@@ -97,7 +105,7 @@ export class StartpageComponent {
       console.log('The dialog was closed');
     });
   }
-// Copy Link
+// Copy Link  
   linkToCopy = 'http://localhost:3000/start';
 
   // Snackbar for Copy Link
@@ -115,8 +123,14 @@ export class StartpageComponent {
   }
 }
 
-function findRoomIdWithName(selectedValue: string, roos: Rooms): string {
-  //Suche nach Raum mit Namen selectedValue
-  // und gibt id zurück
-  return "1";
+function findRoomIdWithName(selectedValue: string, rooms: Rooms): string {
+  const arr = rooms.room
+  arr.find((obj) => {
+    if(obj.name == selectedValue){
+      return obj.id
+    }else 
+    return ""
+  })
+  console.log("Shit");
+  return ""
 }
