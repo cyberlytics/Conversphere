@@ -58,6 +58,16 @@ export class ChatService {
   }
 
   /**
+   *  Sends a request to update the user.
+   *  @param user The user to update.
+   */
+  userUpdate(user: User): void{
+    this.users_socket?.emit('userUpdate', user);
+  }
+
+
+
+  /**
    * Subscribes to the websocket chat to receive messages
    * @returns A Message Obejct everytime a new Message was received.
    * @see Message
