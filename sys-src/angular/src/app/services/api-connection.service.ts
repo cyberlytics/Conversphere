@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Rooms } from '../interfaces/rooms';
-import { Messages } from '../interfaces/messages';
+import { Room, Rooms } from '../interfaces/rooms';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +38,20 @@ export class GameConnectionService {
     return this.http.post<JSON>(url,{
       room_id: room_id,
       nickname: nickname
+    } );
+  }
+
+  /**
+   * Create a room
+   * @param name The Name of the room
+   * @param description The description of the room
+   * @returns The created room with an id
+   */
+  createRoom(name: string, description: string): Observable<Room> {
+    const url = `${this.baseUrl}/join`;
+    return this.http.post<Room>(url,{
+      name: name,
+      description: description
     } );
   }
 }
