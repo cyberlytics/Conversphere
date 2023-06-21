@@ -17,3 +17,5 @@ export const createUser = async (nickname: string) => new UserModel({nickname}).
 export const getAllUserNames = () => UserModel.find().distinct('nickname').exec();
 
 
+
+
