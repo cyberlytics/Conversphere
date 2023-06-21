@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ChatService } from 'src/app/services/chat.service';
 import { User } from 'src/app/interfaces/users';
+import { Room } from 'src/app/interfaces/rooms';
+import { Message } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-game',
@@ -35,7 +37,11 @@ export class GameComponent
   chatFontSize:number | undefined;
   user:User = {
     id: "500",
-    nickname: "Testuser"
+    nickname: "Testuser",
+    position: {
+      x: 10,
+      y: 20
+    }
   }
   rooms:Room={
       id: "600",
