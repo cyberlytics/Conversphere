@@ -10,7 +10,6 @@ export const Room = mongoose.model("Room", RoomScheme);
 
 export const getRooms = () => Room.find();
 export const getRoomById = (id: string) => Room.findById(id);
-export const getRoomByName = (name: string) => Room.findOne({ name });
 export const getRoomByDescription = (description: string) => Room.findOne({ description });
 export const deleteRoomById = (id: string) => Room.findByIdAndDelete({ _id: id }).exec();
 export const createRoomWithName = async (name: string, description: string) => new Room({ name, description }).save().then(room => room.toObject());
@@ -29,6 +28,10 @@ export const joinRoomWithId = async (room_id: string, user_id: mongoose.Types.Ob
             users: user_id
         }},
         { new: true });
+};
+
+export const getRoomByName = async (ame: string) : Promise<HydratedDocument<any>> => {
+    return await Room.findOne({ name });
 };
 
 export const getUsersByRoomId = async (room_id: string) => (await Room.findById(room_id))?.users;

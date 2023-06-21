@@ -30,10 +30,8 @@
       <button
         class="button"
         mat-raised-button
-        routerLink="/game"
         [disabled]="!nickname"
-        routerLinkActive="active"
-        ariaCurrentWhenActi (click)="openDialog()">Raumerstellen
+        ariaCurrentWhenActi (click)="createNewRoom()">Raumerstellen
       </button> 
     </div>
 
@@ -42,16 +40,14 @@
       <mat-form-field>
         <mat-label>Wähle einen Raum</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="room">
-          <mat-option *ngFor="let room of roomArray" [value]="room.id">
-            {{room.id}}
+          <mat-option id="option" *ngFor="let room of roomArray" [value]="room.name">
+            {{room.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <button [disabled]="!selectedValue" 
       mat-raised-button 
-      routerLink="/game" 
-      routerLinkActive="active"
-      ariaCurrentWhenActi (click)="openDialog()"
+      ariaCurrentWhenActi (click)="joinRoom()"
       ariaCurrentWhenActi>{{selectedValue}} beitreten
       </button> 
     </div>  

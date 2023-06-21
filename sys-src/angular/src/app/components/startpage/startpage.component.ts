@@ -17,7 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { UsernameComponent } from '../username/username.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
-import { Room, Rooms } from 'src/app/interfaces/rooms';
+import { Room } from 'src/app/interfaces/rooms';
 
 
 @Component({
@@ -47,11 +47,10 @@ import { Room, Rooms } from 'src/app/interfaces/rooms';
 
 
 export class StartpageComponent {
-  
-  imagePath = 'assets/chatIcon.png';
+  // Copy Link  
+  linkToCopy = 'http://localhost:3000/start';
+  imagePath = './assets/chatIcon.png';
   //List with single selection
-  typesOfShoes: string[] = ["Raum1", "Raum2" , "Raum3", "Raum4"];
-  rooms: Rooms = {room: []};
   roomArray: Room[] = [];
   // Select with form field
   selectedValue: string | undefined;
@@ -68,28 +67,34 @@ export class StartpageComponent {
   }
   ngOnInit(){
     this.gameConnectionService.getRooms().subscribe((data) => {
-      this.rooms = data;
-      this.roomArray = data.room;
+      console.log(data);
+      this.roomArray = data;
     });
   }
   createNewRoom() {
     if(this.room_name.value != null) {
       this.gameConnectionService.createRoom(this.room_name.value, this.description).subscribe((data) => {
         this.createdRoom = data;
+        this.roomArray.push(data)
       });
     }
+
     //GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
   }
 
-  joinNewRoom() {
+  joinRoom() {
     if(this.createdRoom != null) {
-      GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
-    }else if(this.selectedValue != null) {
-      if(this.rooms != undefined){
-        const roomId : string = findRoomIdWithName(this.selectedValue, this.rooms);
-        GameConnectionService.joinRoom(roomId, this.nickname.value);
+      if(this.nickname.value != null) {
+          this.gameConnectionService.joinRoom(this.createdRoom.id, this.nickname.value);
       }
+      else 
       
+      if(this.selectedValue != null) { 
+        const roomId : string = findRoomIdWithName(this.selectedValue, this.roomArray);
+        if(this.nickname.value != null) {
+            this.gameConnectionService.joinRoom(roomId, this.nickname.value);
+        } 
+      }
     }
     //Optional Gibt fehler Meldung als Popup aus "Kein Raum ausgewählt oder erstellt"
   }
@@ -105,8 +110,6 @@ export class StartpageComponent {
       console.log('The dialog was closed');
     });
   }
-// Copy Link  
-  linkToCopy = 'http://localhost:3000/start';
 
   // Snackbar for Copy Link
   copyToClipboard() {
@@ -123,9 +126,8 @@ export class StartpageComponent {
   }
 }
 
-function findRoomIdWithName(selectedValue: string, rooms: Rooms): string {
-  const arr = rooms.room
-  arr.find((obj) => {
+function findRoomIdWithName(selectedValue: string, rooms: Room[]): string {
+  rooms.find((obj) => {
     if(obj.name == selectedValue){
       return obj.id
     }else 
