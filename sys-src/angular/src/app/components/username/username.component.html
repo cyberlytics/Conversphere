@@ -1,6 +1,11 @@
-<h1 mat-dialog-title>Regeln für unseren Chat</h1>
+<h1>Hallo {{nickname}}: <a
+  mat-dialog-title>Bitte beachte folgende Regeln für den Chat: </a></h1>
 <div mat-dialog-content>
-  <p>{{ data.text }}</p>
+  - Sei höflich und respektvoll: Behandle andere Chatteilnehmer mit Freundlichkeit und Respekt.
+  <br>- Vermeide beleidigende oder abfällige Bemerkungen.
+  <br>- Keine Diskriminierung oder Belästigung: 
+  <br>- Diskriminierung, Belästigung, Beleidigungen oder respektloses Verhalten sind inakzeptabel. 
+    <br>- Jeder sollte sich sicher und wohl fühlen können.
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onOkClick()">Ok</button>

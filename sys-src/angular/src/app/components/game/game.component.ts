@@ -81,7 +81,7 @@ export class GameComponent
   prozentualplayerwidth=0;
   player: HTMLElement | null | undefined;
   chatmessage : HTMLElement | null | undefined;
-  ngOnInit() 
+  ngOnInit()
   {
     this.chatmessage=document.getElementById("chatnachricht");
     if(this.chatmessage != null)
@@ -90,7 +90,7 @@ export class GameComponent
       const windowheight = window.innerHeight;
       //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
       this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
-    }    
+    }
   }
   ngAfterInit(){
     this.player = document.getElementById("Spieler");
