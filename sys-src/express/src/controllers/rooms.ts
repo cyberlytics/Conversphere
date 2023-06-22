@@ -1,5 +1,5 @@
 import { User } from './../model/User.js';
-import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId } from './../db/rooms.js';
+import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId, getRoomByName } from './../db/rooms.js';
 import { getUserByNickname , createUser, getAllUserNames} from '../db/users.js';
 import {  Request, Response } from 'express';
 
@@ -61,7 +61,14 @@ export const createRoom = async (req: Request, res: Response) => {
     try{
         const {name, description} = req.body;
 
+        //Überprüfe ob Raum schon vorhanden!
+        // const db_old = await getRoomByName(name);
+        // if(db_old != null){
+        //     return res.status(500);
+        // }
+
         const db_room = await createRoomWithName(name, description);
+
         const room = {
             id: db_room._id.toString(),
             name: db_room.name,
