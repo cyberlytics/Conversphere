@@ -18,6 +18,7 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import { UsernameComponent } from '../username/username.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 import { Room } from 'src/app/interfaces/rooms';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-startpage',
@@ -62,15 +63,23 @@ export class StartpageComponent {
   lastSelection!: Room; 
   opened: unknown;
   
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService, private router: Router) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService, public router: Router) {
     
   }
   ngOnInit(){
+   this.getRooms();
+  }
+
+  getRooms(){
     this.gameConnectionService.getRooms().subscribe((data) => {
       console.log(data);
       this.roomArray = data;
+      data.forEach((element: Room) => {
+        this.roomArray.push(element);
+      });
     });
   }
+
   createNewRoom() {
     if(this.room_name.value != null) {
       this.gameConnectionService.createRoom(this.room_name.value, this.description).subscribe((data) => {
@@ -86,7 +95,7 @@ export class StartpageComponent {
   joinRoom() { 
     if(this.selectedValue != null) { 
       if(this.nickname.value != null) {
-          const roomId : string = findRoomIdWithName(this.selectedValue, this.roomArray);
+          const roomId : string = this.findRoomIdWithName(this.selectedValue, this.roomArray);
           console.log("call joinRoom");
           this.gameConnectionService.joinRoom(roomId, this.nickname.value).subscribe((data) => {
             console.log(data);
@@ -121,14 +130,16 @@ export class StartpageComponent {
       duration: 4000,
     });
   }
-}
 
-function findRoomIdWithName(selectedValue: string, rooms: Room[]): string {
-  const matchedRoom = rooms.find((obj) => obj.name === selectedValue);
-  if (matchedRoom) {
-    return matchedRoom.id;
-  } else {
-    console.log("Roomname not found");
-    return "";
+  findRoomIdWithName(selectedValue: string, rooms: Room[]): string {
+    const matchedRoom = rooms.find((obj) => obj.name === selectedValue);
+    if (matchedRoom) {
+      return matchedRoom.id;
+    } else {
+      console.log("Roomname not found");
+      return "";
+    }
   }
 }
+
+
