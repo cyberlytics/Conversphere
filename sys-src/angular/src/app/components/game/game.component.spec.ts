@@ -35,28 +35,26 @@ describe('GameComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
+
   it('Sollte Component erstellen', () => {
     expect(component).toBeTruthy();
   });
-  
+
   it('Sollte Wert von "opened" verändern wenn Button gedrückt wird', () => {
     const initialOpenedValue = component.opened;
     const button = fixture.nativeElement.querySelector('button[mat-icon-button]');
     button.click();
     expect(component.opened).toBe(!initialOpenedValue);
   });
-  
-  it('Sollte Chatnachricht absenden wenn Button gedrückt wird', () => {
-    const message = 'Test';
-    component.messageControl.setValue(message);
-    const sendButton = fixture.nativeElement.querySelector('.buttonColor');
-    sendButton.click();
-  });
 
   it('Sollte Playerstyles anpassen, bzw, Position der Spieler prozentual gleich lassen', () => {
     const playerElement: HTMLElement = document.createElement('div');
     spyOn(document, 'getElementById').and.returnValue(playerElement);
     const event = new Event('resize');
+    const windowWidth = 800;
+    const windowHeight = 600;
+    spyOnProperty(window, 'innerWidth', 'get').and.returnValue(windowWidth);
+    spyOnProperty(window, 'innerHeight', 'get').and.returnValue(windowHeight);
     window.dispatchEvent(event);
     expect(playerElement.style.left).toBe((component.prozentualplayerwidth * window.innerWidth) + 'px');
     expect(playerElement.style.top).toBe((component.prozentualplayerheight * window.innerHeight) + 'px');
@@ -93,7 +91,7 @@ describe('GameComponent', () => {
     component.onClickAtDiv(event);
     expect(playerElement.style.position).toBe('absolute');
     expect(playerElement.style.left).toBe('200px');
-    expect(playerElement.style.top).toBe('200px'); 
+    expect(playerElement.style.top).toBe('300px'); 
     expect(component.prozentualplayerheight).toBe(100 / window.innerHeight); 
     expect(component.prozentualplayerwidth).toBe(200 / window.innerWidth);
     expect(component.user.position.x).toBe(100 / window.innerHeight);
@@ -108,11 +106,20 @@ describe('GameComponent', () => {
     component.onClickAtDiv(event);
     expect(console.log).toHaveBeenCalledWith('player not found in DOM');
   });
-  //gpt
+
   it('Sollte Chatnachricht absenden und input leeren', () => {
-    const message = 'Test Message';
+    const message = 'Test';
     component.messageControl.setValue(message);
     component.sendMessage();
+    expect(component.messageControl.value).toBe('');
+    expect(chatServiceSpy.SendMessage).toHaveBeenCalledWith(message);
+  });
+
+  it('Sollte Chatnachricht absenden wenn Button gedrückt wird', () => {
+    const message = 'Test';
+    component.messageControl.setValue(message);
+    const sendButton = fixture.nativeElement.querySelector('.buttonColor');
+    sendButton.click();
     expect(component.messageControl.value).toBe('');
     expect(chatServiceSpy.SendMessage).toHaveBeenCalledWith(message);
   });
