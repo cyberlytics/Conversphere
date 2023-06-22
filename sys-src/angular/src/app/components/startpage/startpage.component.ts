@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog'; 
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -62,7 +62,7 @@ export class StartpageComponent {
   lastSelection!: Room; 
   opened: unknown;
   
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService, private router: Router) {
     
   }
   ngOnInit(){
@@ -90,10 +90,10 @@ export class StartpageComponent {
           console.log("call joinRoom");
           this.gameConnectionService.joinRoom(roomId, this.nickname.value).subscribe((data) => {
             console.log(data);
+            this.router.navigate(['/room/'+ roomId]);
           });
       }
     }
-    //Optional Gibt fehler Meldung als Popup aus "Kein Raum ausgewählt oder erstellt"
   }
 
   // Open Info Dialog for chattrules
@@ -126,7 +126,6 @@ export class StartpageComponent {
 function findRoomIdWithName(selectedValue: string, rooms: Room[]): string {
   const matchedRoom = rooms.find((obj) => obj.name === selectedValue);
   if (matchedRoom) {
-    console.log("Roon id: "+ matchedRoom.id);
     return matchedRoom.id;
   } else {
     console.log("Roomname not found");
