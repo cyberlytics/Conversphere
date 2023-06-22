@@ -11,10 +11,10 @@ import { ChatService } from 'src/app/services/chat.service';
 describe('GameComponent', () => {
   let component: GameComponent;
   let fixture: ComponentFixture<GameComponent>;
-  let chatServiceSpy: jasmine.SpyObj<any>; //gpt
+  let chatServiceSpy: jasmine.SpyObj<any>;
 
   beforeEach(async () => {
-    chatServiceSpy = jasmine.createSpyObj('ChatService', ['SendMessage']);  //gpt
+    chatServiceSpy = jasmine.createSpyObj('ChatService', ['SendMessage']);
     await TestBed.configureTestingModule({
       declarations: [GameComponent],
     imports: [
@@ -25,7 +25,7 @@ describe('GameComponent', () => {
       MatToolbarModule,
       RouterTestingModule,
     ],
-    providers: [{ provide: ChatService, useValue: chatServiceSpy }], //gpt
+    providers: [{ provide: ChatService, useValue: chatServiceSpy }],
     }).compileComponents();
 
   });
