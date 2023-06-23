@@ -1,5 +1,9 @@
 ## conversphere 
 
+# My test files (don`t touch)
+gitinspector.html
+gitinspector_run.txt
+
 # Tex/Latex
 docu/*synctex.gz
 docu/*.aux
