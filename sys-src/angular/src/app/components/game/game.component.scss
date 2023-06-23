@@ -66,10 +66,31 @@ mat-form-field{
   margin-top: 2em;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  line-break:inherit;
 }
 .textinput {
-  width: 50vw;
+  width: 75vw;
   height: 7vh;
   font-size: 2vw;
+}
+.player {
+  background-color: purple;
+  width: 5px;
+  height: 5px;
+  position: absolute;
+}
+.nickname {
+  color: white;
+  font-size: 10px;
+  position: absolute;
+  top: 2px;
+}
+.Einzelnachricht{
+  line-height: 1; 
+  white-space: nowrap;
+}
+.Chatnachricht{
+  margin: 0.5em;
 }
 
