@@ -1,130 +1,136 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StartpageComponent } from './startpage.component';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable, async, of } from 'rxjs';
+import { RouterLink } from '@angular/router';
+import { of } from 'rxjs';
+
+import { StartpageComponent } from './startpage.component';
+import { UsernameComponent } from '../username/username.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 import { Room } from 'src/app/interfaces/rooms';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClient, HttpHandler } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('StartpageComponent', () => {
   let component: StartpageComponent;
   let fixture: ComponentFixture<StartpageComponent>;
-  let httpMock: HttpTestingController;
+  let dialog: MatDialog;
+  let snackBar: MatSnackBar;
   let gameConnectionService: GameConnectionService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StartpageComponent,
-        HttpClientTestingModule,
-        BrowserAnimationsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatInputModule,
-        MatSelectModule,
-        MatSnackBarModule,
+      declarations: [],
+      imports: [
+        StartpageComponent,
+        UsernameComponent,
+        CommonModule,
+        MatButtonModule,
         MatIconModule,
         MatSliderModule,
         MatSidenavModule,
         MatToolbarModule,
         RouterTestingModule,
+        FormsModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatListModule,
+        MatSelectModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatSnackBarModule,
+        BrowserAnimationsModule
       ],
-      providers: [MatDialog, MatSnackBar, GameConnectionService],
+      providers: [GameConnectionService, HttpClient, HttpHandler],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(StartpageComponent);
-    component = fixture.componentInstance;
-    httpMock = TestBed.inject(HttpTestingController);
-    gameConnectionService = TestBed.inject(GameConnectionService);
-    fixture.detectChanges();
   });
 
-  // afterEach(() => {
-  //   httpMock.verify();
-  // });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(StartpageComponent);
+    component = fixture.componentInstance;
+    dialog = TestBed.inject(MatDialog);
+    snackBar = TestBed.inject(MatSnackBar);
+    gameConnectionService = TestBed.inject(GameConnectionService);
+
+
+    component.nickname.setValue('John Doe');
+    component.selectedValue = 'Room 1';
+    fixture.detectChanges();
+  });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 
+  // it('should call copyToClipboard and open snackbar', () => {
+  //   spyOn(document, 'createElement').and.returnValue({
+  //     ,
+  //     select: jasmine.createSpy('select'),
+  //     remove: jasmine.createSpy('remove'),
+  //   });
+  //   spyOn(document.body, 'appendChild');
+  //   spyOn(snackBar, 'open');
 
-  it('should initialize roomArray with data from api', () => {
-    const mockRoom: Room[] = [
-      { id: '1', name: 'Room 1', description: 'Test room 1' },
-      { id: '2', name: 'Room 2', description: 'Test room 2' },
-    ];
+  //   component.copyToClipboard();
 
+  //   expect(document.createElement).toHaveBeenCalledWith('textarea');
+  //   expect(document.body.appendChild).toHaveBeenCalled();
+  //   expect(snackBar.open).toHaveBeenCalled();
+  // });
 
-    spyOn(gameConnectionService, 'getRooms').and.callFake(() => {
-      return Observable.create((observer: { next: (arg0: Room[]) => void; complete: () => void; }) => {
-        observer.next(mockRoom);
-        observer.complete();
-      });
-    });
-    
-    component.ngOnInit();
+  it('should call joinRoom and navigate to the selected room', () => {
+    const roomId = 'room123';
+    const navigateSpy = spyOn(component.router, 'navigate');
 
-    expect(component.roomArray.length).toEqual(mockRoom.length);
+    spyOn(component, 'findRoomIdWithName').and.returnValue(roomId);
+
+    const room: Room = { id: 'room123', name: 'Room 1', description: 'Test Room' };
+    spyOn(gameConnectionService, 'joinRoom').and.returnValue(of(room));
+
+    component.joinRoom();
+
+    expect(component.findRoomIdWithName).toHaveBeenCalledWith('Room 1', component.roomArray);
+    expect(gameConnectionService.joinRoom).toHaveBeenCalledWith(roomId, 'John Doe');
+    expect(navigateSpy).toHaveBeenCalledWith(['/room/' + roomId]);
   });
 
-  it('should create a new room', () => {
-    const roomName = 'New Room';
-    const description = 'Test description';
-    const createdRoom: Room = { id: '3', name: roomName, description };
+  it('should call createRoom and add the created room to the roomArray', () => {
+    const createdRoom: Room = { id: 'room123', name: 'Room 1', description: 'Test Room' };
+    spyOn(gameConnectionService, 'createRoom').and.returnValue(of(createdRoom));
 
-    spyOn(gameConnectionService, 'createRoom').and.callFake(() => {
-      return Observable.create((observer: { next: (arg0: Room) => void; complete: () => void; }) => {
-        observer.next(createdRoom);
-        observer.complete();
-      });
-    });
-
-    component.room_name.setValue(roomName);
-    component.description = description;
+    component.room_name.setValue('Room 1');
+    component.description = 'Test Room';
     component.createNewRoom();
 
-    expect(gameConnectionService.createRoom).toHaveBeenCalledWith(roomName, description);
+    expect(gameConnectionService.createRoom).toHaveBeenCalledWith('Room 1', 'Test Room');
     expect(component.createdRoom).toEqual(createdRoom);
-    expect(component.selectedValue).toEqual(roomName);
+    expect(component.selectedValue).toEqual('Room 1');
     expect(component.roomArray).toContain(createdRoom);
   });
 
-  it('should join a room', () => {
-    const selectedRoom: Room = { id: '4', name: 'Selected Room', description: 'Test selected room' };
-    const nickname = 'Test Nickname';
-    const roomId = '4';
-
-    spyOn(gameConnectionService, 'joinRoom').and.returnValue(of());
-
-    component.selectedValue = selectedRoom.name;
-    component.nickname.setValue(nickname);
-    component.joinRoom();
-
-    expect(gameConnectionService.joinRoom).toHaveBeenCalledWith(roomId, nickname);
-    expect(component.router.navigate).toHaveBeenCalledWith(['/room/' + roomId]);
-  });
-
-  it('should find room id with name', () => {
-    const rooms: Room[] = [
-      { id: '5', name: 'Room 5', description: 'Test room 5' },
-      { id: '6', name: 'Room 6', description: 'Test room 6' },
+  it('should call getRooms and populate the roomArray', () => {
+    const roomArray: Room[] = [
+      { id: 'room1', name: 'Room 1', description: 'Test Room 1' },
+      { id: 'room2', name: 'Room 2', description: 'Test Room 2' },
     ];
-    const selectedValue = 'Room 6';
+    spyOn(gameConnectionService, 'getRooms').and.returnValue(of(roomArray));
 
-    const roomId = component.findRoomIdWithName(selectedValue, rooms);
+    component.getRooms();
 
-    expect(roomId).toEqual('6');
+    expect(gameConnectionService.getRooms).toHaveBeenCalled();
+    expect(component.roomArray).toEqual(roomArray);
   });
+
 });

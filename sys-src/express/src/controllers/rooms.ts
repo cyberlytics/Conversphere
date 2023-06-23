@@ -1,6 +1,6 @@
-import { User } from './../model/User.js';
-import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId, getRoomByName } from './../db/rooms.js';
-import { getUserByNickname , createUser, getAllUserNames} from '../db/users.js';
+import { User } from './../model/User';
+import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId, getRoomByName } from './../db/rooms';
+import { getUserByNickname , createUser, getAllUserNames} from '../db/users';
 import {  Request, Response } from 'express';
 
 export const getAllRooms = async(req: Request, res: Response) => {

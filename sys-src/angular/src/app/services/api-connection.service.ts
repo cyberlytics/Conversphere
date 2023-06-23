@@ -32,9 +32,9 @@ export class GameConnectionService {
    * @param nickname
    * @returns
    */
-  public joinRoom(room_id: string, nickname: string): Observable<JSON> {
+  public joinRoom(room_id: string, nickname: string): Observable<Room> {
     const url = `${this.baseUrl}/joinRoom`;
-    return this.http.post<JSON>(url,{
+    return this.http.post<Room>(url,{
       room_id: room_id,
       nickname: nickname
     } );
