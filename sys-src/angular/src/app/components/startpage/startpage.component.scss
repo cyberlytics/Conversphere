@@ -17,7 +17,7 @@
   align-self: center;
   background-color: orange;
   color: black;
-  height: 50px; //in zukunft mit zb 10vh 
+  height: 50px; //in zukunft mit zb 10vh
   width: 100vw;
   margin: 0 0 0 0;
 }
@@ -42,4 +42,7 @@
   flex-direction: column;
   justify-content: center;
   align-self: center;
+}
+.img{
+  background-image: "assets/img/chatIcon.png";
 }

@@ -1,7 +1,7 @@
 <div class="startpage">
   <div class="header">
     <h1>Welcome to Conversphere</h1>
-      <img [src]="imagePath" alt="chatIcon.png">
+      <div clas="img"></div>
   </div>
   <button mat-raised-button (click)="copyToClipboard()">Link kopieren</button>
   <h4>Bitte geben Sie einen Nickname ein: </h4>
@@ -10,48 +10,48 @@
       <mat-form-field class="nickname">
         <mat-label>Nickname:</mat-label>
         <input matInput placeholder="Mindestens 3 Buchstaben! (ohne Leerzeichen)"
-        [formControl]="nickname" required>
-        <mat-error *ngIf="nickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
+        [formControl]="formNickname" required>
+        <mat-error *ngIf="formNickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
       </mat-form-field>
   </div>
   </div>
 
-  <div *ngIf="nickname.valid" class="roomInput">
+  <div *ngIf="formNickname.valid" class="roomInput">
     <div class="createRoom">
       <h4>Einen neuen Raum erstellen</h4>
       <div >
         <mat-form-field>
           <mat-label>Raumnamen angeben:</mat-label>
           <input matInput placeholder="Raumname"
-          [formControl]="room_name" required>
-          <mat-error *ngIf="nickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
+          [formControl]="formRoomName" required [(ngModel)]="roomName">
+          <mat-error *ngIf="formRoomName.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
         </mat-form-field>
     </div>
       <button
         class="button"
         mat-raised-button
-        [disabled]="!nickname"
+        [disabled]="roomName == null || roomName == '' || roomName == undefined"
         ariaCurrentWhenActi (click)="createNewRoom()">Raumerstellen
-      </button> 
+      </button>
     </div>
 
     <div class="chooseRoom">
       <h4>Raum beitreten: </h4>
       <mat-form-field>
         <mat-label>Wähle einen Raum</mat-label>
-        <mat-select [(ngModel)]="selectedValue" name="room">
+        <mat-select [(ngModel)]="selectedRoom" name="room">
           <mat-option id="option" *ngFor="let room of roomArray" [value]="room.name">
             {{room.name}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <button [disabled]="!selectedValue" 
+      <button [disabled]="!selectedRoom"
       mat-raised-button
       (click)="joinRoom()"
-      ariaCurrentWhenActi>{{selectedValue}} beitreten
-      </button> 
-    </div>  
-  </div> 
+      ariaCurrentWhenActi>{{selectedRoom}} beitreten
+      </button>
+    </div>
+  </div>
 </div>
 
 

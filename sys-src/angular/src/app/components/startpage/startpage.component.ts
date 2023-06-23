@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog'; 
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {NgFor} from '@angular/common';
 import {MatListModule} from '@angular/material/list';
@@ -18,24 +18,23 @@ import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angula
 import { UsernameComponent } from '../username/username.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 import { Room } from 'src/app/interfaces/rooms';
-import { of } from 'rxjs';
 
 @Component({
   selector: 'app-startpage',
   standalone: true,
-  imports: [CommonModule, 
-    MatButtonModule, 
+  imports: [CommonModule,
+    MatButtonModule,
     MatIconModule,
     MatSliderModule,
     MatSidenavModule,
     MatToolbarModule,
     RouterLink,
     FormsModule,
-    MatDialogModule, 
+    MatDialogModule,
     MatFormFieldModule,
-    MatListModule, 
-    NgFor,FormsModule, 
-    MatSelectModule, 
+    MatListModule,
+    NgFor,FormsModule,
+    MatSelectModule,
     MatInputModule,
     ReactiveFormsModule,
     MatSnackBarModule,
@@ -47,24 +46,25 @@ import { of } from 'rxjs';
 
 
 export class StartpageComponent {
-  // Copy Link  
+  //Data for Startpage
+  roomName!: string;
+  nickname!: string;
+  selectedRoom!: string;
+  createdRoom!: Room;
+  joinedRoom!: Room;
+  // Copy Link
   linkToCopy = 'http://localhost:3000/start';
-  imagePath = './assets/chatIcon.png';
   //List with single selection
   roomArray: Room[] = [];
   // Select with form field
-  selectedValue: string | undefined;
-  nicknameString!: string | null;
-  nickname = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
-  room_name = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  formNickname = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  formRoomName = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
   description = "test description";
-  createdRoom: Room | undefined;
-  joinedRoom: Room | undefined;
-  lastSelection!: Room; 
+
   opened: unknown;
-  
+
   constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService, public router: Router) {
-    
+
   }
   ngOnInit(){
    this.getRooms();
@@ -74,43 +74,30 @@ export class StartpageComponent {
     this.gameConnectionService.getRooms().subscribe((data) => {
       console.log(data);
       this.roomArray = data;
-      data.forEach((element: Room) => {
-        this.roomArray.push(element);
-      });
     });
   }
 
   createNewRoom() {
-    if(this.room_name.value != null) {
-      this.gameConnectionService.createRoom(this.room_name.value, this.description).subscribe((data) => {
-        this.createdRoom = data;
-        this.selectedValue = data.name;
-        this.roomArray.push(data)
-      });
-    }
-
-    //GameConnectionService.joinRoom(this.createdRoom?.id, this.nickname.value);
+    this.gameConnectionService.createRoom(this.roomName, this.description).subscribe((data) => {
+      this.createdRoom = data;
+      this.selectedRoom = data.name;
+      this.roomArray.push(data)
+    });
   }
 
-  joinRoom() { 
-    if(this.selectedValue != null) { 
-      if(this.nickname.value != null) {
-          const roomId : string = this.findRoomIdWithName(this.selectedValue, this.roomArray);
-          console.log("call joinRoom");
-          this.gameConnectionService.joinRoom(roomId, this.nickname.value).subscribe((data) => {
-            console.log(data);
-            this.router.navigate(['/room/'+ roomId]);
-          });
-      }
-    }
+  joinRoom() {
+    const roomId : string = this.findRoomIdWithName(this.selectedRoom, this.roomArray);
+    this.gameConnectionService.joinRoom(roomId, this.nickname).subscribe((data) => {
+      console.log(data);
+      this.router.navigate(['/room/'+ roomId]);
+    });
   }
 
   // Open Info Dialog for chattrules
   openDialog(): void {
-    this.nicknameString = this.nickname.value;
     const dialogRef = this.dialog.open(UsernameComponent, {
       width: '60vw',
-      data: {nickname: this.nicknameString }
+      data: {nickname: this.nickname }
     });
     dialogRef.afterClosed().subscribe( () => {
       console.log('The dialog was closed');
@@ -125,7 +112,7 @@ export class StartpageComponent {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-  
+
     this.snackBar.open('Link wurde in die Zwischenablage kopiert', 'Schließen', {
       duration: 4000,
     });
