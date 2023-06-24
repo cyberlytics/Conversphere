@@ -30,7 +30,7 @@ export const joinRoomWithId = async (room_id: string, user_id: mongoose.Types.Ob
         { new: true });
 };
 
-export const getRoomByName = async (ame: string) : Promise<HydratedDocument<any>> => {
+export const getRoomByName = async (name: string) : Promise<HydratedDocument<any>> => {
     return await Room.findOne({ name });
 };
 
