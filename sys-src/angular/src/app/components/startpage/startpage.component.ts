@@ -15,7 +15,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { UsernameComponent } from '../username/username.component';
+import { DialogComponent } from '../dialog/dialog.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 import { Room } from 'src/app/interfaces/rooms';
 
@@ -96,7 +96,7 @@ export class StartpageComponent {
 
   // Open Info Dialog for chattrules
   openDialog(): void {
-    const dialogRef = this.dialog.open(UsernameComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       width: '60vw',
       data: {nickname: this.nickname }
     });

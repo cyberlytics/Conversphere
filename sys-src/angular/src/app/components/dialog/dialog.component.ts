@@ -6,18 +6,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-username',
+  selector: 'app-dialog',
   standalone: true,
   imports: [CommonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule,],
-  templateUrl: './username.component.html',
-  styleUrls: ['./username.component.scss']
+  templateUrl: './dialog.component.html',
+  styleUrls: ['./dialog.component.scss']
 })
 
-export class UsernameComponent {
+export class DialogComponent {
   nickname: string | undefined;
 
   constructor(
-    public dialogRef: MatDialogRef<UsernameComponent>,
+    public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.nickname = data.nickname;
   }

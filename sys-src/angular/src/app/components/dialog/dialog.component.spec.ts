@@ -4,15 +4,15 @@ from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { UsernameComponent } from './username.component';
+import { DialogComponent } from './dialog.component';
 
 describe('UsernameComponent', () => {
-    let component: UsernameComponent;
-    let fixture: ComponentFixture<UsernameComponent>;
+    let component: DialogComponent;
+    let fixture: ComponentFixture<DialogComponent>;
     beforeEach(async () => {
   
       await TestBed.configureTestingModule({
-        imports: [ UsernameComponent, NoopAnimationsModule ],
+        imports: [ DialogComponent, NoopAnimationsModule ],
         providers: [
           provideHttpClient(),
           provideHttpClientTesting(),
@@ -22,7 +22,7 @@ describe('UsernameComponent', () => {
       })
       .compileComponents();
   
-      fixture = TestBed.createComponent(UsernameComponent);
+      fixture = TestBed.createComponent(DialogComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
