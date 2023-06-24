@@ -60,11 +60,37 @@ describe('StartpageComponent', () => {
     component.joinRoom();
     const req2 = ctrl.expectOne('http://localhost:8080/api/joinRoom');
     req2.flush(mockoneRoom);
-    
+
     expect(component.joinedRoom).toEqual(mockoneRoom);
     expect(navigateSpy).toHaveBeenCalledWith(['/room/' + mockoneRoom.id]);
     ctrl.verify();
   });
+
+  it('should createnewRoom', () => {
+    const ctrl = TestBed.inject(HttpTestingController);
+    const req1 = ctrl.expectOne('http://localhost:8080/api/rooms');
+  
+    req1.flush(mockRoomArray);
+
+    component.createNewRoom();
+    const req2 = ctrl.expectOne('http://localhost:8080/api/createRoom');
+    req2.flush(mockoneRoom);
+    
+    expect(component.createdRoom).toEqual(mockoneRoom);
+    expect(component.selectedRoom).toEqual(mockoneRoom.name);
+  
+    ctrl.verify();
+  });
+
+
+  it('test findRoomIdWithName '), () => {
+    const ergebnis = component.findRoomIdWithName(mockRoomName, mockRoomArray);
+    
+    expect(ergebnis).toEqual(mockoneRoom.id);
+  }
+
+   
+
 
 
 
