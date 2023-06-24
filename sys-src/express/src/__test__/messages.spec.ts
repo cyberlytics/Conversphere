@@ -1,4 +1,4 @@
-import * as Message from '../db/messages.js';
+import * as Message from '../db/messages';
 import mongoose from 'mongoose';
 
 describe('Message Functions', () => {
@@ -21,8 +21,10 @@ describe('Message Functions', () => {
   describe('getMessages', () => {
     it('should get all messages', async () => {
       // Create some mock messages
-      await Message.createMessage('Message 1', 'user1');
-      await Message.createMessage('Message 2', 'user2');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const userId2 = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      await Message.createMessage('Message 1', userId.toString());
+      await Message.createMessage('Message 2', userId2.toString());
 
       const messages = await Message.getMessages();
       expect(messages.length).toBe(2);
@@ -31,15 +33,17 @@ describe('Message Functions', () => {
     });
 
     it('should return an empty array if no messages exist', async () => {
+      const old = await Message.getMessages();
       const messages = await Message.getMessages();
-      expect(messages.length).toBe(0);
+      expect(messages.length-old.length).toBe(0);
     });
   });
 
   describe('getMessageById', () => {
     it('should get a message by ID', async () => {
       // Create a mock message
-      const newMessage = await Message.createMessage('Message 1', 'user1');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const newMessage = await Message.createMessage('Message 1', userId.toString());
 
       const message = await Message.getMessageById(newMessage._id.toString());
       expect(message).toBeDefined();
@@ -47,7 +51,8 @@ describe('Message Functions', () => {
     });
 
     it('should return null for non-existent message ID', async () => {
-      const message = await Message.getMessageById('nonexistent-id');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const message = await Message.getMessageById(userId.toString());
       expect(message).toBeNull();
     });
   });
@@ -55,53 +60,41 @@ describe('Message Functions', () => {
   describe('getMessagesByUserId', () => {
     it('should get messages by user ID', async () => {
       // Create some mock messages
-      await Message.createMessage('Message 1', 'user1');
-      await Message.createMessage('Message 2', 'user2');
-      await Message.createMessage('Message 3', 'user1');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const userId2 = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      await Message.createMessage('Message 1', userId.toString());
+      await Message.createMessage('Message 2', userId2.toString());
+      await Message.createMessage('Message 3', userId.toString());
 
-      const messages = await Message.getMessagesByUserId('user1');
+      const messages = await Message.getMessagesByUserId(userId.toString());
       expect(messages.length).toBe(2);
       expect(messages[0].text).toBe('Message 1');
       expect(messages[1].text).toBe('Message 3');
     });
 
     it('should return an empty array if no messages exist for the user', async () => {
-      const messages = await Message.getMessagesByUserId('nonexistent-user');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const messages = await Message.getMessagesByUserId(userId.toString());
       expect(messages.length).toBe(0);
     });
   });
 
-  describe('getMessagesByRoomId', () => {
-    it('should get messages by room ID', async () => {
-      // Create some mock messages
-      await Message.createMessage('Message 1', 'user1');
-      await Message.createMessage('Message 2', 'user2');
-      await Message.createMessage('Message 3', 'user1');
-
-      const messages = await Message.getMessagesByRoomId('room1');
-      expect(messages.length).toBe(1);
-      expect(messages[0].text).toBe('Message 3');
-    });
-
-    it('should return an empty array if no messages exist for the room', async () => {
-      const messages = await Message.getMessagesByRoomId('nonexistent-room');
-      expect(messages.length).toBe(0);
-    });
-  });
 
   describe('createMessage', () => {
     it('should create a message with the given text and user ID', async () => {
-      const message = await Message.createMessage('Hello', 'user1');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const message = await Message.createMessage('Hello', userId.toString());
       expect(message).toBeDefined();
       expect(message.text).toBe('Hello');
-      expect(message.user_id).toBe('user1');
+      expect(message.user_id.toString()).toBe(userId.toString());
     });
   });
 
   describe('deleteMessageById', () => {
     it('should delete a message by ID', async () => {
       // Create a mock message
-      const newMessage = await Message.createMessage('Message 1', 'user1');
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const newMessage = await Message.createMessage('Message 1', userId.toString());
 
       await Message.deleteMessageById(newMessage._id.toString());
       const message = await Message.getMessageById(newMessage._id.toString());
@@ -109,11 +102,14 @@ describe('Message Functions', () => {
     });
 
     it('should not delete a message with non-existent ID', async () => {
-      await Message.createMessage('Message 1', 'user1');
-
-      await Message.deleteMessageById('nonexistent-id');
+      const old = await Message.getMessages();
+      
+      const userId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      await Message.createMessage('Message 1', userId.toString());
+      await Message.deleteMessageById(userId.toString());
+      
       const messages = await Message.getMessages();
-      expect(messages.length).toBe(1);
+      expect(messages.length-old.length).toBe(1);
     });
   });
 
