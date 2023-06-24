@@ -32,9 +32,10 @@ httpServer.listen(8080, () => {
 });
 
 const uri = "mongodb+srv://web_anwendung_projekt:W6aKJmOszJOj7Sw1@cluster0.i5kfluk.mongodb.net/?retryWrites=true&w=majority";
+const url2 = "mongodb+srv://feillukas:test@wae.6bsejdu.mongodb.net/?retryWrites=true&w=majority"
 const connectToMongoDB = async () => {
   try {
-    await mongoose.connect(uri);
+    await mongoose.connect(url2);
     console.log('Connected to MongoDB Atlas');
   } catch (error) {
     console.error('Error connecting to MongoDB Atlas', error);
