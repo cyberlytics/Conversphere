@@ -8,9 +8,6 @@ import { User, Users } from '../interfaces/users';
   providedIn: 'root',
 })
 export class ChatService {
-  static SendMessage(SendMessage: any) {
-    throw new Error('Method not implemented.');
-  }
   private base_socket_endpoint = 'localhost:8080/ws'
 
   messages_socket: Socket | undefined;
@@ -49,7 +46,7 @@ export class ChatService {
    * @param message The message to send.
    */
   SendMessage(message: Message): void{
-    this.messages_socket?.emit('sendMessage', message);
+    this.messages_socket?.emit('sendNewMessage', message);
   }
 
   /**

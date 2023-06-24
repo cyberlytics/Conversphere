@@ -2,7 +2,13 @@ import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
     nickname: {type: String, required: true},
-    position: {type: {x: { type: Number, required: false },y: { type: Number, required: false }},required: false}
+    position: {
+        type: {
+            x: { type: Number, 
+                required: false },
+            y: { type: Number, 
+                required: false }
+            },required: false}
 });
 
 export const UserModel = mongoose.model("User", UserSchema);

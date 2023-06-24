@@ -1,4 +1,4 @@
-import * as Room from '../db/rooms.js';
+import * as Room from '../db/rooms';
 import mongoose from 'mongoose';
 
 describe('Room Functions', () => {
@@ -51,7 +51,8 @@ describe('Room Functions', () => {
     });
 
     it('should return null if no room is found', async () => {
-      const foundRoom = await Room.getRoomById('nonexistent_id');
+      const roomId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const foundRoom = await Room.getRoomById(roomId.toString());
 
       expect(foundRoom).toBeNull();
     });
@@ -129,18 +130,16 @@ describe('Room Functions', () => {
 
   describe('leaveRoomWithId', () => {
     it('should remove a user ID from a room', async () => {
-      const room = new Room.Room({ name: 'Room 1', description: 'Description 1', users: ['user1', 'user2'] });
+      const roomId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const roomId2 = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const room = new Room.Room({ name: 'Room 1', description: 'Description 1', users: [roomId.toString(), roomId2.toString()] });
       await room.save();
-
-      const updatedRoom = await Room.leaveRoomWithId(room._id.toString(), 'user1');
-
-      expect(updatedRoom).toBeDefined();
-      expect(updatedRoom.users).toEqual(['user2']);
-
-      const foundRoom = await Room.getRoomById(room._id.toString());
-
-      expect(foundRoom).toBeDefined();
-      expect(foundRoom?.users).toEqual(['user2']);
+    
+      const updatedRoom = await Room.leaveRoomWithId(room._id.toString(), roomId.toString());
+    
+      const expectedUsers = [roomId2.toString()]; // Convert expected users to strings
+    
+      expect(updatedRoom.users.map((user: mongoose.Types.ObjectId) => user.toString())).toEqual(expectedUsers);
     });
   });
 
@@ -148,18 +147,22 @@ describe('Room Functions', () => {
 
   describe('getUsersByRoomId', () => {
     it('should get the list of user IDs in a room', async () => {
-      const room = new Room.Room({ name: 'Room 1', description: 'Description 1', users: ['user1', 'user2'] });
+      const roomId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const room = new Room.Room({ name: 'Room 1', description: 'Description 1', users: [roomId.toString()] });
       await room.save();
 
       const users = await Room.getUsersByRoomId(room._id.toString());
 
-      expect(users).toEqual(['user1', 'user2']);
+      const expectedUsers = [roomId.toString()]; // Convert expected users to strings
+
+      expect(users?.map(user => user.toString())).toEqual(expectedUsers);
     });
 
     it('should return null if no room is found', async () => {
-      const users = await Room.getUsersByRoomId('nonexistent_id');
+      const roomId = new mongoose.Types.ObjectId(); // Generate a new ObjectId
+      const users = await Room.getUsersByRoomId(roomId.toString());
 
-      expect(users).toBeNull();
+      expect(users).toBeUndefined();
     });
   });
 

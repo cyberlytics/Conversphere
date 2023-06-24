@@ -2,22 +2,23 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import {MatDialog, MatDialogModule} from '@angular/material/dialog';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {NgFor} from '@angular/common';
-import {MatListModule} from '@angular/material/list';
+import { MatDialog, MatDialogModule} from '@angular/material/dialog';
+import { MatFormFieldModule} from '@angular/material/form-field';
+import { NgFor} from '@angular/common';
+import { MatListModule} from '@angular/material/list';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatInputModule} from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
-import {FormControl, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DialogComponent } from '../dialog/dialog.component';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 import { Room } from 'src/app/interfaces/rooms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-startpage',
@@ -39,7 +40,7 @@ import { Room } from 'src/app/interfaces/rooms';
     ReactiveFormsModule,
     MatSnackBarModule,
   ],
-  providers: [GameConnectionService],
+  providers: [GameConnectionService, CookieService],
   templateUrl: './startpage.component.html',
   styleUrls: ['./startpage.component.scss'],
 })
@@ -57,15 +58,15 @@ export class StartpageComponent {
   //List with single selection
   roomArray: Room[] = [];
   // Select with form field
-  formNickname = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
-  formRoomName = new FormControl('', [Validators.required,Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  formNickname = new FormControl('', [Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
+  formRoomName = new FormControl('', [Validators.required, Validators.pattern(/^\S*$/), Validators.minLength(3)]);
   description = "test description";
 
   opened: unknown;
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,public gameConnectionService: GameConnectionService, public router: Router) {
-
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,public gameConnectionService: GameConnectionService, public router: Router, public cookieService: CookieService) {
   }
+
   ngOnInit(){
    this.getRooms();
   }
@@ -90,7 +91,10 @@ export class StartpageComponent {
     this.gameConnectionService.joinRoom(roomId, this.nickname).subscribe((data) => {
       console.log(data);
       this.joinedRoom = data;
-      this.router.navigate(['/room/'+ this.joinedRoom.id]);
+      this.cookieService.set('nickname', this.nickname);
+      this.cookieService.set('roomId', roomId);
+      this.cookieService.set('userId', data.id);
+      this.router.navigate(['/room/'+ roomId]);
     });
   }
 

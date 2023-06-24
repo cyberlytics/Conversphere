@@ -25,9 +25,11 @@
       <div class="game">
         <div class="information">
           <div>
-            <p>Room-ID: {{rooms.id}}</p>
+            <p>Room-Name: {{room?.name}}</p>
+            <p>Room-ID: {{room?.id}}</p>
+            <p>Room-Description: {{room?.description}}</p>
             <p>Name: {{user.nickname}}</p>
-          </div>          
+          </div>
           <mat-slider class="slider" min="0" max="2" step="1" discrete [displayWith]="formatlabel" >
             <input matSliderThumb />
           </mat-slider>
@@ -40,14 +42,14 @@
         </div>
         <div class="textarea" name="text">
           <div id="chatnachricht" class="Chatnachricht">
-            <div *ngFor="let message of chatContent">            
+            <div *ngFor="let message of chatContent">
               <div class="Einzelnachricht" [style.opacity]="(message.visibility)/100"> {{ getUsernickname(message.user_id) }} : {{message.text}}
-              </div> 
+              </div>
             </div>
-          </div>          
+          </div>
         </div>
-        <div class="chatroom">           
-          <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>          
+        <div class="chatroom">
+          <input [formControl]="messageControl" (keydown.enter)="sendMessage()" matInput class="textinput" name="getText" maxlength="100" placeholder="Enter your text here"/>
           <button class="buttonColor" mat-raised-button (click)="sendMessage()">Senden</button>
         </div>
       </div>

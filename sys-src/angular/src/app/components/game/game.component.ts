@@ -16,6 +16,8 @@ import { Message } from 'src/app/interfaces/messages';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { CookieService } from 'ngx-cookie-service';
+import { GameConnectionService } from 'src/app/services/api-connection.service';
 
 @Component({
   selector: 'app-game',
@@ -32,7 +34,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatFormFieldModule,
     MatSnackBarModule,
   ],
-  providers: [AuthentificationService],
+  providers: [AuthentificationService, CookieService, GameConnectionService, ChatService],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
@@ -47,24 +49,42 @@ export class GameComponent
   chatFontSize:number | undefined;
   //userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
   userlist:User[]=[];
+
   user:User = {
-    id: "601",
-    nickname: "Testuser",
+    id: "",
+    nickname: "",
     position: {
       x: 0,
-      y: 0
-    }
+      y: 0}
   }
-  rooms:Room={
-      id: "600",
-      name: "Raum 1",
-      description: "Das ist der Testraum 1"
+  room :Room | undefined ;
+  roomid!: string;
+  roomArray!: Room[];
+
+  public opened = false;
+  prozentualplayerheight=0;
+  prozentualplayerwidth=0;
+  player: HTMLElement | null | undefined;
+  chatmessage : HTMLElement | null | undefined;
+
+  constructor(public chatservice:ChatService, public cookieService: CookieService, public gameConnectionService: GameConnectionService)
+  {
+    this.roomid = cookieService.get('roomId');
+    this.user.nickname = cookieService.get('nickname');
+    this.user.id = cookieService.get('userId');
+    this.getRooms();
+
   }
+
+  setupWebsocket(){
+    this.chatservice.setupSocketConnection(this.roomid, this.user);
+    this.chatservice.InitMessagesSocket().subscribe( (data: Message) => {
   getUsernickname(userId: string): string {
     const user = this.userlist.find(user => user.id === userId);
     return user ? user.nickname : '';
-  }
-  constructor(private chatservice:ChatService, private snackBar: MatSnackBar)
+  }}
+
+  constructor(private chatservice:ChatService, private snackBar: MatSnackBar, private cookieService: CookieService, private gameConnectionService: GameConnectionService)
   {
     chatservice.InitMessagesSocket().subscribe( (data: Message) => {
       if (this.chatContent.length > 12)
@@ -77,30 +97,48 @@ export class GameComponent
         this.chatContent.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
       }
     } );
-    chatservice.InitUsersSocket().subscribe((data:Users)=>{
+    this.chatservice.InitUsersSocket().subscribe((data:Users)=>{
       this.userlist=data.users;
     });
   }
 
-
-  public opened = false;
-  prozentualplayerheight=0;
-  prozentualplayerwidth=0;
-  player: HTMLElement | null | undefined;
-  chatmessage : HTMLElement | null | undefined;
   ngOnInit()
-  {
-    this.chatmessage=document.getElementById("chatnachricht");
-    if(this.chatmessage != null)
     {
-      const windowwidth = window.innerWidth;
-      const windowheight = window.innerHeight;
-      //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
-      this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
+      this.chatmessage=document.getElementById("chatnachricht");
+      if(this.chatmessage != null)
+      {
+        const windowwidth = window.innerWidth;
+        const windowheight = window.innerHeight;
+        //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
+        this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
+      }
     }
-  }
+
   ngAfterInit(){
     this.player = document.getElementById("Spieler");
+  }
+
+  getUsernickname(userId: string): string {
+    const user = this.userlist.find(user => user.id === userId);
+    return user ? user.nickname : '';
+  }
+
+  getRooms(){
+    this.gameConnectionService.getRooms().subscribe((data) => {
+      this.roomArray = data;
+      this.room = this.findRoomWithId(this.roomid, this.roomArray);
+      this.setupWebsocket();
+    });
+  }
+
+  findRoomWithId(roomId: string, rooms: Room[]): Room | undefined {
+    const matchedRoom = rooms.find((obj) => obj.id === roomId);
+    if (matchedRoom) {
+      return matchedRoom;
+    } else {
+      console.log("Roomname not found");
+      return undefined;
+    }
   }
 
   onClickAtDiv(e: MouseEvent)

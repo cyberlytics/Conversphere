@@ -1,4 +1,4 @@
-import * as User from '../db/users.js';
+import * as User from '../db/users';
 import mongoose from 'mongoose';
 
 describe('User Functions1', () => {
