@@ -92,8 +92,9 @@ export class StartpageComponent {
       console.log(data);
       this.joinedRoom = data;
       this.cookieService.set('nickname', this.nickname);
-      this.cookieService.set('roomId', this.joinedRoom.id);
-      this.router.navigate(['/room/'+ this.joinedRoom.id]);
+      this.cookieService.set('roomId', roomId);
+      this.cookieService.set('userId', data.id);
+      this.router.navigate(['/room/'+ roomId]);
     });
   }
 
