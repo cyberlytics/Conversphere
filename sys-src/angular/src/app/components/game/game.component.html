@@ -17,7 +17,7 @@
         Login Page
       </button>
       <div class="copy">Seite mit Freunden teilen</div>
-       <button mat-raised-button (click)="copyToClipboard()"ariaCurrentWhenActive="page" >Link kopieren</button>     
+       <button mat-raised-button (click)="copyToClipboard()"ariaCurrentWhenActive="page" >Link kopieren</button>
     </div>
   </mat-sidenav>
 
@@ -43,7 +43,7 @@
         <div class="textarea" name="text">
           <div id="chatnachricht" class="Chatnachricht">
             <div *ngFor="let message of chatContent">
-              <div class="Einzelnachricht" [style.opacity]="(message.visibility)/100"> {{ getUsernickname(message.user_id) }} : {{message.text}}
+              <div class="Einzelnachricht" [style.opacity]="(message.visibility ?? 100)/100"> {{ getUsernickname(message.user_id) }} : {{message.text}}
               </div>
             </div>
           </div>

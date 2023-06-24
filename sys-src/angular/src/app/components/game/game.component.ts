@@ -108,6 +108,10 @@ export class GameComponent {
     this.player = document.getElementById("Spieler");
   }
 
+  ngOnDestroy(){
+    this.chatservice.LeaveRoom(this.user);
+  }
+
   getUsernickname(userId: string): string {
     const user = this.userlist.find(user => user.id === userId);
     return user ? user.nickname : '';
@@ -200,8 +204,13 @@ export class GameComponent {
 
   messageControl = new FormControl();
   sendMessage(){
-    const message = this.messageControl.value;
-    if(message)
+    const  message: Message = {
+      text: this.messageControl.value,
+      user_id: this.user.id,
+      id: null,
+      visibility: null
+    }
+    if(this.messageControl.value != "")
     {
       this.messageControl.setValue("");
       this.chatservice.SendMessage(message);

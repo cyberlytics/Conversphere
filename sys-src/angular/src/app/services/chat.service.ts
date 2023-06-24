@@ -8,7 +8,7 @@ import { User, Users } from '../interfaces/users';
   providedIn: 'root',
 })
 export class ChatService {
-  private base_socket_endpoint = 'localhost:8080/ws'
+  private base_socket_endpoint = 'localhost:8080/ws/rooms'
 
   messages_socket: Socket | undefined;
   users_socket: Socket | undefined;
@@ -25,8 +25,11 @@ export class ChatService {
    * @returns The subject for the Messages and the Users of the chat-room.
    */
   setupSocketConnection(roomId: string, user: User) {
+    console.log('Setup socket connection for room: ' + roomId + ' and user: ' + user.nickname);
     const messagePath = this.base_socket_endpoint + '/' + roomId + '/messages';
     const usersPath = this.base_socket_endpoint + '/' + roomId + '/users';
+    console.log('MessagePath: ' + messagePath);
+    console.log('UsersPath: ' + usersPath);
     this.messages_socket = io(messagePath, {query: {user_id: user.id}});
     this.users_socket = io(usersPath, {query: {user_id: user.id}});
   }
