@@ -31,17 +31,20 @@ export const joinRoom = async (req: Request, res: Response ) => {
         if(!room){
             return res.status(400).end();
         }
+        console.log("Room found: " + room.name);
 
-        // check if there is already a user in the room
+        //check if there is already a user in the room
         const existingUser = await getUserByNickname(nickname);
         if(existingUser){
             if(room.users.some(x => x == existingUser._id)){
+                console.log("User already in room!!!");
                 return res.status(423).end();
             }
         }
-        
+        console.log("User not found in room, fine to join");
+
         // create new user
-        const newUser = await createUser( nickname);
+        const newUser = await createUser(nickname);
         await joinRoomWithId(room_id, newUser._id);
 
         const returnUser = {
@@ -49,6 +52,7 @@ export const joinRoom = async (req: Request, res: Response ) => {
             nickname: newUser.nickname,
             position: newUser.position
         } as User;
+        console.log("User created and joined room, returning user: "+ returnUser.nickname);
 
         return res.status(200).json(returnUser).end();
     }catch (err: any) {

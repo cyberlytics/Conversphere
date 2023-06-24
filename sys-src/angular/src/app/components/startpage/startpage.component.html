@@ -10,7 +10,7 @@
       <mat-form-field class="nickname">
         <mat-label>Nickname:</mat-label>
         <input matInput placeholder="Mindestens 3 Buchstaben! (ohne Leerzeichen)"
-        [formControl]="formNickname" required>
+        [formControl]="formNickname" [(ngModel)]="nickname" required>
         <mat-error *ngIf="formNickname.invalid">Bitte mindestens 3 Zeichen eingeben ohne Leerzeichen.</mat-error>
       </mat-form-field>
   </div>
