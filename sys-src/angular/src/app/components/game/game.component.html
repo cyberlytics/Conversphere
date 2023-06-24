@@ -16,9 +16,11 @@
       <button mat-raised-button routerLink="/login" (click)="leaveRoom()" routerLinkActive="active" ariaCurrentWhenActive="page">
         Login Page
       </button>
+      <div class="copy">Seite mit Freunden teilen</div>
+       <button mat-raised-button (click)="copyToClipboard()"ariaCurrentWhenActive="page" >Link kopieren</button>     
     </div>
   </mat-sidenav>
-  
+
   <mat-sidenav-content id="gamefield">
       <div class="game">
         <div class="information">

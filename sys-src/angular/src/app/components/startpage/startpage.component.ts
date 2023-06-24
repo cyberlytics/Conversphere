@@ -53,7 +53,7 @@ export class StartpageComponent {
   createdRoom!: Room;
   joinedRoom!: Room;
   // Copy Link
-  linkToCopy = 'http://localhost:3000/start';
+  linkToCopy = window.location.href;
   //List with single selection
   roomArray: Room[] = [];
   // Select with form field
