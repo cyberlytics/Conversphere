@@ -1,9 +1,9 @@
 import { Namespace, Server } from "socket.io";
-import { handleMessagesNamespace, msg_connections } from "./messagesController.js";
-import { handleUsersNamespace, usr_connections } from "./usersControllers.js";
-import { User } from "./../model/User.js";
-import { getUsersByRoomId } from "./../db/rooms.js";
-import { getUserById } from "./../db/users.js";
+import { handleMessagesNamespace, msg_connections } from "./messagesController";
+import { handleUsersNamespace, usr_connections } from "./usersControllers";
+import { User } from "./../model/User";
+import { getUsersByRoomId } from "./../db/rooms";
+import { getUserById } from "./../db/users";
 
 function checkNamespaces(io: Server) : Namespace {
   return io.of((name, auth, next) => 

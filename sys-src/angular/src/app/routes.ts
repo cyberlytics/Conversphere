@@ -18,7 +18,7 @@ export const APP_ROUTES: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'game',
+    path: 'room/:roomId',
     component: GameComponent,
   },
   {

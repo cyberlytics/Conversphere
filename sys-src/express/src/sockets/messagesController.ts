@@ -1,10 +1,10 @@
-import { createMessage } from "./../db/messages.js";
-import { getUsersByRoomId } from "./../db/rooms.js";
-import { getUserById } from "./../db/users.js";
-import { Message } from "./../model/Message.js";
-import { User } from "./../model/User.js";
+import { createMessage } from "./../db/messages";
+import { getUsersByRoomId } from "./../db/rooms";
+import { getUserById } from "./../db/users";
+import { Message } from "./../model/Message";
+import { User } from "./../model/User";
 import { Namespace, Socket } from "socket.io";
-import { getUserForRoom } from "./socketController.js";
+import { getUserForRoom } from "./socketController";
 
 const msg_connections: {[user_id: string]: Socket} = {}
 
@@ -34,18 +34,18 @@ function handleMessagesNamespace(nsp: Namespace) : void{
             if(x && x.id != sender?.id){
               // TODO -> Dynamic calculation
               const visibility = 100;
-              const db_message = await createMessage(msg.text, msg.user_id, roomId)
-              const message = {
-                id: db_message._id.toString(),
-                text: db_message.text,
-                user_id: db_message.user_id.toString(),
-                visibility: visibility 
-              } as Message;
+              //const db_message = await createMessage(msg.text, msg.user_id, roomId)
+              // const message = {
+              //   id: db_message._id.toString(),
+              //   text: db_message.text,
+              //   user_id: db_message.user_id.toString(),
+              //   visibility: visibility 
+              // } as Message;
               
               // emit message via socket
               const connection = msg_connections[x.id]
               if(connection){
-                connection.emit('receiveNewMessage', message);
+                connection.emit('receiveNewMessage', msg.text);
               }else{
                 console.warn('Not able to find connection for user: ' + x.id);
               }

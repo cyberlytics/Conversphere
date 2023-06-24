@@ -1,5 +1,5 @@
 import express from 'express';
-import { createRoom, getAllRooms, joinRoom } from '../controllers/rooms.js';
+import { createRoom, getAllRooms, joinRoom } from '../controllers/rooms';
 
 export default (router: express.Router) => {
     router.get('/api/rooms', getAllRooms);

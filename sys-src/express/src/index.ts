@@ -5,8 +5,8 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
-import router from './router/index.js';
-import { checkNamespaces, handleNamespaces } from './sockets/socketController.js';
+import router from './router/index';
+import { checkNamespaces, handleNamespaces } from './sockets/socketController';
 import mongoose from 'mongoose';
 
 const app: Express = express();

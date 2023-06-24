@@ -1,7 +1,7 @@
 import { Namespace, Socket } from "socket.io";
-import { getUserForRoom, userDisconnected } from "./socketController.js";
+import { getUserForRoom, userDisconnected } from "./socketController";
 
-import { deleteRoomById, leaveRoomWithId} from '../db/rooms.js'; 
+import { deleteRoomById, leaveRoomWithId} from '../db/rooms'; 
 
 interface UserLeftMessage{
   userId: string
