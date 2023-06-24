@@ -24,6 +24,8 @@ mat-form-field{
     margin-left: 2em;
     margin-right: 2em;
     margin-top: 2em;
+    margin-bottom: 2em;
+    margin: 1em;
   }
 }
 .game{
@@ -94,3 +96,13 @@ mat-form-field{
   margin: 0.5em;
 }
 
+.copy button{
+  background-color: orange;
+}
+.copy{
+  display: flex;
+  justify-content: center;
+  align-self: center;
+
+
+}

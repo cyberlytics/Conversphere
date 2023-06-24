@@ -14,6 +14,8 @@ import { User, Users } from 'src/app/interfaces/users';
 import { Room } from 'src/app/interfaces/rooms';
 import { Message } from 'src/app/interfaces/messages';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { CookieService } from 'ngx-cookie-service';
 import { GameConnectionService } from 'src/app/services/api-connection.service';
 
@@ -30,13 +32,16 @@ import { GameConnectionService } from 'src/app/services/api-connection.service';
     RouterLink,
     ReactiveFormsModule,
     MatFormFieldModule,
+    MatSnackBarModule,
   ],
   providers: [AuthentificationService, CookieService, GameConnectionService, ChatService],
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent
-{
+export class GameComponent {
+  // Copy Link
+  linkToCopy = window.location.href;
+
   //chatContent: Message[] = [{id:"Message_id", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"600", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"602", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
   chatContent:Message[]=[];
   chatFontSize:number | undefined;
@@ -60,7 +65,7 @@ export class GameComponent
   player: HTMLElement | null | undefined;
   chatmessage : HTMLElement | null | undefined;
 
-  constructor(public chatservice:ChatService, public cookieService: CookieService, public gameConnectionService: GameConnectionService)
+  constructor(public chatservice:ChatService, public cookieService: CookieService, public gameConnectionService: GameConnectionService, public snackBar: MatSnackBar)
   {
     this.roomid = cookieService.get('roomId');
     this.user.nickname = cookieService.get('nickname');
@@ -201,5 +206,19 @@ export class GameComponent
       this.messageControl.setValue("");
       this.chatservice.SendMessage(message);
     }
+  }
+
+  // Snackbar for Copy Link
+  copyToClipboard() {
+    const el = document.createElement('textarea');
+    el.value = this.linkToCopy;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    this.snackBar.open('Link wurde in die Zwischenablage kopiert', 'Schließen', {
+      duration: 4000,
+    });
   }
 }
