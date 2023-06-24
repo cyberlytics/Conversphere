@@ -63,7 +63,7 @@ export class StartpageComponent {
 
   opened: unknown;
 
-  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,private gameConnectionService: GameConnectionService, public router: Router) {
+  constructor(public dialog: MatDialog, private snackBar: MatSnackBar,public gameConnectionService: GameConnectionService, public router: Router) {
 
   }
   ngOnInit(){
@@ -89,7 +89,8 @@ export class StartpageComponent {
     const roomId : string = this.findRoomIdWithName(this.selectedRoom, this.roomArray);
     this.gameConnectionService.joinRoom(roomId, this.nickname).subscribe((data) => {
       console.log(data);
-      this.router.navigate(['/room/'+ roomId]);
+      this.joinedRoom = data;
+      this.router.navigate(['/room/'+ this.joinedRoom.id]);
     });
   }
 

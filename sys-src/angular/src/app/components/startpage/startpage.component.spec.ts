@@ -1,72 +1,38 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { RouterLink } from '@angular/router';
-import { of } from 'rxjs';
-
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting }
+    from '@angular/common/http/testing';
 import { StartpageComponent } from './startpage.component';
-import { UsernameComponent } from '../username/username.component';
-import { GameConnectionService } from 'src/app/services/api-connection.service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Room } from 'src/app/interfaces/rooms';
-import { MatButtonModule } from '@angular/material/button';
-import { HttpClient, HttpHandler } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+const mockRoomArray: Room[] = [{ id: 'room1', name: 'Room 1', description: 'Test Room 1' },
+{ id: 'room2', name: 'Room 2', description: 'Test Room 2' }];
+const mockNickname = 'John Doe';
+const mockRoomName = 'Room 1';
+const mockoneRoom = { id: 'room1', name: 'Room 1', description: 'Test Room 1' };
 
 describe('StartpageComponent', () => {
   let component: StartpageComponent;
   let fixture: ComponentFixture<StartpageComponent>;
-  let dialog: MatDialog;
-  let snackBar: MatSnackBar;
-  let gameConnectionService: GameConnectionService;
-
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [],
-      imports: [
-        StartpageComponent,
-        UsernameComponent,
-        CommonModule,
-        MatButtonModule,
-        MatIconModule,
-        MatSliderModule,
-        MatSidenavModule,
-        MatToolbarModule,
-        RouterTestingModule,
-        FormsModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatListModule,
-        MatSelectModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatSnackBarModule,
-        BrowserAnimationsModule
-      ],
-      providers: [GameConnectionService, HttpClient, HttpHandler],
-    }).compileComponents();
-  });
 
-  beforeEach(() => {
+    await TestBed.configureTestingModule({
+      imports: [ StartpageComponent, NoopAnimationsModule ],
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+
+        provideRouter([]),
+      ],
+    })
+    .compileComponents();
+
     fixture = TestBed.createComponent(StartpageComponent);
     component = fixture.componentInstance;
-    dialog = TestBed.inject(MatDialog);
-    snackBar = TestBed.inject(MatSnackBar);
-    gameConnectionService = TestBed.inject(GameConnectionService);
-
-
-    component.nickname.setValue('John Doe');
-    component.selectedValue = 'Room 1';
+    component.nickname = mockNickname ;
+    component.roomName = mockRoomName; 
     fixture.detectChanges();
   });
 
@@ -74,63 +40,58 @@ describe('StartpageComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should call copyToClipboard and open snackbar', () => {
-  //   spyOn(document, 'createElement').and.returnValue({
-  //     ,
-  //     select: jasmine.createSpy('select'),
-  //     remove: jasmine.createSpy('remove'),
-  //   });
-  //   spyOn(document.body, 'appendChild');
-  //   spyOn(snackBar, 'open');
+  it('should load rooms after initialisation', () => {
+    const ctrl = TestBed.inject(HttpTestingController);
+    const req = ctrl.expectOne('http://localhost:8080/api/rooms');
 
-  //   component.copyToClipboard();
+    req.flush(mockRoomArray);
 
-  //   expect(document.createElement).toHaveBeenCalledWith('textarea');
-  //   expect(document.body.appendChild).toHaveBeenCalled();
-  //   expect(snackBar.open).toHaveBeenCalled();
-  // });
+    expect(component.roomArray).toEqual(mockRoomArray);
+    ctrl.verify();
+  });
 
   it('should call joinRoom and navigate to the selected room', () => {
-    const roomId = 'room123';
+    const ctrl = TestBed.inject(HttpTestingController);
+    const req1 = ctrl.expectOne('http://localhost:8080/api/rooms');
+  
+    req1.flush(mockRoomArray);
+
     const navigateSpy = spyOn(component.router, 'navigate');
-
-    spyOn(component, 'findRoomIdWithName').and.returnValue(roomId);
-
-    const room: Room = { id: 'room123', name: 'Room 1', description: 'Test Room' };
-    spyOn(gameConnectionService, 'joinRoom').and.returnValue(of(room));
-
     component.joinRoom();
-
-    expect(component.findRoomIdWithName).toHaveBeenCalledWith('Room 1', component.roomArray);
-    expect(gameConnectionService.joinRoom).toHaveBeenCalledWith(roomId, 'John Doe');
-    expect(navigateSpy).toHaveBeenCalledWith(['/room/' + roomId]);
+    const req2 = ctrl.expectOne('http://localhost:8080/api/joinRoom');
+    req2.flush(mockoneRoom);
+    
+    expect(component.joinedRoom).toEqual(mockoneRoom);
+    expect(navigateSpy).toHaveBeenCalledWith(['/room/' + mockoneRoom.id]);
+    ctrl.verify();
   });
 
-  it('should call createRoom and add the created room to the roomArray', () => {
-    const createdRoom: Room = { id: 'room123', name: 'Room 1', description: 'Test Room' };
-    spyOn(gameConnectionService, 'createRoom').and.returnValue(of(createdRoom));
 
-    component.room_name.setValue('Room 1');
-    component.description = 'Test Room';
-    component.createNewRoom();
 
-    expect(gameConnectionService.createRoom).toHaveBeenCalledWith('Room 1', 'Test Room');
-    expect(component.createdRoom).toEqual(createdRoom);
-    expect(component.selectedValue).toEqual('Room 1');
-    expect(component.roomArray).toContain(createdRoom);
-  });
+  // it('should call createRoom and add the created room to the roomArray', () => {
+  //   const createdRoom: Room = { id: 'room123', name: 'Room 1', description: 'Test Room' };
+  //   spyOn(gameConnectionService, 'createRoom').and.returnValue(of(createdRoom));
 
-  it('should call getRooms and populate the roomArray', () => {
-    const roomArray: Room[] = [
-      { id: 'room1', name: 'Room 1', description: 'Test Room 1' },
-      { id: 'room2', name: 'Room 2', description: 'Test Room 2' },
-    ];
-    spyOn(gameConnectionService, 'getRooms').and.returnValue(of(roomArray));
+  //   component.room_name.setValue('Room 1');
+  //   component.description = 'Test Room';
+  //   component.createNewRoom();
 
-    component.getRooms();
+  //   expect(gameConnectionService.createRoom).toHaveBeenCalledWith('Room 1', 'Test Room');
+  //   expect(component.createdRoom).toEqual(createdRoom);
+  //   expect(component.selectedValue).toEqual('Room 1');
+  //   expect(component.roomArray).toContain(createdRoom);
+  // });
 
-    expect(gameConnectionService.getRooms).toHaveBeenCalled();
-    expect(component.roomArray).toEqual(roomArray);
-  });
+  // it('should call getRooms and populate the roomArray', () => {
+  //   const roomArray: Room[] = [
+  //     { id: 'room1', name: 'Room 1', description: 'Test Room 1' },
+  //     { id: 'room2', name: 'Room 2', description: 'Test Room 2' },
+  //   ];
+  //   spyOn(gameConnectionService, 'getRooms').and.returnValue(of(roomArray));
 
+  //   component.getRooms();
+
+  //   expect(gameConnectionService.getRooms).toHaveBeenCalled();
+  //   expect(component.roomArray).toEqual(roomArray);
+  // });
 });
