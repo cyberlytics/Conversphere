@@ -8,7 +8,7 @@
     "start-build": "node dist/index.js",
     "dev": "concurrently --kill-others \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
     "start": "nodemon",
-    "test":"jest",
+    "test": "jest",
     "coverage": "jest --coverage"
   },
   "keywords": [],
