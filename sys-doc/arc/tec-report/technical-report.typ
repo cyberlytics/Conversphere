@@ -46,6 +46,9 @@ Technischer Anspruch:
 - Die Anwendung soll so einfach gehalten werden, dass sie im gegebenen Zeitraum umgesetzt werden kann.
 
 = Umsetzung
+
+== Architekturentscheidung
+
 Bei der Umsetzung der Conversphere-Webanwendung haben wir uns für eine Web-Anwendung entschieden, um eine breite Zugänglichkeit über verschiedene Geräte und Plattformen hinweg zu gewährleisten. Dabei setzen wir die leistungsfähige und moderne Programmiersprache TypeScript ein, die uns eine einfache und typsichere entwicklung ermöglicht. 
 
 Um die Entwicklung der Benutzeroberfläche zu vereinfachen und eine hohe Benutzerfreundlichkeit zu gewährleisten, verwenden wir das Angular Framework. Angular bietet uns eine strukturierte und komponentenbasierte Architektur, die es uns ermöglicht, die Anwendung in logisch getrennte Teile aufzuteilen und somit den Entwicklungsprozess zu vereinfachen.
@@ -56,9 +59,41 @@ Bei der serverseitigen Entwicklung nutzen wir das leistungsstarke Node.js Framew
 
 Zusätzlich verwenden wir das Express.js Framework, das auf Node.js aufbaut und uns eine einfache und effektive Art der Entwicklung von Webanwendungen ermöglicht. Express.js bietet uns eine Vielzahl von Funktionen und Erweiterungen, die uns helfen, einen robusten und sicheren Webserver für unsere Anwendung bereitzustellen.
 
-Damit die Conversphere-Webanwendung Echtzeitkommunikation unterstützen kann, integrieren wir das Socket.io Framework. Socket.io ermöglicht es uns, Websockets zu implementieren und eine zuverlässige bidirektionale Echtzeitkommunikation zwischen den Benutzern herzustellen. Dadurch können die Benutzer in Echtzeit Nachrichten austauschen und interaktiv miteinander kommunizieren.
+Damit die Conversphere-Webanwendung Echtzeitkommunikation unterstützen kann, integrieren wir das Socket.io Framework. Socket.io ermöglicht es uns, Websockets zu implementieren und eine zuverlässige bidirektionale Echtzeitkommunikation zwischen den Benutzern herzustellen. Dadurch können die Benutzer in Echtzeit Nachrichten austauschen und interaktiv miteinander kommunizieren. Zusätzlich zu der Kommunikation über Socket.io wurde auch noch eine REST-Schnittstelle verwendet, um Anfragen an das Backend zu senden.
 
 Durch die geschickte Kombination dieser Technologien und Frameworks schaffen wir eine leistungsfähige und benutzerfreundliche Webanwendung, die es den Benutzern ermöglicht, sicher und effizient miteinander zu kommunizieren. Die Umsetzung in TypeScript, die Verwendung von Angular, MongoDB, Node.js, Express.js und Socket.io ermöglichen es uns, eine hochwertige und skalierbare Lösung zu entwickeln, die den Anforderungen der Conversphere-Webanwendung gerecht wird.
+
+Um eine detaillierten Einblick in die Funktionalität des Express-Servers zu erhalten, werden nachfolgend die REST-Schnittstelle und die Websocket-Endpoints kurz beschrieben.
+
+== Beschreibung der REST-Schnittstelle
+
+Die REST-Schnittstelle dient zur Bereitstellung einer Kommunikationsschiene für die Anfragen, welche nicht für die Funktionalität des Chat-Services benötigt werden, beispielsweise das Erstellen von Räumen.
+Die Schnittstelle stellt 3 Endpunkte bereit:
+=== GET /api/rooms:
+
+Unter diesem Endpunkt kann eine List mit den akutellen Räumen abgerufen werden.
+
+=== POST /api/createRoom
+
+Über diesen Endpunkt kann ein neuer Raum mit einem neuem Namen erstellt werden.
+
+=== POST /api/join
+
+Über diesen Endpunkt kann einem bestehenden Raum beigetreten werden. Als Response wird das User-Objekt gesendet, mit welchem der Aufrufer im Chat-Room identifiziert wird. Mit diesem kann anschließend die Socket.io-Verbindung initiiert werden.
+
+== Beschreibung der Socket.io-Schnittstelle
+
+Diese Schnittstelle dient zur bidirektionalen Echtzeitkommunikation zwischem dem Server und der Webseite. Folgende Endpunkte sind für diese Schnittstelle definiert:
+
+=== ws/rooms/{roomId}/messages
+
+Dieser Kanal wird verwendet, um über neue Nachrichten im Chat-Room zu informieren. Das Backend hört dabei auf Nachrichten mit dem Topic "sendNewMessage". Über diese kann das Frontend neue Nachrichten vom Nutzer an das Backend senden. Dort wird diese Nachricht verabeitet und an die anderen Nutzer weitergesendet.
+Das Weitersenden der Nachrichten geschieht über Nachrichtem mit dem Topic "receiveNewMessage". Bei diesen Nachrichten wird die anzuzeigenden Nachricht mit der entsprechenden Sichtbarkeit an jeden einzelnen Nutzer in dem Raum gesendet.
+
+=== ws/rooms/{roomId}/users
+
+Dieser Kanal wird verwendet, um Nutzer bezogenen Nachrichten zwischen dem Frontend und dem Backend auszutauschen. Das Backend kann über eine Nachricht mit dem Topic "userInformation" eine akutelle Liste aller Nutzer in dem Chatraum mit deren akutellen Position an alle Nutzer in dem Raum zu senden. Dies wird beispielsweise gemacht, wenn ein neuer Nutzer den Raum betreten hat oder sich ein Status eines Nutzer im Raum verändert hat. Damit das Frontend das Backend über eine Änderung des Nutzer informieren kann, sind dafür zwei Topics definiert: "leaveRoom" und "positionUpdate".
+Mittels "leaveRoom" kann ein Nutzer einen akutellen Chatraum verlassen. "positionUpdate" informiert das Backend über einen Positionswechsel des Nutzers. In beiden Fällen wird die akutelle Nutzerinformation über das Topic "userInformation" an alle Nutzer im Raum verteilt. 
 
 
 = Herausforderungen während der Entwicklung
