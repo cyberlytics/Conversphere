@@ -19,7 +19,6 @@ export const getAllRooms = async(req: Request, res: Response) => {
 }
 };
 
-
 export const joinRoom = async (req: Request, res: Response ) => {
     try {
         const {room_id, nickname} = req.body;
@@ -59,21 +58,17 @@ export const joinRoom = async (req: Request, res: Response ) => {
     }
 };
 
-
-
-
 export const createRoom = async (req: Request, res: Response) => {
     try{
         const {name, description} = req.body;
 
-        //Überprüfe ob Raum schon vorhanden!
-        // const db_old = await getRoomByName(name);
-        // if(db_old != null){
-        //     return res.status(500);
-        // }
-
         const db_room = await createRoomWithName(name, description);
-        const room = getRoomByDescription (description)
+        const room = {
+            id: db_room._id.toString(),
+            name: db_room.name,
+            description: db_room.description
+        };
+
         return res.status(200).json(room).end();
     }catch(err: any){
         return res.status(500);

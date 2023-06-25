@@ -33,14 +33,14 @@
         </div>
         <div id="Spielfeld" class="spielfeld" (click)="onClickAtDiv($event)" >
           <div id="Spieler" class="spieler"></div>
-          <div *ngFor="let user of userlist" class="player" [style.top.px]="user.position.y" [style.left.px]="user.position.x">
+          <div *ngFor="let user of $user | async" class="player" [style.top.px]="user.position.y" [style.left.px]="user.position.x">
             <span class="nickname">{{ user.nickname }}</span>
           </div>
         </div>
         <div class="textarea" name="text">
           <div id="chatnachricht" class="Chatnachricht">
             <div *ngFor="let message of chatContent">
-              <div class="Einzelnachricht" [style.opacity]="(message.visibility ?? 100)/1"> {{ getUsernickname(message.user_id) }} : {{message.text}}
+              <div class="Einzelnachricht" [style.opacity]="(message.visibility ?? 10000)/100"> {{ getUsernickname(message.user_id) }} : {{message.text}}
               </div>
             </div>
           </div>

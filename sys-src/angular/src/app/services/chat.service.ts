@@ -79,8 +79,6 @@ export class ChatService {
     const messages = new Subject<Message>();
 
     this.messages_socket?.on('receiveNewMessage', (message: Message)=>{
-     // console.log('Received a new message: '+ message.id + ' ' + message.text + ' ' + message.user_id + ' ' + message.visibility);
-
       messages.next(message);
     });
     return messages;
@@ -95,8 +93,6 @@ export class ChatService {
     const userSubject = new Subject<User[]>();
 
     this.users_socket?.on('usersUpdate', (user: User[])=>{
-      console.log('Users: '+user[0].id + ' ' + user[0].nickname + ' ' + user[0].position.x + ' ' + user[0].position.y);
-
       userSubject.next(user);
     });
 
