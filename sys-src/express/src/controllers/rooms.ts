@@ -1,5 +1,5 @@
 import { User } from './../model/User';
-import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId, getRoomByName } from './../db/rooms';
+import { getRooms, joinRoomWithId, createRoomWithName, getRoomById, getUsersByRoomId, getRoomByName, getRoomByDescription } from './../db/rooms';
 import { getUserByNickname , createUser, getAllUserNames} from '../db/users';
 import {  Request, Response } from 'express';
 
@@ -15,7 +15,6 @@ export const getAllRooms = async(req: Request, res: Response) => {
     });
     return res.status(200).json(rooms).end();
 }catch (err: any){
-    console.log(err);
     return res.sendStatus(400);
 }
 };
@@ -24,7 +23,7 @@ export const getAllRooms = async(req: Request, res: Response) => {
 export const joinRoom = async (req: Request, res: Response ) => {
     try {
         const {room_id, nickname} = req.body;
-        console.log("Request to join room(" + room_id + ") with nickname: " + nickname);
+        //console.log("Request to join room(" + room_id + ") with nickname: " + nickname);
 
         // get the room and check
         const room = await getRoomById(room_id);
@@ -56,10 +55,12 @@ export const joinRoom = async (req: Request, res: Response ) => {
 
         return res.status(200).json(returnUser).end();
     }catch (err: any) {
-        console.log(err);
         return res.sendStatus(500);
     }
 };
+
+
+
 
 export const createRoom = async (req: Request, res: Response) => {
     try{
@@ -72,16 +73,9 @@ export const createRoom = async (req: Request, res: Response) => {
         // }
 
         const db_room = await createRoomWithName(name, description);
-
-        const room = {
-            id: db_room._id.toString(),
-            name: db_room.name,
-            description: db_room.description
-        };
-
+        const room = getRoomByDescription (description)
         return res.status(200).json(room).end();
     }catch(err: any){
-        console.log(err);
-        return res.sendStatus(500);
+        return res.status(500);
     }
 };
