@@ -10,7 +10,7 @@ import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 import { ChatService } from 'src/app/services/chat.service';
-import { User, Users } from 'src/app/interfaces/users';
+import { User } from 'src/app/interfaces/users';
 import { Room } from 'src/app/interfaces/rooms';
 import { Message } from 'src/app/interfaces/messages';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -87,8 +87,8 @@ export class GameComponent {
         this.chatContent.push(data); // eine neue Chatnachricht -> chatContent zu Liste wandeln - neue nachricht an Liste anfügen und über --ngFor-- anzeigen wenn Liste voll ist erstes element wieder löschen
       }
     } );
-    this.chatservice.InitUsersSocket().subscribe((data:Users)=>{
-      this.userlist=data.users;
+    this.chatservice.InitUsersSocket().subscribe((data:User[])=>{
+      this.userlist=data;
     });
   }
 

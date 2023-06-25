@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Socket, io } from "socket.io-client";
 import { Message } from '../interfaces/messages';
-import { User, Users } from '../interfaces/users';
+import { User } from '../interfaces/users';
 
 @Injectable({
   providedIn: 'root',
@@ -78,8 +78,8 @@ export class ChatService {
   InitMessagesSocket() : Subject<Message>{
     const messages = new Subject<Message>();
 
-    this.messages_socket?.on('receivedMessage', (message: Message)=>{
-      console.log('Received a new message: '+ message);
+    this.messages_socket?.on('receiveNewMessage', (message: Message)=>{
+     // console.log('Received a new message: '+ message.id + ' ' + message.text + ' ' + message.user_id + ' ' + message.visibility);
 
       messages.next(message);
     });
@@ -91,13 +91,13 @@ export class ChatService {
    * @returns A Users Obejct everytime a new User was received.
    * @see Users
    */
-  InitUsersSocket() : Subject<Users>{
-    const userSubject = new Subject<Users>();
+  InitUsersSocket() : Subject<User[]>{
+    const userSubject = new Subject<User[]>();
 
-    this.users_socket?.on('userChanged', (users: Users)=>{
-      console.log('Users: '+users);
+    this.users_socket?.on('usersUpdate', (user: User[])=>{
+      console.log('Users: '+user[0].id + ' ' + user[0].nickname + ' ' + user[0].position.x + ' ' + user[0].position.y);
 
-      userSubject.next(users);
+      userSubject.next(user);
     });
 
     return userSubject;
