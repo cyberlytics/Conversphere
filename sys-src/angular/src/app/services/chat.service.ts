@@ -64,8 +64,8 @@ export class ChatService {
    *  Sends a request to update the user.
    *  @param user The user to update.
    */
-  userUpdate(user: User): void{
-    this.users_socket?.emit('userUpdate', user);
+  positionUpdate(user: User): void{
+    this.users_socket?.emit('positionUpdate', user);
   }
 
 

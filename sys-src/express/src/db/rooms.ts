@@ -14,11 +14,11 @@ export const getRoomByDescription = (description: string) => Room.findOne({ desc
 export const deleteRoomById = (id: string) => Room.findByIdAndDelete({ _id: id }).exec();
 export const createRoomWithName = async (name: string, description: string) => new Room({ name, description }).save().then(room => room.toObject());
 
-export const updateRoomWithId = async (room_id: string, user_id: string) : Promise<HydratedDocument<any>> => {
+export const leaveRoomWithId = async (room_id: string, user_id: string) : Promise<HydratedDocument<any>> => {
     return await Room.findByIdAndUpdate(
         room_id,
-        { $pull: { users: user_id } },
-        { new: true })
+        { $pull: { users: user_id } }
+    );
 };
 
 export const joinRoomWithId = async (room_id: string, user_id: mongoose.Types.ObjectId) : Promise<HydratedDocument<any>> => {

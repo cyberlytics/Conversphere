@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
     nickname: {type: String, required: true},
@@ -21,6 +21,18 @@ export const deleteUserById = (id: string) => UserModel.findByIdAndDelete({_id: 
 export const createUser = async (nickname: string) => new UserModel({nickname}).save().then((user) => user.toObject());
 
 export const getAllUserNames = () => UserModel.find().distinct('nickname').exec();
+
+export const updatePosition = async (user_id: string, x: number, y: number) : Promise<HydratedDocument<any>> => {
+    return await UserModel.updateOne(
+        {_id: user_id},
+        {$set:{
+            position: {
+                x: x,
+                y: y
+            }
+        }}
+    );
+}
 
 
 

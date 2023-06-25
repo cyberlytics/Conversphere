@@ -43,10 +43,12 @@ channels:
       roomId:
         $ref: '#/components/parameters/roomId'
     subscribe:
-      summary: Information about leaving the room.
-      operationId: leaveRoom
+      summary: Information about a user in the room.
+      operationId: SubUserInformation
       message:
-        $ref: '#/components/messages/leaveRoom'
+        oneOf:
+          - $ref: '#/components/messages/leaveRoom'
+          - $ref: '#/components/messages/positionUpdate'
     publish:
       summary: Information about a user-interaction in the room.
       operationId: userInformation
@@ -83,6 +85,13 @@ components:
       name: leaveRoom
       title: Leave room
       summary: Information about leaving the room
+      payload:
+        $ref: '#/components/schemas/User'
+    positionUpdate:
+      messageId: positionUpdate
+      name: positionUpdate
+      title: Position update
+      summary: Information about the new position of a user
       payload:
         $ref: '#/components/schemas/User'
   schemas:

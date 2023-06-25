@@ -159,7 +159,7 @@ export class GameComponent {
     }
     this.user.position.x=this.prozentualplayerheight;
     this.user.position.y=this.prozentualplayerwidth;
-    this.chatservice.userUpdate(this.user);
+    this.chatservice.positionUpdate(this.user);
   }
 
   @HostListener('window:resize', ['$event']) onResize()
