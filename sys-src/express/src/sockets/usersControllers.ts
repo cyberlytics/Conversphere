@@ -1,7 +1,7 @@
 import { Namespace, Socket } from "socket.io";
 import { getUserForRoom, userDisconnected } from "./socketController";
 
-import { deleteRoomById, leaveRoomWithId} from '../db/rooms'; 
+import { deleteRoomById, updateRoomWithId} from '../db/rooms'; 
 
 interface UserLeftMessage{
   userId: string
@@ -17,16 +17,16 @@ function handleUsersNamespace(nsp: Namespace) : void {
       // listen to events for user-actions (leave/join)
       if(typeof socket.handshake.query.user_id === 'string'){
         usr_connections[socket.handshake.query.user_id] = socket;
-        socket.on("leaveRoom", async (message: UserLeftMessage) => {
+        socket.on("userUpdate", async (message: UserLeftMessage) => {
           console.log("User disconnected with user-id " + message.userId + " and nickname " + message.nickname);
           
           // Get all the user for the room
           const room_id = namespace.slice("/ws/rooms/".length, -("/users".length));
           // remove the user from the room
-          await leaveRoomWithId(room_id,message.userId);
+          await updateRoomWithId(room_id,message.userId);
 
           // Update the socket-lists
-          userDisconnected(message.userId);
+          // userDisconnected(message.userId);
 
           // Send update to all participants in the room and if the room is now empty -> delete the room
           await updateUserListForRoom(room_id);
