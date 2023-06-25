@@ -32,6 +32,7 @@ function handleUsersNamespace(nsp: Namespace) : void {
           // Get all the user for the room
           const room_id = namespace.slice("/ws/rooms/".length, -("/users".length));
           // remove the user from the room
+
           await leaveRoomWithId(room_id,message.userId);
 
           // Update the socket-lists

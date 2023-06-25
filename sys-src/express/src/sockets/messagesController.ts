@@ -29,10 +29,17 @@ function handleMessagesNamespace(nsp: Namespace) : void{
             
           // Now calculate the visibility of the message based on the position
           // Do not send the message back to the sender
-          // const sender = users.find(x => x?.id == msg.user_id);
+          const sender = users.find(x => x?.id == msg.user_id);
           users.forEach(async x => {
-            // TODO -> Dynamic calculation
-            const visibility = 100;
+
+            let visibility : number;
+            // determine distance between sender and receiver
+            const dist = calculateDistance(sender?.position.x ?? 0, sender?.position.y ?? 0, x.position.x, x.position.y) * 100;
+            if(dist < 30){
+              visibility = (30 - dist) * 100;
+            }else{
+              visibility = 0;
+            }
 
             const db_message = await createMessage(msg.text, msg.user_id);
             const message = {
@@ -57,6 +64,10 @@ function handleMessagesNamespace(nsp: Namespace) : void{
       }
     }
   }); 
+}
+
+function calculateDistance(x1: number, y1: number, x2: number, y2: number) : number {
+  return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
 
