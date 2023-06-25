@@ -62,7 +62,7 @@ describe('StartpageComponent', () => {
     req2.flush(mockoneRoom);
 
     expect(component.joinedRoom).toEqual(mockoneRoom);
-    expect(navigateSpy).toHaveBeenCalledWith(['/room/' + mockoneRoom.id]);
+    expect(navigateSpy).toHaveBeenCalledWith(['/room/']);
     ctrl.verify();
   });
 
