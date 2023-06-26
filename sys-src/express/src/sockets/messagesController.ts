@@ -35,12 +35,13 @@ function handleMessagesNamespace(nsp: Namespace) : void{
             let visibility : number;
             // determine distance between sender and receiver
             const dist = calculateDistance(sender?.position.x ?? 0, sender?.position.y ?? 0, x.position.x, x.position.y) * 100;
-            if(dist < 30){
-              visibility = (30 - dist) * 100;
-            }else{
-              visibility = 0;
-            }
-
+            console.log(dist);
+            // if(dist < 30){
+            //   visibility = (30 - dist) * 100;
+            // }else{
+            //   visibility = 0;
+            // }
+            visibility = 1 - (dist /100);
             const db_message = await createMessage(msg.text, msg.user_id);
             const message = {
               id: db_message._id.toString(),

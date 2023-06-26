@@ -44,8 +44,8 @@ export class GameComponent {
   linkToCopy = window.location.href;
   $user: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([{ id: "", nickname: "", position: { x: 0, y: 0}}]);
 
-  //chatContent: Message[] = [{id:"Message_id", text:"Halloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" , user_id:"600", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"602", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
-  chatContent:Message[]=[];
+  //chatContent: Message[] = [{id:"Message_id", text:"Halloa" , user_id:"600", visibility:5},{id:"Name 2", text:"Hallo2" , user_id:"602", visibility:10},{id:"Name 3", text:"Hallo 3" , user_id:"502", visibility:20},{id:"Name 4", text:"Hallo4" , user_id:"503", visibility:30},{id:"Name 5", text:"Hallo5" , user_id:"504", visibility:40},{id:"Name 6", text:"Hallo 6" , user_id:"505", visibility:50},{id:"Name 7", text:"Hallo8" , user_id:"506", visibility:60},{id:"Name 9", text:"Hallo9" , user_id:"507", visibility:70},{id:"Name 10", text:"Hallo 10" , user_id:"508", visibility:80},{id:"Name 11", text:"Hallo 11" , user_id:"509", visibility:90},{id:"Name 12", text:"Hallo12" , user_id:"510", visibility:100}];
+  chatContent:Message[]=[{id : "", text : "", user_id : "", visibility : 0}];
   chatFontSize:number | undefined;
   //userlist: User[] = [{ id: "600", nickname: "User1", position: { x: 200, y: 200  }}, {id: "602", nickname: "User2", position: { x: 300, y: 300 }}]
   userlist:User[]=[];
@@ -73,7 +73,6 @@ export class GameComponent {
     this.user.nickname = cookieService.get('nickname');
     this.user.id = cookieService.get('userId');
     this.getRooms();
-
   }
 
   setupWebsocket(){
@@ -108,16 +107,16 @@ export class GameComponent {
   }
 
   ngOnInit()
+  {
+    this.chatmessage=document.getElementById("chatnachricht");
+    if(this.chatmessage != null)
     {
-      this.chatmessage=document.getElementById("chatnachricht");
-      if(this.chatmessage != null)
-      {
-        const windowwidth = window.innerWidth;
-        const windowheight = window.innerHeight;
-        //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
-        this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
-      }
+      const windowwidth = window.innerWidth;
+      const windowheight = window.innerHeight;
+      //this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
+      this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
+  }
 
   ngAfterInit(){
     this.player = document.getElementById("Spieler");
@@ -190,7 +189,6 @@ export class GameComponent {
     this.chatmessage=document.getElementById("chatnachricht");
     if(this.chatmessage != null)
     {
-
       this.chatmessage.style.fontSize=((Math.min(windowwidth,windowheight)/40)+'px');
       //this.chatmessage.style.fontSize=(((windowwidth+windowheight)/120)+'px');
     }
