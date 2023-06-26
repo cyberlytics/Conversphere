@@ -86,7 +86,7 @@ Diese Schnittstelle dient zur bidirektionalen Echtzeitkommunikation zwischem dem
 
 === ws/rooms/{roomId}/messages
 
-Dieser Kanal wird verwendet, um über neue Nachrichten im Chat-Room zu informieren. Das Backend hört dabei auf Nachrichten mit der Topic "sendNewMessage". Über diese kann das Frontend neue Nachrichten vom Nutzer an das Backend senden. Dort wird diese Nachricht verabeitet und an die anderen Nutzer weitergesendet.
+Dieser Kanal wird verwendet, um über neue Nachrichten im Chat-Room zu informieren. Das Backend hört dabei auf Nachrichten mit der Topic "sendNewMessage". Über diese kann das Frontend neue Nachrichten vom Nutzer an das Backend senden. Dort wird diese Nachricht verarbeitet und an die anderen Nutzer weitergesendet.
 Das Weitersenden der Nachrichten geschieht über Nachrichten mit der Topic "receiveNewMessage". Bei diesen Nachrichten wird die anzuzeigende Nachricht mit der entsprechenden Sichtbarkeit an jeden einzelnen Nutzer in dem Raum gesendet.
 
 === ws/rooms/{roomId}/users
