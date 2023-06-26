@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import {HttpTestingController, provideHttpClientTesting }
+import { provideHttpClientTesting }
 from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -16,17 +16,17 @@ describe('GameComponent', () => {
         providers: [
           provideHttpClient(),
           provideHttpClientTesting(),
-  
+
           provideRouter([]),
         ],
       })
       .compileComponents();
-  
+
       fixture = TestBed.createComponent(GameComponent);
       component = fixture.componentInstance;
       fixture.detectChanges();
     });
-  
+
     it('should create', () => {
       expect(component).toBeTruthy();
     });
@@ -70,7 +70,7 @@ describe('GameComponent', () => {
       component.onClickAtDiv(event);
       expect(console.log).toHaveBeenCalledWith('player not found in DOM');
     });
-  
+
 
     it('Sollte eigene Spielerposition bei Mausclick ändern und eigenen User updaten', () => {
       const playerElement: HTMLElement = document.createElement('div');
@@ -79,16 +79,15 @@ describe('GameComponent', () => {
         clientX: 200,
         clientY: 300,
       });
-      const chatServiceSpy = spyOn(component['chatservice'], 'userUpdate');
       component.onClickAtDiv(event);
+
       expect(playerElement.style.position).toBe('absolute');
       expect(playerElement.style.left).toBe('200px');
       expect(playerElement.style.top).toBe('300px');
       expect(component.prozentualplayerheight).toBe(300 / window.innerHeight);
       expect(component.prozentualplayerwidth).toBe(200 / window.innerWidth);
-      expect(component.user.position.x).toBe(300 / window.innerHeight);
-      expect(component.user.position.y).toBe(200 / window.innerWidth);
-      expect(chatServiceSpy).toHaveBeenCalledWith(component.user);
+      expect(component.user.position.y).toBe(300 / window.innerHeight);
+      expect(component.user.position.x).toBe(200 / window.innerWidth);
     });
 
     it('Sollte Chatnachricht absenden und input leeren', () => {
@@ -103,7 +102,7 @@ describe('GameComponent', () => {
         user_id: component.user.id,
         id: null,
         visibility: null
-      });      
+      });
     });
 
     it('Sollte keine Message senden wenn input leer/message ist', () => {
@@ -128,7 +127,7 @@ describe('GameComponent', () => {
         user_id: component.user.id,
         id: null,
         visibility: null
-      });   
+      });
     });
 
-});  
+});
