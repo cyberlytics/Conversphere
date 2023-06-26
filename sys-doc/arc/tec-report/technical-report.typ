@@ -64,6 +64,22 @@ Durch die geschickte Kombination dieser Technologien und Frameworks schaffen wir
 
 Um einen detaillierten Einblick in die Funktionalität des Express-Servers zu erhalten, werden nachfolgend die REST-Schnittstelle und die Websocket-Endpoints kurz beschrieben.
 
+Die App wird über AWS S3 bereitgestellt. Der
+Zugriff auf AWS S3 wird durch Cloudfront Weltweit mit niedriger Latenz ermöglicht. 
+
+Interagiert
+der Benutzer mit der bereitgestellten Web App
+so greift diese auf eine AWS EC2 Instanz zu in 
+welcher der Docker Container läuft. Die EC2
+Instanz wird durch einen ECS Service verwaltet.
+Der Docker Container enthält den Node.js Server.
+
+#align(center + bottom)[
+  #image("deployment.png", width: 150%)
+
+  *Deployment in AWS*
+]
+
 == Beschreibung der REST-Schnittstelle
 
 Die REST-Schnittstelle dient zur Bereitstellung einer Kommunikationsschiene für die Anfragen, welche nicht für die Funktionalität des Chat-Services benötigt werden, beispielsweise das Erstellen von Räumen.
@@ -103,11 +119,7 @@ Das Durchführen von Angular-Komponententests gestaltete sich ebenfalls als Hera
 
 Eine weitere Herausforderung bestand darin, die MongoDB-Datenbank anzusprechen und effizient mit ihr zu interagieren. Die Integration der Datenbank erforderte das Schreiben geeigneter Abfragen und die Beherrschung der Datenbank-APIs. Die korrekte Handhabung von Datenzugriff und -manipulation, sowie die Gewährleistung einer effizienten Datenbankperformance waren entscheidend für eine reibungslose Funktion der Anwendung.
 
-
-= Fazit und Ausblick
-== Fazit
-
-== Ausblick
+= Ausblick
 Aufgrund zeitlicher Beschränkungen wird die Anwendung derzeit nicht auf AWS gehostet, sondern lokal als Docker-Container betrieben. Es ist jedoch geplant, den Docker-Container in Zukunft auf dem AWS Elastic Container Service zu hosten.
 Darüber hinaus planen wir in naher Zukunft die Implementierung eines Schiebereglers zur Einstellung der Lautstärke, um die Reichweite von Nachrichten anzupassen. Abhängig von der Lautstärke wird der Radius für den Empfang oder Versand von Nachrichten entsprechend vergrößert oder verkleinert.
 Auch der Code für eine automatische Farbverteilung der anderen Spieler oder sogar eigener Farbwahl ist bereits vorhanden, aus zeitlichen Gründen hat dieser es jedoch nicht in die bisherige Implementierung geschafft.
