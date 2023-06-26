@@ -16,9 +16,6 @@
   abstract: [hier sollte ein abstract stehen],
 )
 
-
-= Einführung
-
 = Mission statement
 Conversphere ist eine Web Chat-Anwendung, die es
 Benutzern ermöglicht, miteinander über Textnachrichten zu
@@ -95,22 +92,16 @@ Das Weitersenden der Nachrichten geschieht über Nachrichtem mit dem Topic "rece
 Dieser Kanal wird verwendet, um Nutzer bezogenen Nachrichten zwischen dem Frontend und dem Backend auszutauschen. Das Backend kann über eine Nachricht mit dem Topic "userInformation" eine akutelle Liste aller Nutzer in dem Chatraum mit deren akutellen Position an alle Nutzer in dem Raum zu senden. Dies wird beispielsweise gemacht, wenn ein neuer Nutzer den Raum betreten hat oder sich ein Status eines Nutzer im Raum verändert hat. Damit das Frontend das Backend über eine Änderung des Nutzer informieren kann, sind dafür zwei Topics definiert: "leaveRoom" und "positionUpdate".
 Mittels "leaveRoom" kann ein Nutzer einen akutellen Chatraum verlassen. "positionUpdate" informiert das Backend über einen Positionswechsel des Nutzers. In beiden Fällen wird die akutelle Nutzerinformation über das Topic "userInformation" an alle Nutzer im Raum verteilt. 
 
-
 = Herausforderungen während der Entwicklung
-Während der Entwicklung der Conversphere-Webanwendung traten verschiedene Herausforderungen auf, die es zu bewältigen galt. Eine dieser Herausforderungen bestand darin, die Position eines Mausklicks im Browser zu erfassen und die Spieler entsprechend im Spielfeld zu platzieren. Die genaue Erfassung der Mausposition und die korrekte Umsetzung im Spielfeld erforderten eine umrechnung ausgelesenen Positionen im Verhältins zum Spielfeld, welche sich durch die Größe des Browserfensters verändert. Dadurch muss zusätzlich die Größe des Browserfensters erfasst werden, um die Mausposition korrekt umrechnen zu können. Außerdem muss die Position der Spieler im Spielfeld in Abhängigkeit von der Größe des Browserfensters angepasst werden und bei einer änderung der Fenstergröße neu berechnet werden.
+Während der Entwicklung der Conversphere-Webanwendung traten verschiedene Herausforderungen auf, die es zu bewältigen galt. Eine dieser Herausforderungen bestand darin, die Position eines Mausklicks im Browser zu erfassen und die Spieler entsprechend im Spielfeld zu platzieren. Die genaue Erfassung der Mausposition und die korrekte Umsetzung im Spielfeld erforderten eine umrechnung der ausgelesenen Positionen im Verhältins zum Spielfeld. Dadurch muss zusätzlich die Größe des Browserfensters erfasst werden. Außerdem muss die Position der Spieler im Spielfeld in Abhängigkeit von der Größe des Browserfensters angepasst werden und bei einer änderung der Fenstergröße neu berechnet werden.
 
-Die Umsetztung des Chats war zunächst nicht wie gewünscht möglich. Die Nachrichten wurden nicht in Echtzeit übertragen und die Kommunikation zwischen den Benutzern war nicht möglich. Um dies zu beheben, musste die Kommunikation zwischen den Benutzern über Websockets realisiert werden. Websockets ermöglichen eine Echtzeitkommunikation zwischen den Benutzern und sind entscheidend für die sofortige Übertragung von Nachrichten im Chat. Es erforderte ein gründliches Verständnis der Websocket implementierung von Socket.io und eine effiziente Integration in die Anwendung, um eine zuverlässige und stabile Kommunikation zu gewährleisten.
+Die Umsetztung des Chats war zunächst nicht wie gewünscht möglich. Nachdem wir uns gegen long polling entschieden haben. Wurde die Kommunikation zwischen den Benutzern über Websockets realisiert. Websockets ermöglichen eine Echtzeitkommunikation zwischen den Benutzern und sind entscheidend für die sofortige Übertragung von Nachrichten im Chat. Es erforderte ein gründliches Verständnis der Websocket implementierung von Socket.io und eine effiziente Integration in die Anwendung, um eine zuverlässige und stabile Kommunikation zu gewährleisten.
 
-Das Durchführen von Angular-Komponententests gestaltete sich ebenfalls als Herausforderung. Das Testen der einzelnen Komponenten unabhängig voneinander erforderte ein tiefes Verständnis der Angular-Testwerkzeuge und -methoden. Es war notwendig, geeignete Testfälle zu entwickeln, um sicherzustellen, dass die Komponenten korrekt funktionieren und mögliche Fehler oder Schwachstellen identifiziert werden können.
+Das Durchführen von Angular-Komponententests gestaltete sich ebenfalls als Herausforderung. Da wir die aktuellsten Features des Angular Frameworks in Version 16 verwenden, konnten wir nur sehr wenig dokumentation dazu finden. Am schwiriegsten stelle sich das erstellen der Testkonfiguration dar. Anuglar verwendet die von Angular unabhängige Testumgebung Karma mit dem Test Framework Jasmine im Hintergrund. Aus diesem Grund gibt es auch der offiziellen Homepage von Angular "Angular.io", nur sehr wenig Dokumentation, wie diese korrekt zu verwenden sind. Es ist notwendig Erkenntnisse auf der Dokumentation von Karma bzw Jasmine und Anuglar zu verbinden um eine Testumgebung zu initieren. Nachdem wir die Testkonfiguration erstellt hatten, konnten wir die Tests jedoch erfolgreich durchführen.
 
 Eine weitere Herausforderung bestand darin, die MongoDB-Datenbank anzusprechen und effizient mit ihr zu interagieren. Die Integration der Datenbank erforderte das Schreiben geeigneter Abfragen und die Beherrschung der Datenbank-APIs. Die korrekte Handhabung von Datenzugriff und -manipulation sowie die Gewährleistung einer effizienten Datenbankperformance waren entscheidend für eine reibungslose Funktion der Anwendung.
 
-Trotz dieser Herausforderungen haben wir uns intensiv mit den technischen Anforderungen auseinandergesetzt und kreative Lösungen gefunden, um diese Hindernisse zu überwinden. Durch sorgfältige Planung, Zusammenarbeit im Team und eine iterative Entwicklung konnten wir letztendlich die gewünschten Funktionen erfolgreich umsetzen und eine hochwertige Conversphere-Webanwendung bereitstellen.
-
-
-
-= Architektur
-== Architekturdiagramm
+= Deployment 
 
 
 
