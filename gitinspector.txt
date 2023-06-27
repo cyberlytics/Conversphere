@@ -1,0 +1,8 @@
+docker run --rm -v C:\Users\hier\sollte\das\projekt\liegen:/repo `
+ felix/gitinspector:0.4.4 --format=html --grading -L `
+ --file-types=java,cs,c,cc,cpp,h,hh,hpp,glsl,php,py,pl,scala,rb,js,jsx,cjs,svelte,ts,tsx,vue,jade,proto,ml,mli,hs,po,pot,sql,gql,html,htm,cshtml,css,scss,sass,xml,jsp,jspx,doc,docx,xls,xlsx,txt,md,tex,drawio,bib,*,marker,yml,cmd,bat,sh,ps1,sln,csproj,dcproj,runsettings,conf,webmanifest,iml,yaml,toml,template `
+ -x file:package-lock.json -x "file:.cls$" `
+ -x file:assets -x file:node_modules `
+ -x file:template_ieee.tex `
+ --since="10.04.2022" `
+ > "gitinspector.html"
