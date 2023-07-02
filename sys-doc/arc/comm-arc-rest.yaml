@@ -53,6 +53,35 @@ paths:
           description: Username already in use in the requested chatroom.
         "500":
           description: Internal server error
+  /api/createRoom:
+    post:
+      summary: Creates a room
+      description: Creates a room with the given name and description.
+      operationId: createRoom
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: 'TestRoom'
+                description:
+                  type: string
+                  example: 'Test description for the room'
+      responses:
+        "200":
+          description: Room created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        "400":
+          description: Bad request. Invalid request-body.
+        "500":
+          description: Internal serer error.
 components:
   schemas:
     Room:

@@ -1,13 +1,13 @@
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
 import { Server } from 'socket.io';
 import http from 'http';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
-//import mongoose from 'mongoose';
-import router from './router/index.js';
-import { checkNamespaces, handleNamespaces } from './sockets/socketController.js';
+import router from './router/index';
+import { checkNamespaces, handleNamespaces } from './sockets/socketController';
+import mongoose from 'mongoose';
 
 const app: Express = express();
 
@@ -31,15 +31,17 @@ httpServer.listen(8080, () => {
   console.log('Server is running on port 8080');
 });
 
-/*
-const MONGO_URL = "mongodb+srv://feillukas:"+encodeURIComponent("pEj?VQK>w2*2Uk4UAk5MS<9mDiT7fYyZ")+"@wae.6bsejdu.mongodb.net/?retryWrites=true&w=majority";
-
-mongoose.Promise = Promise;
-mongoose.connect(MONGO_URL);
-mongoose.connection.on('error', (err: Error) => {
-  console.log(err);
-});
-*/
+const uri = "mongodb+srv://web_anwendung_projekt:W6aKJmOszJOj7Sw1@cluster0.i5kfluk.mongodb.net/?retryWrites=true&w=majority";
+const url2 = "mongodb+srv://feillukas:test@wae.6bsejdu.mongodb.net/?retryWrites=true&w=majority"
+const connectToMongoDB = async () => {
+  try {
+    await mongoose.connect(url2);
+    console.log('Connected to MongoDB Atlas');
+  } catch (error) {
+    console.error('Error connecting to MongoDB Atlas', error);
+  }
+};
+connectToMongoDB();
 
 
 app.use('/', router());

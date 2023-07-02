@@ -1,18 +1,39 @@
-import mongoose from "mongoose";
+import mongoose, { HydratedDocument } from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-    id: {type: mongoose.Schema.Types.UUID, required: true},
     nickname: {type: String, required: true},
+    position: {
+        type: {
+            x: { type: Number, 
+                required: false },
+            y: { type: Number, 
+                required: false }
+            },required: false}
 });
 
 export const UserModel = mongoose.model("User", UserSchema);
 
-/*
+//
 export const getUsers = () => UserModel.find();
-export const getUserByEmail = (email: string) => UserModel.findOne({email});
-export const getUserBySessionToken = (sessionToken: string) => UserModel.findOne({"authentication.sessionToken": sessionToken});
 export const getUserById = (id: string) => UserModel.findById(id);
-export const createUser = async (values: Record<string, any>) => new UserModel(values).save().then((user) => user.toObject());
+export const getUserByNickname = (nickname: string) => UserModel.findOne({nickname});
 export const deleteUserById = (id: string) => UserModel.findByIdAndDelete({_id: id});
-export const updateUserById = (id: string, values: Record<string, any>) => UserModel.findByIdAndUpdate(id, values);
-*/
+export const createUser = async (nickname: string) => new UserModel({nickname}).save().then((user) => user.toObject());
+
+export const getAllUserNames = () => UserModel.find().distinct('nickname').exec();
+
+export const updatePosition = async (user_id: string, x: number, y: number) : Promise<HydratedDocument<any>> => {
+    return await UserModel.updateOne(
+        {_id: user_id},
+        {$set:{
+            position: {
+                x: x,
+                y: y
+            }
+        }}
+    );
+}
+
+
+
+

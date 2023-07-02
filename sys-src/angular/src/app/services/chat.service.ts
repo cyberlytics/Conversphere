@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Socket, io } from "socket.io-client";
 import { Message } from '../interfaces/messages';
-import { User, Users } from '../interfaces/users';
+import { User } from '../interfaces/users';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private base_socket_endpoint = 'localhost:8080/ws'
+  private base_socket_endpoint = 'localhost:8080/ws/rooms'
 
   messages_socket: Socket | undefined;
   users_socket: Socket | undefined;
@@ -25,8 +25,11 @@ export class ChatService {
    * @returns The subject for the Messages and the Users of the chat-room.
    */
   setupSocketConnection(roomId: string, user: User) {
+    console.log('Setup socket connection for room: ' + roomId + ' and user: ' + user.nickname);
     const messagePath = this.base_socket_endpoint + '/' + roomId + '/messages';
     const usersPath = this.base_socket_endpoint + '/' + roomId + '/users';
+    console.log('MessagePath: ' + messagePath);
+    console.log('UsersPath: ' + usersPath);
     this.messages_socket = io(messagePath, {query: {user_id: user.id}});
     this.users_socket = io(usersPath, {query: {user_id: user.id}});
   }
@@ -46,7 +49,7 @@ export class ChatService {
    * @param message The message to send.
    */
   SendMessage(message: Message): void{
-    this.messages_socket?.emit('sendMessage', message);
+    this.messages_socket?.emit('sendNewMessage', message);
   }
 
   /**
@@ -58,6 +61,16 @@ export class ChatService {
   }
 
   /**
+   *  Sends a request to update the user.
+   *  @param user The user to update.
+   */
+  positionUpdate(user: User): void{
+    this.users_socket?.emit('positionUpdate', user);
+  }
+
+
+
+  /**
    * Subscribes to the websocket chat to receive messages
    * @returns A Message Obejct everytime a new Message was received.
    * @see Message
@@ -65,9 +78,7 @@ export class ChatService {
   InitMessagesSocket() : Subject<Message>{
     const messages = new Subject<Message>();
 
-    this.messages_socket?.on('receivedMessage', (message: Message)=>{
-      console.log('Received a new message: '+ message);
-
+    this.messages_socket?.on('receiveNewMessage', (message: Message)=>{
       messages.next(message);
     });
     return messages;
@@ -78,13 +89,11 @@ export class ChatService {
    * @returns A Users Obejct everytime a new User was received.
    * @see Users
    */
-  InitUsersSocket() : Subject<Users>{
-    const userSubject = new Subject<Users>();
+  InitUsersSocket() : Subject<User[]>{
+    const userSubject = new Subject<User[]>();
 
-    this.users_socket?.on('userChanged', (users: Users)=>{
-      console.log('Users: '+users);
-
-      userSubject.next(users);
+    this.users_socket?.on('usersUpdate', (user: User[])=>{
+      userSubject.next(user);
     });
 
     return userSubject;
