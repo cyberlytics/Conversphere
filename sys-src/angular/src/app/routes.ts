@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { StartpageComponent } from './components/startpage/startpage.component';
 import { ErrorComponent } from './components/error/error.component';
-import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
 
 export const APP_ROUTES: Routes = [
@@ -12,10 +11,6 @@ export const APP_ROUTES: Routes = [
   {
     path: 'error',
     component: ErrorComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
   },
   {
     path: 'room/:roomId',

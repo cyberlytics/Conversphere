@@ -16,8 +16,6 @@ jest.mock('../db/rooms', () => ({
 
 describe('getAllRooms', () => {
 
-
-    
   it('should return all rooms', async () => {
     // Définir le comportement du mock getRooms
     const mockRooms = [
